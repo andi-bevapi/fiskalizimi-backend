@@ -1,11 +1,47 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
-const sequelize = require('./models/sequelize');
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+
+require('./db');
+
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Fiskalizimi API',
+            version: '1.0.0'
+        },
+        servers: [
+            {
+                url: 'http://localhost:8000'
+            },
+            {
+                url: 'https://fiskalizimi-dev-api.herokuapp.com'
+            }
+        ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                }
+            }
+        },
+        security: [{
+            bearerAuth: []
+        }]
+    },
+    apis: ['./routes/*.js']
+}
+
+const specs = swaggerJsDoc(options);
 
 const app = express();
 
-sequelize.sync();
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));

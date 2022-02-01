@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const user = require('./user');
+const client = require('./client');
+const branch = require('./branch');
+const transportOrder = require('./transportOrder');
+const product = require('./product');
 
-router.use('/user', user);
+router.use('/client', client);
+router.use('/branch', branch);
+router.use('/transport-order', transportOrder);
+router.use('/product', product);
 
 module.exports = router;
