@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const swaggerUI = require('swagger-ui-express');
@@ -40,6 +41,8 @@ const options = {
 const specs = swaggerJsDoc(options);
 
 const app = express();
+
+app.use(cors());
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
