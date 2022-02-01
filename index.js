@@ -1,18 +1,25 @@
+const port = process.env.PORT || 8000;
 const express = require('express');
-const bodyParser = require('body-parser');
-const routes = require('./routes');
-const sequelize = require('./models/sequelize');
-
 const app = express();
-
+const cors = require("cors");
+const sequelize = require('./models/sequelize');
+const categoryRouter = require("./routes/Categories/Categories");
 sequelize.sync();
 
-// Body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+const config = {
+    cors : {
+        origin: "http://localhost:3000",
+        methods: ["GET,POST","PUT"]
+    }
+}
 
-app.use('/api', routes);
+app.use(cors(config));
 
-const port = process.env.PORT || 8000;
+//we use build in express body parser middleware
+app.use(express.json());
+app.use(express.urlencoded());
+
+
+app.use("/api/categories",categoryRouter);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
