@@ -2,10 +2,9 @@ const port = process.env.PORT || 8000;
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const routes = require("./routes");
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
-
-const categoryRouter = require("./routes/Categories/Categories");
 
 require('./db');
 
@@ -46,7 +45,7 @@ const specs = swaggerJsDoc(options);
 const config = {
     cors : {
         origin: "http://localhost:3000",
-        methods: ["GET,POST","PUT"]
+        methods: ["GET,POST","PUT","DELETE"]
     }
 }
 
@@ -58,7 +57,6 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 app.use(express.json());
 app.use(express.urlencoded());
 
-
-app.use("/api/categories",categoryRouter);
+app.use("/api",routes);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
