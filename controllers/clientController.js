@@ -11,7 +11,11 @@ const getClients = async (req, res) => {
                 }
             ]
         });
-        res.send(data);
+        res.send({
+            statusCode: 200,
+            message: 'Lista e klienteve',
+            data
+        });
     } catch (error) {
         res.status(500).send()
     }

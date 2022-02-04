@@ -20,7 +20,11 @@ const getTransportOrders = async (req, res) => {
                 }
             ]
         });
-        res.send(data);
+        res.send({
+            statusCode: 200,
+            message: 'Lista e porosive',
+            data
+        });
     } catch (error) {
         res.status(500).send()
     }
@@ -37,7 +41,11 @@ const getTransportOrderDetails = async (req, res) => {
                 }
             ]
         });
-        res.send(data);
+        res.send({
+            statusCode: 200,
+            message: 'Detajet e porosise',
+            data
+        });
     } catch (error) {
         res.status(500).send()
     }
@@ -66,7 +74,11 @@ const getTransportOrderItems = async (req, res) => {
                 },
             ]
         });
-        res.send(data);
+        res.send({
+            statusCode: 200,
+            message: 'Artikujt e porosise',
+            data
+        });
     } catch (error) {
         res.status(500).send()
     }

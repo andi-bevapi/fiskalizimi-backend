@@ -11,7 +11,11 @@ const getBranches = async (req, res) => {
                 }
             ]
         });
-        res.send(data);
+        res.send({
+            statusCode: 200,
+            message: 'Lista e degeve',
+            data
+        });
     } catch (error) {
         res.status(500).send()
     }

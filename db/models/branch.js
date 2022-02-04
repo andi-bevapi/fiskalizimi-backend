@@ -15,7 +15,7 @@ class Branch extends Model {
         type: DataTypes.STRING,
         allowNull: false
       },
-      businUnitCode: {
+      businessUnitCode: {
         type: DataTypes.STRING,
         allowNull: false
       },

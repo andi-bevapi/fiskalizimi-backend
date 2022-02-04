@@ -23,7 +23,7 @@ const branchController = require('../controllers/branchController');
  *          type: string
  *       clientId:
  *          type: number
- *       businUnitCode:
+ *       businessUnitCode:
  *          type: string
  *       maintainerCode:
  *          type: string
