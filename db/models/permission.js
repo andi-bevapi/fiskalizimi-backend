@@ -22,6 +22,10 @@ class Permission extends Model {
       modelName: 'Permission'
     })
   }
+
+  static associate(models) {
+    this.belongsToMany(models.User, { through: 'User_Permissions' });
+  }
 }
 
 module.exports = Permission;

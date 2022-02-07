@@ -60,6 +60,7 @@ class User extends Model {
   static associate(models) {
     this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
     this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
+    this.belongsToMany(models.Permission, { through: 'User_Permissions' });
   }
 }
 
