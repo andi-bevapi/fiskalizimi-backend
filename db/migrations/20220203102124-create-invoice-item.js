@@ -1,17 +1,35 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TransportOrders', {
+    await queryInterface.createTable('InvoiceItems', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      clientId: {
+      invoiceId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Clients',
+          model: 'Invoices',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      productId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Products',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      sellingUnitId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'SellingUnits',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -26,29 +44,25 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      type: {
-        allowNull: false,
-        type: Sequelize.STRING
+      description: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      transportTransaction: {
-        allowNull: false,
-        type: Sequelize.STRING
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
-      transportDatetime: {
-        allowNull: false,
-        type: Sequelize.DATE
+      finalPrice: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
-      totalValue: {
-        allowNull: false,
-        type: Sequelize.BIGINT
+      originalPrice: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
-      packNumber: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      WTNIC: {
-        allowNull: false,
-        type: Sequelize.STRING
+      discountPerUnit: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -73,6 +87,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TransportOrders');
+    await queryInterface.dropTable('InvoiceItems');
   }
 };

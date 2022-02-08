@@ -1,6 +1,6 @@
 const { Model, DataTypes, literal } = require('sequelize');
 
-class TransportOrderDetails extends Model {
+class InvoiceItem extends Model {
   static init(sequelize) {
     super.init({
       id: {
@@ -9,48 +9,24 @@ class TransportOrderDetails extends Model {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      startAddress: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      startCity: {
-        type: DataTypes.STRING,
+      quantity: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      startPoint: {
-        type: DataTypes.DATE,
+      finalPrice: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      startDateTime: {
-        type: DataTypes.DATE,
+      originalPrice: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      destinationAddress: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      destinationCity: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      destinationPoint: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      destinationDateTime: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      vehiclePlates: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      carrierName: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      carrierAddress: {
-        type: DataTypes.STRING,
+      discountPerUnit: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       isActive: {
@@ -75,13 +51,16 @@ class TransportOrderDetails extends Model {
       }
     }, {
       sequelize,
-      modelName: 'TransportOrderDetails'
+      modelName: 'InvoiceItem'
     })
   }
 
   static associate(models) {
-    this.belongsTo(models.TransportOrder, { foreignKey: 'transportOrderId', as: 'transportOrder' });
+    this.belongsTo(models.Invoice, { foreignKey: 'invoiceId', as: 'invoice' });
+    this.belongsTo(models.Product, { foreignKey: 'productId', as: 'product' });
+    this.belongsTo(models.SellingUnit, { foreignKey: 'sellingUnitId', as: 'sellingUnit' });
+    this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
   }
 }
 
-module.exports = TransportOrderDetails;
+module.exports = InvoiceItem;

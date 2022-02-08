@@ -1,42 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const productController = require('../controllers/productController');
+const branchController = require('../controllers/branch.controller');
 
 /**
  * @swagger
  * tags:
- *  name: Product
+ *  name: Branch
  */
 
 /**
  * @swagger
  * components:
  *  schemas:
- *    Product:
+ *    Branch:
  *     type: object
  *     properties:
  *       name:
  *          type: string
- *       description:
+ *       address:
  *          type: string
- *       price:
- *          type: number
- *       barcode:
+ *       city:
  *          type: string
- *       supplierId:
+ *       clientId:
  *          type: number
- *       stock:
+ *       businessUnitCode:
  *          type: string
- *       stockCheck:
- *          type: boolean
- *       imageVirtualPath:
+ *       maintainerCode:
  *          type: string
- *       branchId:
- *          type: number
- *       sellingUnitId:
- *          type: number
- *       categoryId:
- *          type: number
+ *       code:
+ *          type: string
  *       isActive:
  *          type: boolean
  *       isDeleted:
@@ -47,15 +39,15 @@ const productController = require('../controllers/productController');
  *          type: string
  */
 
-// @route   GET api/product
-// @desc    Get all products
+// @route   GET api/branch
+// @desc    Get all branches
 // @access  Private
 /**
  * @swagger
- * /api/product:
+ * /api/branch:
  *  get:
- *    summary: Get all products
- *    tags: [Product]
+ *    summary: Get all branches
+ *    tags: [Branch]
  *    responses:
  *      200:
  *        description: Success
@@ -64,8 +56,8 @@ const productController = require('../controllers/productController');
  *            schema:
  *              type: array
  *              items:
- *                $ref: '#/components/schemas/Product'
+ *                $ref: '#/components/schemas/Branch'
  */
-router.get('/', productController.getProducts);
+router.get('/', branchController.getBranches);
 
 module.exports = router;

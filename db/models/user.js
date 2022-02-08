@@ -1,6 +1,6 @@
 const { Model, DataTypes, literal } = require('sequelize');
 
-class TransportOrder extends Model {
+class User extends Model {
   static init(sequelize) {
     super.init({
       id: {
@@ -9,27 +9,41 @@ class TransportOrder extends Model {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      type: {
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      operatorCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      password: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      transportTransaction: {
+      isFirstTimeLogin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+      },
+      position: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      transportDatetime: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      totalValue: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-      },
-      packNumber: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      WTNIC: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -42,27 +56,18 @@ class TransportOrder extends Model {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: literal('CURRENT_TIMESTAMP')
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: literal('CURRENT_TIMESTAMP')
       }
     }, {
       sequelize,
-      modelName: 'TransportOrder'
+      modelName: 'User'
     })
   }
 
   static associate(models) {
-    this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
     this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
+    this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
+    this.belongsToMany(models.Permission, { through: 'User_Permissions' });
   }
 }
 
-module.exports = TransportOrder;
+module.exports = User;

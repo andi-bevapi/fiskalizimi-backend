@@ -1,6 +1,6 @@
 const { Model, DataTypes, literal } = require('sequelize');
 
-class SellingUnit extends Model {
+class Permission extends Model {
   static init(sequelize) {
     super.init({
       id: {
@@ -35,9 +35,13 @@ class SellingUnit extends Model {
       }
     }, {
       sequelize,
-      modelName: 'SellingUnit'
+      modelName: 'Permission'
     })
+  }
+
+  static associate(models) {
+    this.belongsToMany(models.User, { through: 'User_Permissions' });
   }
 }
 
-module.exports = SellingUnit;
+module.exports = Permission;

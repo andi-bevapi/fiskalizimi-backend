@@ -1,6 +1,6 @@
 const { Model, DataTypes, literal } = require('sequelize');
 
-class SellingUnit extends Model {
+class User_Permissions extends Model {
   static init(sequelize) {
     super.init({
       id: {
@@ -9,8 +9,12 @@ class SellingUnit extends Model {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      name: {
-        type: DataTypes.STRING,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      permissionId: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       isActive: {
@@ -35,9 +39,9 @@ class SellingUnit extends Model {
       }
     }, {
       sequelize,
-      modelName: 'SellingUnit'
+      modelName: 'User_Permissions'
     })
   }
 }
 
-module.exports = SellingUnit;
+module.exports = User_Permissions;

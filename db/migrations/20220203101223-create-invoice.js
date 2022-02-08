@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TransportOrders', {
+    await queryInterface.createTable('Invoices', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -26,29 +26,54 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      type: {
+      invoiceCode: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.STRING
+        unique: true
       },
-      transportTransaction: {
-        allowNull: false,
-        type: Sequelize.STRING
+      totalAmount: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
-      transportDatetime: {
-        allowNull: false,
-        type: Sequelize.DATE
+      totalVat: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
-      totalValue: {
-        allowNull: false,
-        type: Sequelize.BIGINT
+      discount: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      packNumber: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+      description: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      WTNIC: {
-        allowNull: false,
-        type: Sequelize.STRING
+      paymentMethod: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      hasPayDeadline: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
+      payDeadline: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      isReturn: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
+      dateTime: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      NSLF: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      FIC: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -73,6 +98,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TransportOrders');
+    await queryInterface.dropTable('Invoices');
   }
 };

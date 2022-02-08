@@ -1,6 +1,6 @@
 const { Model, DataTypes, literal } = require('sequelize');
 
-class TransportOrderDetails extends Model {
+class Invoice extends Model {
   static init(sequelize) {
     super.init({
       id: {
@@ -9,47 +9,52 @@ class TransportOrderDetails extends Model {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      startAddress: {
+      invoiceCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      totalAmount: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      totalVat: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      discount: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      startCity: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      startPoint: {
+      paymentMethod: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      hasPayDeadline: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+      },
+      payDeadline: {
         type: DataTypes.DATE,
         allowNull: false
       },
-      startDateTime: {
+      isReturn: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+      },
+      dateTime: {
         type: DataTypes.DATE,
         allowNull: false
       },
-      destinationAddress: {
+      NSLF: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      destinationCity: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      destinationPoint: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      destinationDateTime: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      vehiclePlates: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      carrierName: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      carrierAddress: {
+      FIC: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -75,13 +80,14 @@ class TransportOrderDetails extends Model {
       }
     }, {
       sequelize,
-      modelName: 'TransportOrderDetails'
+      modelName: 'Invoice'
     })
   }
 
   static associate(models) {
-    this.belongsTo(models.TransportOrder, { foreignKey: 'transportOrderId', as: 'transportOrder' });
+    this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
+    this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
   }
 }
 
-module.exports = TransportOrderDetails;
+module.exports = Invoice;

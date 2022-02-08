@@ -1,21 +1,50 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TransportOrders', {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      clientId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Clients',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
+      operatorCode: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      isFirstTimeLogin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
+      position: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      firstName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      lastName: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       branchId: {
         type: Sequelize.INTEGER,
@@ -26,29 +55,14 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      type: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      transportTransaction: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      transportDatetime: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      totalValue: {
-        allowNull: false,
-        type: Sequelize.BIGINT
-      },
-      packNumber: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      WTNIC: {
-        allowNull: false,
-        type: Sequelize.STRING
+      clientId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Clients',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -73,6 +87,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TransportOrders');
+    await queryInterface.dropTable('Users');
   }
 };

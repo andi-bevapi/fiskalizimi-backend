@@ -1,45 +1,16 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Branches', {
+    await queryInterface.createTable('Permissions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      clientId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Clients',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
       name: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      address: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      city: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      businessUnitCode: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      maintainerCode: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      code: {
-        allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -64,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Branches');
+    await queryInterface.dropTable('Permissions');
   }
 };

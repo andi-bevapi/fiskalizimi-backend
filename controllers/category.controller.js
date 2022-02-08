@@ -1,4 +1,4 @@
-const category = require("../../db/models/category");
+const category = require("../db/models/category");
 const getAllCategory = async(req,res) =>{
     try{
         const categories = await category.findAll({where:{isActive:true}});
@@ -28,29 +28,20 @@ const createCategory = async(req,res) =>{
 }
 
 const updateCategory = async(req,res) =>{
-    try{
-         await category.update(
-            {name : req.body.data.name.toUpperCase()},
-            {
-                where: {id:req.params.id},
-                plain: true,
-                returning: true
-            }
-        );
+   try{
+       const checkIfExist = await category.findOne({where : {name : req.body.name.toUpperCase()}});
+       if(checkIfExist) {
+           const payload = { statusCode: 409, message: "Kjo kategori ekziston"};
+           return res.status(409).send(payload);
+       }
 
-        const categoryUpdated = await category.findOne(
-            {
-                where: {id:req.params.id},
-                plain: true,
-                returning: true
-            }
-        );
-        const payload = { statusCode: 200, message: "category has  been updated" , category : categoryUpdated};
-        return res.status(200).send(payload);
-    }catch(error){
-        const errorMessage = {statusCode : 500 ,message:"Internal server error", error : error};
-        return res.status(500).send(errorMessage);
-    }
+       await category.update({name : req.body.name.toUpperCase()},{where: {id:req.params.id}, plain: true});
+       const payload = { statusCode: 200, message: "category has  been updated"};
+       return res.status(200).send(payload);
+   }catch(error){
+       const errorMessage = {statusCode : 500 ,message:"Internal server error", error : error};
+       return res.status(500).send(errorMessage);
+   }
 }
 
 const deleteCategory = async(req,res) => {
