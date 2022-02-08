@@ -1,8 +1,14 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, literal } = require('sequelize');
 
 class TransportOrderDetails extends Model {
   static init(sequelize) {
     super.init({
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       startAddress: {
         type: DataTypes.STRING,
         allowNull: false
@@ -49,11 +55,23 @@ class TransportOrderDetails extends Model {
       },
       isActive: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: true
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: false
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: literal('CURRENT_TIMESTAMP')
       }
     }, {
       sequelize,

@@ -1,8 +1,14 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, literal } = require('sequelize');
 
 class Invoice extends Model {
   static init(sequelize) {
     super.init({
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       invoiceCode: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -61,6 +67,16 @@ class Invoice extends Model {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: literal('CURRENT_TIMESTAMP')
       }
     }, {
       sequelize,
