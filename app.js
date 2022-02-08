@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const routes = require('./routes');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const customResponse = require('./utils/response');
 
 require('./db');
 
@@ -42,13 +42,14 @@ const specs = swaggerJsDoc(options);
 
 const app = express();
 
+app.response = Object.create(customResponse);
+
 app.use(cors());
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
-// Body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use('/api', routes);
 
