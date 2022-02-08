@@ -26,6 +26,7 @@ const getProducts = async (req, res) => {
                 },
             ]
         });
+        
         res.send({
             statusCode: 200,
             message: 'Lista e produkteve',

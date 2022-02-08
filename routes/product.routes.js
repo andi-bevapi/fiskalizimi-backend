@@ -1,34 +1,42 @@
 const express = require('express');
 const router = express.Router();
-const branchController = require('../controllers/branchController');
+const productController = require('../controllers/product.controller');
 
 /**
  * @swagger
  * tags:
- *  name: Branch
+ *  name: Product
  */
 
 /**
  * @swagger
  * components:
  *  schemas:
- *    Branch:
+ *    Product:
  *     type: object
  *     properties:
  *       name:
  *          type: string
- *       address:
+ *       description:
  *          type: string
- *       city:
- *          type: string
- *       clientId:
+ *       price:
  *          type: number
- *       businessUnitCode:
+ *       barcode:
  *          type: string
- *       maintainerCode:
+ *       supplierId:
+ *          type: number
+ *       stock:
  *          type: string
- *       code:
+ *       stockCheck:
+ *          type: boolean
+ *       imageVirtualPath:
  *          type: string
+ *       branchId:
+ *          type: number
+ *       sellingUnitId:
+ *          type: number
+ *       categoryId:
+ *          type: number
  *       isActive:
  *          type: boolean
  *       isDeleted:
@@ -39,15 +47,15 @@ const branchController = require('../controllers/branchController');
  *          type: string
  */
 
-// @route   GET api/branch
-// @desc    Get all branches
+// @route   GET api/product
+// @desc    Get all products
 // @access  Private
 /**
  * @swagger
- * /api/branch:
+ * /api/product:
  *  get:
- *    summary: Get all branches
- *    tags: [Branch]
+ *    summary: Get all products
+ *    tags: [Product]
  *    responses:
  *      200:
  *        description: Success
@@ -56,8 +64,8 @@ const branchController = require('../controllers/branchController');
  *            schema:
  *              type: array
  *              items:
- *                $ref: '#/components/schemas/Branch'
+ *                $ref: '#/components/schemas/Product'
  */
-router.get('/', branchController.getBranches);
+router.get('/', productController.getProducts);
 
 module.exports = router;
