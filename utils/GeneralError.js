@@ -1,11 +1,11 @@
 class GeneralError extends Error {
-    constructor(message,code){
-        super(message,code);
+    constructor(message, code) {
+        super(message, code);
         this.message = message;
         this.code = code;
 
-        if(Error.captureStackTrace){
-            Error.captureStackTrace(this,GeneralError);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, GeneralError);
         }
     }
 }

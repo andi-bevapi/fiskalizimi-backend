@@ -23,6 +23,7 @@ const categoryController = require("../controllers/CategoryController");
  *        type: boolean
  */
 
+
 // @route   GET api/categories
 // @desc    Get all categories
 // @access  Private
@@ -42,6 +43,7 @@ const categoryController = require("../controllers/CategoryController");
  *             items:
  *               $ref: '#/components/schemas/Category'
  */
+router.get("/", categoryController.getAllCategory);
 
 // @route   POST api/categories/create
 // @desc    Create new category
@@ -67,6 +69,7 @@ const categoryController = require("../controllers/CategoryController");
  *           "500":
  *              description: internal server error
  */
+router.post("/create", categoryController.createCategory);
 
 // @route   UPDATE api/categories/update/{id}
 // @desc    update one categories
@@ -103,6 +106,7 @@ const categoryController = require("../controllers/CategoryController");
  *        description: internal server error
  */
 
+router.put("/update/:id", categoryController.updateCategory);
 
 // @route   DELETE api/categories/delete/{id}
 // @desc    delete one categories
@@ -132,10 +136,6 @@ const categoryController = require("../controllers/CategoryController");
  *      500:
  *        description: internal server error
  */
-
-router.get("/", categoryController.getAllCategory);
-router.post("/create", categoryController.createCategory);
-router.put("/update/:id", categoryController.updateCategory);
 router.put("/delete/:id", categoryController.deleteCategory);
 
 module.exports = router;
