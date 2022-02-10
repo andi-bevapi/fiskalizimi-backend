@@ -67,5 +67,8 @@ const productController = require('../controllers/ProductController');
  *                $ref: '#/components/schemas/Product'
  */
 router.get('/', productController.getProducts);
+router.post('/createProduct', productController.createProduct);
+router.put('/deleteProduct/:id', productController.deleteProduct);
+router.put('/updateProduct/:id', productController.updateProduct);
 
 module.exports = router;
