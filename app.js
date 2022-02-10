@@ -6,7 +6,7 @@ const routes = require("./routes");
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const customResponse = require('./utils/response');
-const errorHandler = require("./utils/errorHandler");
+const errorHandler = require("./middleware/errorHandler");
 require('./db');
 
 

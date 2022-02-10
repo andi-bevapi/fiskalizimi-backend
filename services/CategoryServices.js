@@ -27,7 +27,6 @@ const updatedCategory = async(name,id) =>{
 const deleteCategory = async(id) =>{
     const checkIfExist = await category.findOne({where : {id : id}});
     if(checkIfExist) {
-        
         const categoryToDelete = await category.update(
             {isActive : false , isDeleted : true},
             { where : { id : id }}
