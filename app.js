@@ -5,7 +5,8 @@ const cors = require('cors');
 const routes = require("./routes");
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
-
+const customResponse = require('./utils/response');
+const errorHandler = require("./utils/errorHandler");
 require('./db');
 
 
@@ -49,14 +50,12 @@ const config = {
     }
 }
 
+
 app.use(cors(config));
-
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
-
-//we use build in express body parser middleware
 app.use(express.json());
 app.use(express.urlencoded());
-
-app.use("/api",routes);
-
+app.response = Object.create(customResponse);
+app.use('/api', routes);
+app.use(errorHandler);
 app.listen(port, () => console.log(`Server running on port ${port}`));
