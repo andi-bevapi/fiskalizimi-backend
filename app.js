@@ -1,11 +1,14 @@
+const port = process.env.PORT || 8000;
 const express = require('express');
+const app = express();
 const cors = require('cors');
-const routes = require('./routes');
+const routes = require("./routes");
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const customResponse = require('./utils/response');
-
+const errorHandler = require("./middleware/errorHandler");
 require('./db');
+
 
 const options = {
     definition: {
@@ -40,19 +43,19 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
-const app = express();
+const config = {
+    cors : {
+        origin: "http://localhost:3000",
+        methods: ["GET,POST","PUT","DELETE"]
+    }
+}
 
-app.response = Object.create(customResponse);
 
-app.use(cors());
-
+app.use(cors(config));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
-
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+app.use(express.urlencoded());
+app.response = Object.create(customResponse);
 app.use('/api', routes);
-
-const port = process.env.PORT || 8000;
-
+app.use(errorHandler);
 app.listen(port, () => console.log(`Server running on port ${port}`));
