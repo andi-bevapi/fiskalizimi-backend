@@ -1,8 +1,5 @@
 const Product = require("../db/models/product");
-const Branch = require("../db/models/branch");
-const Category = require("../db/models/category");
-const SellingUnit = require("../db/models/sellingunit");
-const Supplier = require("../db/models/supplier");
+const GeneralError = require("../utils/GeneralError")
 
 const createProductService = async (req) => {
   const checkIfExists = await Product.findAll({
@@ -13,7 +10,7 @@ const createProductService = async (req) => {
   });
 
   if (checkIfExists.length !== 0) {
-    throw new Error("ky produkt ekziston");
+    throw new GeneralError("Ekziston tashme nje produkt me kete emer!", 409);
     // return res.status(409).send({
     //   statusCode: 409,
     //   message: "Ky produkt ekziston aktualisht!",
@@ -51,9 +48,11 @@ const deleteProductService = async (id) => {
   });
 
   if (!checkIfExists) {
-    throw new Error("Nuk ekziston nje produkt me kete id");
+    throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
   }
 
+  // When deleting a product, will the record be deleted or only updated to 
+  // { isDeleted: true, isActive: false },
   // const productToDelete = await Product.update(
   //   { isDeleted: true, isActive: false },
   //   {
@@ -72,7 +71,7 @@ const deleteProductService = async (id) => {
   if (productToDelete === 1) {
     return productToDelete;
   }
-  return null;
+   throw new GeneralError("Fshirja e produktit deshtoi!", 500);
 };
 
 const updateProductService = async (id, data) => {
@@ -84,7 +83,7 @@ const updateProductService = async (id, data) => {
   });
 
   if (!checkById) {
-    throw new Error("Nuk ekziston nje produkt me kete id");
+    throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
   }
 
   const checkByName = await Product.findOne({
@@ -95,7 +94,7 @@ const updateProductService = async (id, data) => {
   });
 
   if (checkByName) {
-    throw new Error("Ekziston tashme nje produkt me kete emer!");
+    throw new GeneralError("Ekziston tashme nje produkt me kete emer!", 409);
   }
 
   const productToUpdate = await Product.update(
@@ -118,7 +117,7 @@ const updateProductService = async (id, data) => {
   if (productToUpdate[0] === 1) {
     return productToUpdate[0];
   }
-  throw new Error("Modifikimi i produkti deshoti!");
+  throw new GeneralError("Modifikimi i produkti deshoti!", 500);
 };
 
 module.exports = {

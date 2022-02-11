@@ -42,10 +42,10 @@ const createProduct = async (req, res) => {
   try {
     const data = await productServices.createProductService(req);
     if (data) {
-      return res.status(200).send(data);
+      res.ok(data, "Produkti u krijua me sukses!")
     }
   } catch (error) {
-    return res.status(500).send(error.message);
+    next(error)
   }
 };
 
@@ -53,22 +53,22 @@ const deleteProduct = async (req, res) => {
   try {
     const data = await productServices.deleteProductService(req.params.id);
     if (data === 1) {
-      res.status(200).send("Produkti u fshi me sukses!");
+      res.ok(data, "Produkti u fshi me sukses!")
     }
   } catch (error) {
-    return res.status(500).send(error.message);
+    next(error)
   }
 };
 
-const updateProduct = async (req, res) => {
+const updateProduct = async (req, res, next) => {
   try {
     const data = await productServices.updateProductService(
       req.params.id,
       req.body
     );
-    return res.status(200).send("Produkti u modifikua me sukses!");
+    return res.ok(data, "Produkti u modifikua me sukses!")
   } catch (error) {
-    return res.status(500).send(error.message);
+    next(error)
   }
 };
 
