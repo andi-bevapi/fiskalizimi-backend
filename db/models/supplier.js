@@ -11,7 +11,8 @@ class Supplier extends Model {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       startDate: {
         type: DataTypes.DATE,

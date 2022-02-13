@@ -11,7 +11,8 @@ class Category extends Model {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       isActive: {
         type: DataTypes.BOOLEAN,
