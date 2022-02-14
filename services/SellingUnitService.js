@@ -17,24 +17,31 @@ const create  = async(name) => {
 
 const update  = async(name,id) =>{
     
-    const checkIfExist = await sellingUnit.findOne({where : {name : name}});
-    if(checkIfExist) {
-        throw new GeneralError("Kjo njesi ekziston",409);
+    const checkIfNameExists = await sellingUnit.findOne({where : {name} });
+    const checkIfIdExists = await sellingUnit.findOne({where : {id}});
+
+    if(checkIfNameExists) {
+        throw new GeneralError("Kjo njesi me kete emer ekziston",409);
     }
-    const updatedSellingUnit= await sellingUnit.update({name : name},{where: {id:id}, plain: true});
+
+    if(!checkIfIdExists) {
+        throw new GeneralError("Ky furnizues nuk gjendet",404);
+    }
+
+    const updatedSellingUnit= await sellingUnit.update({name},{where: {id:id}, plain: true});
     return updatedSellingUnit;
 }
 
-const deleted = async(id) =>{
-    const checkIfExist = await sellingUnit.findOne({where : {id : id}});
+const deleteSellingUnit = async(id) =>{
+    const checkIfExist = await sellingUnit.findOne({where : {id}});
     if(checkIfExist) {
         const sellingUnitToDelete = await sellingUnit.update(
             {isActive : false , isDeleted : true},
-            { where : { id : id }}
+            { where : { id }}
         );
         return sellingUnitToDelete;
     }
     throw new GeneralError("Kjo njesi nuk ekziston",404);
 };
 
-module.exports = { getAll, create , update , deleted } ;
+module.exports = { getAll, create , update , deleteSellingUnit } ;

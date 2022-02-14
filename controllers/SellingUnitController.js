@@ -29,7 +29,7 @@ const updatedSellingUnit = async (req, res, next) => {
 
 const deleteSellingUnit = async (req, res, next) => {
     try {
-        const deleteSellingUnit = await SellingUnitServices.deleted(req.params.id);
+        const deleteSellingUnit = await SellingUnitServices.deleteSellingUnit(req.params.id);
         res.ok(deleteSellingUnit, "Selling Unit is deleted");
     } catch (error) {
         next(error);
