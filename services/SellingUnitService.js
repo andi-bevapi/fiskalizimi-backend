@@ -7,11 +7,11 @@ const getAll  = async () =>{
 }
 
 const create  = async(name) => {
-    const checkIfExist = await sellingUnit.findOne({where : {name : name}});
+    const checkIfExist = await sellingUnit.findOne({where : {name}});
     if(checkIfExist) {
         throw new GeneralError("Kjo njesi ekziston",409);
     }
-    const newSellingUnit = await sellingUnit.create({name : name, isActive:true, isDeleted: false});
+    const newSellingUnit = await sellingUnit.create({name});
     return newSellingUnit;
 }
 
@@ -28,7 +28,7 @@ const update  = async(name,id) =>{
         throw new GeneralError("Ky furnizues nuk gjendet",404);
     }
 
-    const updatedSellingUnit= await sellingUnit.update({name},{where: {id:id}, plain: true});
+    const updatedSellingUnit= await sellingUnit.update({name},{where: {id}, plain: true});
     return updatedSellingUnit;
 }
 
