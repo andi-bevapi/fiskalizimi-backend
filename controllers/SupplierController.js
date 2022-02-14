@@ -29,7 +29,7 @@ const updatedSupplier = async (req, res, next) => {
 
 const deleteSupplier = async (req, res, next) => {
     try {
-        const deleteSupplier = await SupplierService.deleted(req.params.id);
+        const deleteSupplier = await SupplierService.deletedSupplier(req.params.id);
         res.ok(deleteSupplier, "Supplier is deleted");
     } catch (error) {
         next(error);

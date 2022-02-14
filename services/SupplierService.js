@@ -17,8 +17,8 @@ const create  = async(name,startDate,endDate) => {
 
 const update  = async(name,id) =>{
     
-    const checkIfNameExists = await supplier.findOne({where : {name:name} });
-    const checkIfIdExists = await supplier.findOne({where : {id : id}});
+    const checkIfNameExists = await supplier.findOne({where : {name} });
+    const checkIfIdExists = await supplier.findOne({where : {id}});
 
     if(checkIfNameExists) {
         throw new GeneralError("Ky furnizues me kete emer ekziston",409);
@@ -28,20 +28,20 @@ const update  = async(name,id) =>{
         throw new GeneralError("Ky furnizues nuk gjendet",404);
     }
 
-    const updatedSuplier = await supplier.update({name : name},{where: {id:id}});
+    const updatedSuplier = await supplier.update({name},{where: {id}});
     return updatedSuplier;
 }
 
-const deleted = async(id) =>{
-    const checkIfExist = await supplier.findOne({where : {id : id}});
+const deletedSupplier = async(id) =>{
+    const checkIfExist = await supplier.findOne({where : {id}});
     if(checkIfExist) {
         const updatedSuplier = await supplier.update(
             {isActive : false , isDeleted : true},
-            { where : { id : id }}
+            { where : { id }}
         );
         return updatedSuplier;
     }
     throw new GeneralError("Kjo furnizues nuk ekziston",404);
 };
 
-module.exports = { getAll, create , update , deleted } ;
+module.exports = { getAll, create , update , deletedSupplier } ;
