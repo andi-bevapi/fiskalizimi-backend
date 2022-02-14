@@ -17,11 +17,18 @@ const create  = async(name,startDate,endDate) => {
 
 const update  = async(name,id) =>{
     
-    const checkIfExist = await supplier.findOne({where : {name : name}});
-    if(checkIfExist) {
-        throw new GeneralError("Kjo furnizues ekziston",409);
+    const checkIfNameExists = await supplier.findOne({where : {name:name} });
+    const checkIfIdExists = await supplier.findOne({where : {id : id}});
+
+    if(checkIfNameExists) {
+        throw new GeneralError("Ky furnizues me kete emer ekziston",409);
     }
-    const updatedSuplier = await supplier.update({name : name},{where: {id:id}, plain: true});
+
+    if(!checkIfIdExists) {
+        throw new GeneralError("Ky furnizues nuk gjendet",404);
+    }
+
+    const updatedSuplier = await supplier.update({name : name},{where: {id:id}});
     return updatedSuplier;
 }
 
