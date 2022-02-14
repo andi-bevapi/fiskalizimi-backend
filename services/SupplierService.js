@@ -11,7 +11,7 @@ const create  = async(name,startDate,endDate) => {
     if(checkIfExist) {
         throw new GeneralError("Ky furnizues ekziston",409);
     }
-    const newSuplier = await supplier.create({name : name, startDate : startDate , endDate : endDate ,isActive:true, isDeleted: false});
+    const newSuplier = await supplier.create({name,startDate,endDate});
     return newSuplier;
 }
 
