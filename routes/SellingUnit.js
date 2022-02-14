@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const categoryController = require("../controllers/CategoryController");
+const sellingUnitController = require("../controllers/SellingUnitController");
 
 /**
  * @swagger
  * tags:
- *  name: Category
+ *  name: SellingUnits
  */
 
 /**
  * @swagger
  * components:
  *  schemas:
- *    Category:
+ *    SellingUnits:
  *     type: object
  *     properties:
  *      name:
@@ -24,15 +24,15 @@ const categoryController = require("../controllers/CategoryController");
  */
 
 
-// @route   GET api/categories
-// @desc    Get all categories
+// @route   GET api/selling-units
+// @desc    Get all selling-units
 // @access  Private
 /**
  * @swagger
- * /api/categories:
+ * /api/selling-units:
  *  get:
- *    summary: Get all categories
- *    tags: [Category]
+ *    summary: Get all selling unit
+ *    tags: [SellingUnits]
  *    responses:
  *      200:
  *       description: Success
@@ -41,59 +41,59 @@ const categoryController = require("../controllers/CategoryController");
  *           schema:
  *             type: array
  *             items:
- *               $ref: '#/components/schemas/Category'
+ *               $ref: '#/components/schemas/SellingUnits'
  */
-router.get("/", categoryController.getAllCategory);
+router.get("/", sellingUnitController.getAllSellingUnit);
 
-// @route   POST api/categories/create
-// @desc    Create new category
+// @route   POST api/selling-units/create
+// @desc    Create new selling unit
 // @access  Private
 /**
  *@swagger
- * /api/categories/create:
+ * /api/selling-units/create:
  *   post:
- *       summary: Create new categories
- *       tags: [Category]
- *       description: Create a new category
+ *       summary: Create new selling unit
+ *       tags: [SellingUnits]
+ *       description: Create a new selling unit
  *       requestBody:
  *           required: true
  *           content:
  *              application/json:
  *                 schema:
- *                    $ref: '#/components/schemas/Category'
+ *                    $ref: '#/components/schemas/SellingUnits'
  *       responses:
  *           "200":
  *             description: Success
  *           "409":
- *              description: category with this name exists
+ *              description: selling unit with this name exists
  *           "500":
  *              description: internal server error
  */
-router.post("/create", categoryController.createCategory);
+router.post("/create", sellingUnitController.createSellingUnit);
 
-// @route   UPDATE api/categories/update/{id}
-// @desc    update one categories
+// @route   UPDATE api/selling-units/update/{id}
+// @desc    update one selling-units
 // @access  Private
 /**
  * @swagger
- * /api/categories/update/{id}:
+ * /api/selling-units/update/{id}:
  *  put:
- *    summary: Get all categories
- *    tags: [Category]
- *    description: Create a new category
+ *    summary: Get all selling unit
+ *    tags: [SellingUnits]
+ *    description: Create a selling unit
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: number
- *        description: category id
+ *        description: selling unit id
  *        required: true
  *    requestBody:
  *         required: true
  *         content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Category'
+ *                $ref: '#/components/schemas/SellingUnits'
  *    responses:
  *      200:
  *         description: Success
@@ -101,29 +101,29 @@ router.post("/create", categoryController.createCategory);
  *            application/json:
  *               schema:
  *                   items:
- *                     $ref: '#/components/schemas/Category'
+ *                     $ref: '#/components/schemas/SellingUnits'
  *      500:
  *        description: internal server error
  */
 
-router.put("/update/:id", categoryController.updateCategory);
+router.put("/update/:id", sellingUnitController.updatedSellingUnit);
 
-// @route   DELETE api/categories/delete/{id}
-// @desc    delete one categories
+// @route   DELETE api/selling-units/delete/{id}
+// @desc    delete one selling-units
 // @access  Private
 /**
  * @swagger
- * /api/categories/delete/{id}:
+ * /api/selling-units/delete/{id}:
  *  put:
- *    summary: Delete one category
- *    tags: [Category]
- *    description: Delete category
+ *    summary: Delete one selling-units
+ *    tags: [SellingUnits]
+ *    description: Delete selling-units
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: number
- *        description: category id
+ *        description: selling-units id
  *        required: true
  *    responses:
  *      200:
@@ -132,10 +132,10 @@ router.put("/update/:id", categoryController.updateCategory);
  *            application/json:
  *               schema:
  *                   items:
- *                     $ref: '#/components/schemas/Category'
+ *                     $ref: '#/components/schemas/SellingUnits'
  *      500:
  *        description: internal server error
  */
-router.put("/delete/:id", categoryController.deleteCategory);
+router.put("/delete/:id", sellingUnitController.deleteSellingUnit);
 
 module.exports = router;
