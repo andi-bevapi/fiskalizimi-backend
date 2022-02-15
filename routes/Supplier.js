@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const supplierController = require("../controllers/SupplierController");
-
+const Joivalidation = require("../validation/supplier");
 /**
  * @swagger
  * tags:
@@ -73,7 +73,7 @@ router.get("/", supplierController.getAllSupplier);
  *           "500":
  *              description: internal server error
  */
-router.post("/create", supplierController.createSupplier);
+router.post("/create", Joivalidation ,supplierController.createSupplier);
 
 // @route   UPDATE api/supplier/update/{id}
 // @desc    update one supplier
@@ -110,7 +110,7 @@ router.post("/create", supplierController.createSupplier);
  *        description: internal server error
  */
 
-router.put("/update/:id", supplierController.updatedSupplier);
+router.put("/update/:id",Joivalidation,supplierController.updatedSupplier);
 
 // @route   DELETE api/supplier/delete/{id}
 // @desc    delete one supplier
