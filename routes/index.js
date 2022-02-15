@@ -9,9 +9,7 @@ const transportOrder = require('./TransportOrder');
 const supplier = require("./Supplier");
 const sellingUnits = require("./SellingUnit");
 
-const Joivalidation = require("../validation/category");
-
-router.use("/categories",Joivalidation,category);
+router.use("/categories",category);
 router.use('/client', client);
 router.use('/branch', branch);
 router.use('/product', product);
