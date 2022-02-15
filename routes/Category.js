@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const categoryController = require("../controllers/CategoryController");
-
+const Joivalidation = require("../validation/category");
 /**
  * @swagger
  * tags:
@@ -69,7 +69,7 @@ router.get("/", categoryController.getAllCategory);
  *           "500":
  *              description: internal server error
  */
-router.post("/create", categoryController.createCategory);
+router.post("/create",Joivalidation,categoryController.createCategory);
 
 // @route   UPDATE api/categories/update/{id}
 // @desc    update one categories
@@ -106,7 +106,7 @@ router.post("/create", categoryController.createCategory);
  *        description: internal server error
  */
 
-router.put("/update/:id", categoryController.updateCategory);
+router.put("/update/:id",Joivalidation,categoryController.updateCategory);
 
 // @route   DELETE api/categories/delete/{id}
 // @desc    delete one categories

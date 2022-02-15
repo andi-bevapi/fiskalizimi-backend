@@ -7,7 +7,7 @@ const getAll  = async () =>{
 }
 
 const create  = async(name) => {
-    const checkIfExist = await sellingUnit.findOne({where : {name}});
+    const checkIfExist = await sellingUnit.findOne({where : {name,isDeleted:false}});
     if(checkIfExist) {
         throw new GeneralError("Kjo njesi ekziston",409);
     }
@@ -25,7 +25,7 @@ const update  = async(name,id) =>{
     }
 
     if(!checkIfIdExists) {
-        throw new GeneralError("Ky furnizues nuk gjendet",404);
+        throw new GeneralError("Kjo njesi nuk gjendet",404);
     }
 
     const updatedSellingUnit= await sellingUnit.update({name},{where: {id}, plain: true});
