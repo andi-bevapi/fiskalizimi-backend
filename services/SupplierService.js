@@ -7,7 +7,7 @@ const getAll  = async () =>{
 }
 
 const create  = async(name,startDate,endDate) => {
-    const checkIfExist = await supplier.findOne({where : {name : name}});
+    const checkIfExist = await supplier.findOne({where : {name,isDeleted:false}});
     if(checkIfExist) {
         throw new GeneralError("Ky furnizues ekziston",409);
     }

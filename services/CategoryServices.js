@@ -7,29 +7,29 @@ const getAllCategory = async () =>{
 }
 
 const createCategory = async(name) => {
-    const checkIfExist = await category.findOne({where : {name : name}});
+    const checkIfExist = await category.findOne({where : {name,isDeleted:false}});
     if(checkIfExist) {
         throw new GeneralError("Kjo kategori ekziston",409);
     }
-    const newCategory = await category.create({name : name, isActive:true, isDeleted: false});
+    const newCategory = await category.create({name, isActive:true, isDeleted: false});
     return newCategory;
 }
 
 const updatedCategory = async(name,id) =>{
-    const checkIfExist = await category.findOne({where : {name : name}});
+    const checkIfExist = await category.findOne({where : {name,isDeleted:false}});
     if(checkIfExist) {
         throw new GeneralError("Kjo kategori ekziston",409);
     }
-    const updatedCategory = await category.update({name : name},{where: {id:id}, plain: true});
+    const updatedCategory = await category.update({name},{where: {id}, plain: true});
     return updatedCategory;
 }
 
 const deleteCategory = async(id) =>{
-    const checkIfExist = await category.findOne({where : {id : id}});
+    const checkIfExist = await category.findOne({where : {id}});
     if(checkIfExist) {
         const categoryToDelete = await category.update(
             {isActive : false , isDeleted : true},
-            { where : { id : id }}
+            { where : {id}}
         );
         return categoryToDelete;
     }

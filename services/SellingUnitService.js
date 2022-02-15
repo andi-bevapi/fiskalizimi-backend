@@ -7,7 +7,7 @@ const getAll  = async () =>{
 }
 
 const create  = async(name) => {
-    const checkIfExist = await sellingUnit.findOne({where : {name}});
+    const checkIfExist = await sellingUnit.findOne({where : {name,isDeleted:false}});
     if(checkIfExist) {
         throw new GeneralError("Kjo njesi ekziston",409);
     }
