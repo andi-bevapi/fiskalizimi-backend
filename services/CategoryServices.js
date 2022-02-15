@@ -17,9 +17,16 @@ const createCategory = async(name) => {
 
 const updatedCategory = async(name,id) =>{
     const checkIfExist = await category.findOne({where : {name,isDeleted:false}});
+    const checkIfIdExists = await category.findOne({where : {id}});
+
     if(checkIfExist) {
         throw new GeneralError("Kjo kategori ekziston",409);
     }
+
+    if(!checkIfIdExists) {
+        throw new GeneralError("Kjo kategori nuk gjendet",404);
+    }
+
     const updatedCategory = await category.update({name},{where: {id}, plain: true});
     return updatedCategory;
 }

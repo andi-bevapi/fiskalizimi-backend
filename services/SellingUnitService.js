@@ -25,7 +25,7 @@ const update  = async(name,id) =>{
     }
 
     if(!checkIfIdExists) {
-        throw new GeneralError("Ky furnizues nuk gjendet",404);
+        throw new GeneralError("Kjo njesi nuk gjendet",404);
     }
 
     const updatedSellingUnit= await sellingUnit.update({name},{where: {id}, plain: true});
