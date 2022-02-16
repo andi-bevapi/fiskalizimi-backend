@@ -38,16 +38,13 @@ const createProductService = async (product) => {
     where: {
       name: product.name,
       branchId: product.branchId,
+      isDeleted: false,
     },
     raw: true,
   });
 
   if (checkIfExists.length > 0) {
-    for (var index = 0; index < checkIfExists.length; index++) {
-      if (checkIfExists[index].isDeleted == false) {
-        throw new GeneralError("Ekziston tashme nje produkt me kete emer", 409);
-      }
-    }
+    throw new GeneralError("Ekziston tashme nje produkt me kete emer", 409);
   }
 
   const data = await Product.create(product);
@@ -78,7 +75,6 @@ const deleteProductService = async (id) => {
   return productToDelete;
 };
 
-
 const updateProductService = async (id, data) => {
   const checkById = await Product.findOne({
     where: {
@@ -96,6 +92,8 @@ const updateProductService = async (id, data) => {
       where: {
         name: data.name,
         branchId: data.branchId,
+        isDeleted: false,
+        isActive: true,
       },
     });
     if (checkByName) {
