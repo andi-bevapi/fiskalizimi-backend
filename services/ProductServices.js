@@ -67,7 +67,7 @@ const createProductService = async (product) => {
 const deleteProductService = async (id) => {
   const checkIfExists = await Product.findOne({
     where: {
-      id: id,
+      id,
     },
     raw: true,
   });
