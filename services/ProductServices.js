@@ -7,7 +7,7 @@ const Supplier = require("../db/models/supplier");
 
 const getProductsService = async () => {
   const data = await Product.findAll({
-    where : {
+    where: {
       isActive: true,
       isDeleted: false,
     },
@@ -41,29 +41,15 @@ const createProductService = async (product) => {
     },
     raw: true,
   });
-  if (
-    checkIfExists.length !== 0 &&
-    checkIfExists[0].isDeleted === 1 &&
-    checkIfExists[0].isActive === 0
-  ) {
-    product.isDeleted = false;
-    product.isActive = true;
-    const productUpdate = await Product.update(product, {
-      where: {
-        name: product.name,
-      },
-    });
-    return productUpdate;
-  } else if (
-    checkIfExists.length !== 0 &&
-    checkIfExists[0].isDeleted === 0 &&
-    checkIfExists[0].isActive === 1
-  ) {
-    throw new GeneralError(
-      "Ekziston tashme nje produkt me kete emer per kete branch",
-      409
-    );
+
+  if (checkIfExists.length > 0) {
+    for (var index = 0; index < checkIfExists.length; index++) {
+      if (checkIfExists[index].isDeleted == false) {
+        throw new GeneralError("Ekziston tashme nje produkt me kete emer", 409);
+      }
+    }
   }
+
   const data = await Product.create(product);
   return data;
 };
@@ -92,6 +78,7 @@ const deleteProductService = async (id) => {
   return productToDelete;
 };
 
+
 const updateProductService = async (id, data) => {
   const checkById = await Product.findOne({
     where: {
@@ -104,15 +91,16 @@ const updateProductService = async (id, data) => {
     throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
   }
 
-  const checkByName = await Product.findOne({
-    where: {
-      name: data.name,
-      branchId: data.branchId,
-    },
-  });
-
-  if (checkByName) {
-    throw new GeneralError("Ekziston tashme nje produkt me kete emer!", 409);
+  if (data.name) {
+    const checkByName = await Product.findOne({
+      where: {
+        name: data.name,
+        branchId: data.branchId,
+      },
+    });
+    if (checkByName) {
+      throw new GeneralError("Ekziston tashme nje produkt me kete emer!", 409);
+    }
   }
 
   const productToUpdate = await Product.update(data, {
