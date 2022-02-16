@@ -67,8 +67,91 @@ const productController = require('../controllers/ProductController');
  *                $ref: '#/components/schemas/Product'
  */
 router.get('/', productController.getProducts);
-router.post('/createProduct', productController.createProduct);
-router.put('/deleteProduct/:id', productController.deleteProduct);
-router.put('/updateProduct/:id', productController.updateProduct);
+
+
+// @route   POST api/product/create
+// @desc    Create new product
+// @access  Private
+/**
+ *@swagger
+ * /api/product/create:
+ *   post:
+ *       summary: Create new product
+ *       tags: [Product]
+ *       description: Create a new product
+ *       requestBody:
+ *           required: true
+ *           content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Product'
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "409":
+ *              description: Conflict, a product already exists
+ *           "500":
+ *              description: Internal server error
+ */
+
+
+router.post('/create', productController.createProduct);
+
+// @route   PUT api/product/delete/{id}
+// @desc    Delete one product
+// @access  Private
+/**
+ *@swagger
+ * /api/product/delete/{id}:
+ *   put:
+ *       summary: Delete product
+ *       tags: [Product]
+ *       description: Delete a product
+ *       requestBody:
+ *           required: true
+ *           content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Product'
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "404":
+ *              description: Product not found
+ *           "500":
+ *              description: Internal server error
+ */
+
+
+router.put('/delete/:id', productController.deleteProduct);
+
+// @route   PUT api/product/delete/{id}
+// @desc    Delete one product
+// @access  Private
+/**
+ *@swagger
+ * /api/product/update/{id}:
+ *   put:
+ *       summary: Update product
+ *       tags: [Product]
+ *       description: Update a product
+ *       requestBody:
+ *           required: true
+ *           content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Product'
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "404":
+ *              description: Not found, Product not found
+ *           "409":
+ *              description: Conflict, Product already exists
+ *           "500":
+ *              description: Internal server error
+ */
+
+router.put('/update/:id', productController.updateProduct);
 
 module.exports = router;
