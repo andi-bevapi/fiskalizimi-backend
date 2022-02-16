@@ -7,6 +7,10 @@ const Supplier = require("../db/models/supplier");
 
 const getProductsService = async () => {
   const data = await Product.findAll({
+    where : {
+      isActive: true,
+      isDeleted: false,
+    },
     include: [
       {
         model: Branch,
