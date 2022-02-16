@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const productController = require('../controllers/ProductController');
+const productController = require("../controllers/ProductController");
 
 /**
  * @swagger
@@ -66,8 +66,7 @@ const productController = require('../controllers/ProductController');
  *              items:
  *                $ref: '#/components/schemas/Product'
  */
-router.get('/', productController.getProducts);
-
+router.get("/", productController.getProducts);
 
 // @route   POST api/product/create
 // @desc    Create new product
@@ -94,8 +93,7 @@ router.get('/', productController.getProducts);
  *              description: Internal server error
  */
 
-
-router.post('/create', productController.createProduct);
+router.post("/create", productController.createProduct);
 
 // @route   PUT api/product/delete/{id}
 // @desc    Delete one product
@@ -107,12 +105,13 @@ router.post('/create', productController.createProduct);
  *       summary: Delete product
  *       tags: [Product]
  *       description: Delete a product
- *       requestBody:
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *             type: number
+ *           description: product id
  *           required: true
- *           content:
- *              application/json:
- *                 schema:
- *                    $ref: '#/components/schemas/Product'
  *       responses:
  *           "200":
  *             description: Success
@@ -122,11 +121,10 @@ router.post('/create', productController.createProduct);
  *              description: Internal server error
  */
 
+router.put("/delete/:id", productController.deleteProduct);
 
-router.put('/delete/:id', productController.deleteProduct);
-
-// @route   PUT api/product/delete/{id}
-// @desc    Delete one product
+// @route   PUT api/product/update/{id}
+// @desc    Update one product
 // @access  Private
 /**
  *@swagger
@@ -135,6 +133,13 @@ router.put('/delete/:id', productController.deleteProduct);
  *       summary: Update product
  *       tags: [Product]
  *       description: Update a product
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *             type: number
+ *           description: product id
+ *           required: true
  *       requestBody:
  *           required: true
  *           content:
@@ -152,6 +157,6 @@ router.put('/delete/:id', productController.deleteProduct);
  *              description: Internal server error
  */
 
-router.put('/update/:id', productController.updateProduct);
+router.put("/update/:id", productController.updateProduct);
 
 module.exports = router;
