@@ -8,6 +8,7 @@ const product = require('./Product');
 const transportOrder = require('./TransportOrder');
 const supplier = require("./Supplier");
 const sellingUnits = require("./SellingUnit");
+const user = require("./User");
 
 router.use("/categories",category);
 router.use('/client', client);
@@ -16,5 +17,6 @@ router.use('/product', product);
 router.use('/transport-order', transportOrder);
 router.use("/supplier",supplier);
 router.use("/selling-units",sellingUnits);
+router.use("/user", user);
 
 module.exports = router;
