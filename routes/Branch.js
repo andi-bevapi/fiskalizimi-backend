@@ -142,12 +142,6 @@ router.put("/update/:id",Joivalidation,branchController.updateBranch);
  *          type: number
  *        description: branch id
  *        required: true
- *    requestBody:
- *         required: true
- *         content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Branch'
  *    responses:
  *      200:
  *         description: Success
