@@ -11,12 +11,9 @@ const getAllUsers = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    // console.log("BODY=>", req.body);
     const createUser = await UserServices.createUser(req.body);
-    // console.log(createUser);
     res.ok(createUser);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -26,7 +23,6 @@ const updateUser = async (req, res, next) => {
     const updateUser = await UserServices.updateUser(req.params.id, req.body);
     res.ok(updateUser);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -36,7 +32,6 @@ const deleteUser = async (req, res, next) => {
     const deleteUser = await UserServices.deleteUser(req.params.id);
     res.ok(deleteUser);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
