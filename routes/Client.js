@@ -162,12 +162,6 @@ router.put("/update/:id",Joivalidation,clientController.updateClients);
  *          type: number
  *        description: client id
  *        required: true
- *    requestBody:
- *         required: true
- *         content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Client'
  *    responses:
  *      200:
  *         description: Success

@@ -27,7 +27,6 @@ const updateClients = async(body,id) => {
         throw new GeneralError("Ky klient nuk gjendet",404);
     }
     const updateClient = await Client.update(body,{where: {id}});
-    console.log("updateClient----",updateClient);
     return updateClient;
 }
 
