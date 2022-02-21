@@ -60,6 +60,34 @@ const Joivalidation = require("../validation/branch");
  */
 router.get('/', branchController.getBranches);
 
+// @route   GET api/branch/{id}
+// @desc    Get branches for one client
+// @access  Private
+/**
+ * @swagger
+ * /api/branch/{id}:
+ *  get:
+ *    summary: Get branches for one client
+ *    tags: [Branch]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: number
+ *        description: client id
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Branch'
+ */
+
+ router.get('/:clientId', branchController.getClientBranches);
 
 // @route   POST api/branch/create
 // @desc    Create new branch
