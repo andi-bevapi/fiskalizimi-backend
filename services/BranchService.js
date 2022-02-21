@@ -15,7 +15,6 @@ const getList = async function (query = {}, page = 1, limit = 10) {
 }
 
 const createBranch = async(body) => {
-    console.log("body-----",body);
     const checkClientId = await Client.findOne({where:body.clientId});
     if(!checkClientId){
         throw new GeneralError("Ky klient me kete id nuk gjendet",404);
@@ -33,7 +32,7 @@ const updateBranch = async(body,id) => {
     if(!checkBranchId){
         throw new GeneralError("Ky branch  me kete id nuk gjendet",404);
     }
-    const updateBranch = await Branch.update({body},{where: {id}, plain: true});
+    const updateBranch = await Branch.update(body,{where: {id}, plain: true});
     return updateBranch;
 }
 
