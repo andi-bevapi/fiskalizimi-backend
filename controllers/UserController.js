@@ -2,7 +2,7 @@ const UserServices = require("../services/UserServices");
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await UserServices.getAllUsers(req.body);
+    const users = await UserServices.getAllUsers(req.params.branchId);
     res.ok(users);
   } catch (error) {
     next(error);

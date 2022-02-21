@@ -48,26 +48,33 @@ const Joivalidation = require("../validation/user");
  *          type: string
  */
 
-// @route   GET api/user
+// @route   GET api/user/{id}
 // @desc    Get all users
 // @access  Private
 /**
  * @swagger
- * /api/user:
- *  get:
- *    summary: Get all users
- *    tags: [User]
- *    responses:
- *      200:
- *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/User'
+ * /api/user/{id}:
+ *   get:
+ *       summary: Get users
+ *       tags: [User]
+ *       description: Get user
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *             type: number
+ *           description: user id
+ *           required: true
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "404":
+ *              description: Not found, User not found
+ *           "409":
+ *              description: Conflict, User already exists
+ *           "500":
+ *              description: Internal server error
  */
-
 router.get("/:branchId", Joivalidation, userController.getAllUsers);
 
 // @route   POST api/user/create

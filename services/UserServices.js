@@ -1,6 +1,7 @@
 const User = require("../db/models/user");
 const User_Permissions = require("../db/models/user_permissions");
 const GeneralError = require("../utils/GeneralError");
+var bcrypt = require('bcryptjs');
 
 const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
@@ -22,6 +23,8 @@ const createUser = async (user) => {
   if (checkIfOperatorCodeExist) {
     throw new GeneralError("Ky operator code eshte perdorur", 409);
   }
+  var hashed = await bcrypt.hash(user.user.password, 10);
+  user.user.password = hashed;
   const newUser = await User.create(user.user, { raw: true });
 
   return newUser;
@@ -51,6 +54,8 @@ const updateUser = async (id, user) => {
     throw new GeneralError("Ekziston tashme nje perdorues me kete emer!", 409);
   }
 
+  var hashed = await bcrypt.hash(user.user.password, 10);
+  user.user.password = hashed;
   const userToUpdate = await User.update(user.user, {
     where: {
       id,
