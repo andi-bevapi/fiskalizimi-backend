@@ -16,36 +16,43 @@ const Joivalidation = require("../validation/user");
  *    User:
  *     type: object
  *     properties:
- *       username:
- *          type: string
- *       operatorCode:
- *          type: string
- *       email:
- *          type: string
- *       password:
- *          type: string
- *       isFirstTimeLogin:
- *          type: boolean
- *       position:
- *          type: string
- *       phone:
- *          type: string
- *       firstName:
- *          type: string
- *       lastName:
- *          type: string
- *       branchId:
- *          type: number
- *       clientId:
- *          type: number
- *       isActive:
- *          type: boolean
- *       isDeleted:
- *          type: boolean
+ *      user:
+ *       type: object
+ *       properties:
+ *        username:
+ *           type: string
+ *        operatorCode:
+ *           type: string
+ *        email:
+ *           type: string
+ *        password:
+ *           type: string
+ *        isFirstTimeLogin:
+ *           type: boolean
+ *        position:
+ *           type: string
+ *        phone:
+ *           type: string
+ *        firstName:
+ *           type: string
+ *        lastName:
+ *           type: string
+ *        branchId:
+ *           type: number
+ *        clientId:
+ *           type: number
+ *        isActive:
+ *           type: boolean
+ *        isDeleted:
+ *           type: boolean
  *       createdAt:
  *          type: string
  *       updatedAt:
  *          type: string
+ *      permissions:
+ *       type: array
+ *       items:
+ *         type: integer
  */
 
 // @route   GET api/user/{id}
@@ -63,7 +70,7 @@ const Joivalidation = require("../validation/user");
  *           name: id
  *           schema:
  *             type: number
- *           description: user id
+ *           description: branch id
  *           required: true
  *       responses:
  *           "200":
