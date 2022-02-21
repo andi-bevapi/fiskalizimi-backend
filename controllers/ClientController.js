@@ -1,26 +1,44 @@
-const Branch = require('../db/models/branch');
-const Client = require('../db/models/client');
+const clientService = require("../services/ClientService");
 
-const getClients = async (req, res) => {
-    try {
-        const data = await Client.findAll({
-            include: [
-                {
-                    model: Branch,
-                    as: 'branches'
-                }
-            ]
-        });
-        res.send({
-            statusCode: 200,
-            message: 'Lista e klienteve',
-            data
-        });
-    } catch (error) {
-        res.status(500).send()
+const getClients = async(req,res,next)=>{
+    try{
+        const clients = await clientService.getClients();
+        res.ok(clients,"Lista me kliente");
+    }catch(error){
+        next(error);
+    }
+}
+
+const createClients = async(req,res,next)=>{
+    try{
+        const clients = await clientService.createClients(req.body);
+        res.ok(clients,"Klienti u krijua me sukses ");
+    }catch(error){
+        next(error);
+    }
+}
+
+const updateClients = async(req,res,next)=>{
+    try{
+        const clients = await clientService.updateClients(req.body,req.params.id);
+        res.ok(clients,"Klienti u perditesua   me sukses ");
+    }catch(error){
+        next(error);
+    }
+}
+
+const deleteClients = async(req,res,next)=>{
+    try{
+        const clients = await clientService.deleteClients(req.params.id);
+        res.ok(clients,"Klienti u fshi me sukses ");
+    }catch(error){
+        next(error);
     }
 }
 
 module.exports = {
-    getClients
+    getClients,
+    createClients,
+    updateClients,
+    deleteClients
 };
