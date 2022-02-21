@@ -44,10 +44,10 @@ const user = Joi.object({
     "any.required": `"Fjalekalimi" eshte nje fushe e detyrueshme`,
   }),
   branchId: Joi.number().positive().greater(0).required().messages({
-    "any.required": `"BranchId" eshte nje fushe e detyrueshme`
+    "any.required": `"BranchId" eshte nje fushe e detyrueshme`,
   }),
   clientId: Joi.number().positive().greater(0).required().messages({
-    "any.required": `"ClientId" eshte nje fushe e detyrueshme`
+    "any.required": `"ClientId" eshte nje fushe e detyrueshme`,
   }),
   isFirstTimeLogin: Joi.boolean(),
   isActive: Joi.boolean(),

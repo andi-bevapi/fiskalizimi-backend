@@ -68,7 +68,7 @@ const Joivalidation = require("../validation/user");
  *                $ref: '#/components/schemas/User'
  */
 
-router.get("/", userController.getAllUsers);
+router.get("/:branchId", Joivalidation, userController.getAllUsers);
 
 // @route   POST api/user/create
 // @desc    Create new user

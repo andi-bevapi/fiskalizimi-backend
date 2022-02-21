@@ -2,9 +2,9 @@ const User = require("../db/models/user");
 const User_Permissions = require("../db/models/user_permissions");
 const GeneralError = require("../utils/GeneralError");
 
-const getAllUsers = async (req) => {
+const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
-    where: { isActive: true, branchId: req.branchId },
+    where: { isActive: true, branchId: branchId },
   });
   return allUsers;
 };
