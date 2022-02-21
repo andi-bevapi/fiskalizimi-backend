@@ -1,6 +1,6 @@
 const { Model, DataTypes, literal } = require('sequelize');
 
-class Branch extends Model {
+class UserBranches extends Model {
   static init(sequelize) {
     super.init({
       id: {
@@ -9,28 +9,12 @@ class Branch extends Model {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      name: {
-        type: DataTypes.STRING,
+      userId: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      address: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      city: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      businessUnitCode: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      maintainerCode: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      code: {
-        type: DataTypes.STRING,
+      branchId: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       isActive: {
@@ -55,14 +39,9 @@ class Branch extends Model {
       }
     }, {
       sequelize,
-      modelName: 'Branch'
+      modelName: 'UserBranches'
     })
-  }
-
-  static associate(models) {
-    this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
-    this.belongsToMany(models.User, { through: 'UserBranches' });
   }
 }
 
-module.exports = Branch;
+module.exports = UserBranches;
