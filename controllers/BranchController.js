@@ -9,6 +9,15 @@ const getBranches = async (req,res,next) => {
     }
 }
 
+const getClientBranches = async (req,res,next) => {
+    try {
+        const branch = await BranchService.getClientBranches(req.params.clientId);
+        res.ok(branch,"Lista me deget");
+    } catch (error) {
+        next(error);
+    }
+}
+
 const createBranch = async(req,res,next) =>{
     try{
         const branch = await BranchService.createBranch(req.body);
@@ -39,6 +48,7 @@ const deleteBranch = async(req,res,next) =>{
 
 module.exports = {
     getBranches,
+    getClientBranches,
     createBranch,
     updateBranch,
     deleteBranch
