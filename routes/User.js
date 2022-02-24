@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/UserController");
+const UserBranchesController = require("../controllers/UserBranchesController");
 const Joivalidation = require("../validation/user");
 
 /**

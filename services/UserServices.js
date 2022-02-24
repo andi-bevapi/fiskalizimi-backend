@@ -1,7 +1,9 @@
 const User = require("../db/models/user");
 const User_Permissions = require("../db/models/user_permissions");
 const GeneralError = require("../utils/GeneralError");
-var bcrypt = require('bcryptjs');
+
+const UserBranchesServices = require("./UserBranchesServices");
+var bcrypt = require("bcryptjs");
 
 const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
@@ -26,7 +28,7 @@ const createUser = async (user) => {
   var hashed = await bcrypt.hash(user.user.password, 10);
   user.user.password = hashed;
   const newUser = await User.create(user.user, { raw: true });
-
+  // const newUserBranch = await UserBranchesServices.createUserBranches(14);
   return newUser;
 };
 
