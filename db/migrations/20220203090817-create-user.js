@@ -46,15 +46,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      branchId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Branches',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
       clientId: {
         type: Sequelize.INTEGER,
         references: {

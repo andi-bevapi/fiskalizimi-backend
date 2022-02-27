@@ -1,4 +1,4 @@
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -9,7 +9,6 @@ const customResponse = require('./utils/response');
 const errorHandler = require("./middleware/errorHandler");
 require('./db');
 
-
 const options = {
     definition: {
         openapi: '3.0.0',
@@ -19,7 +18,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:8000'
+                url: 'http://localhost:5000'
             },
             {
                 url: 'https://fiskalizimi-dev-api.herokuapp.com'
@@ -45,11 +44,10 @@ const specs = swaggerJsDoc(options);
 
 const config = {
     cors : {
-        origin: "http://localhost:3000",
+        origin: "http://localhost:5000",
         methods: ["GET,POST","PUT","DELETE"]
     }
 }
-
 
 app.use(cors(config));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));

@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/UserController");
-const Joivalidation = require("../validation/user");
+const { validateUser, validateUserLogin } = require("../validation/user");
 
 /**
  * @swagger
  * tags:
  *  name: User
  */
+
 
 /**
  * @swagger
@@ -37,8 +38,6 @@ const Joivalidation = require("../validation/user");
  *           type: string
  *        lastName:
  *           type: string
- *        branchId:
- *           type: number
  *        clientId:
  *           type: number
  *        isActive:
@@ -50,27 +49,31 @@ const Joivalidation = require("../validation/user");
  *       updatedAt:
  *          type: string
  *      permissions:
- *       type: array
- *       items:
- *         type: integer
+ *          type: array
+ *          items:
+ *              type: integer
+ *      branches:
+ *          type: array
+ *          items:
+ *              type: integer
  */
 
-// @route   GET api/user/{id}
+// @route   GET api/user/{clientId}
 // @desc    Get all users
 // @access  Private
 /**
  * @swagger
- * /api/user/{id}:
+ * /api/user/{clientId}:
  *   get:
  *       summary: Get users
  *       tags: [User]
- *       description: Get user
+ *       description: Get users based on client
  *       parameters:
  *         - in: path
- *           name: id
+ *           name: clientId
  *           schema:
  *             type: number
- *           description: branch id
+ *           description: Client id
  *           required: true
  *       responses:
  *           "200":
@@ -82,7 +85,31 @@ const Joivalidation = require("../validation/user");
  *           "500":
  *              description: Internal server error
  */
-router.get("/:branchId", Joivalidation, userController.getAllUsers);
+router.get("/:clientId", userController.getAllUsers);
+
+// @route   GET api/user/current/info
+// @desc    Get user
+// @access  Private
+/**
+ * @swagger
+ * /api/user/current/info:
+ *   get:
+ *       security:
+ *          - bearerAuth: []
+ *       summary: Get user
+ *       tags: [User]
+ *       description: Get user
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "404":
+ *              description: Not found, User not found
+ *           "409":
+ *              description: Conflict, User already exists
+ *           "500":
+ *              description: Internal server error
+ */
+ router.get("/current/info", userController.getCurrentUser);
 
 // @route   POST api/user/create
 // @desc    Create new user
@@ -109,7 +136,7 @@ router.get("/:branchId", Joivalidation, userController.getAllUsers);
  *              description: Internal server error
  */
 
-router.post("/create", Joivalidation, userController.createUser);
+router.post("/create", validateUser, userController.createUser);
 
 // @route   PUT api/user/update/{id}
 // @desc    Update one user
@@ -145,7 +172,7 @@ router.post("/create", Joivalidation, userController.createUser);
  *              description: Internal server error
  */
 
-router.put("/update/:id", Joivalidation, userController.updateUser);
+router.put("/update/:id", validateUser, userController.updateUser);
 
 // @route   PUT api/user/delete/{id}
 // @desc    Delete one user
@@ -174,5 +201,36 @@ router.put("/update/:id", Joivalidation, userController.updateUser);
  */
 
 router.put("/delete/:id", userController.deleteUser);
+
+// @route   POST api/user/login
+// @desc    Login user
+// @access  Public
+/**
+ *@swagger
+ * /api/user/login:
+ *   post:
+ *       summary: Login user
+ *       tags: [User]
+ *       description: Login user
+ *       requestBody:
+ *           required: true
+ *           content:
+ *              application/json:
+ *                 schema:
+ *                    type: object
+ *                    properties:
+ *                      username:
+ *                          type: string
+ *                      password:
+ *                          type: string
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "409":
+ *              description: Conflict, a user already exists
+ *           "500":
+ *              description: Internal server error
+ */
+router.post('/login', validateUserLogin, userController.loginUser);
 
 module.exports = router;

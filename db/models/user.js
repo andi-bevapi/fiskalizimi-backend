@@ -1,4 +1,5 @@
-const { Model, DataTypes, literal } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
+const jwt = require('jsonwebtoken');
 
 class User extends Model {
   static init(sequelize) {
@@ -64,11 +65,22 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
     this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
-    this.belongsToMany(models.Permission, { through: 'User_Permissions' });
-    this.belongsToMany(models.Branch, { through: 'UserBranches' });
+    this.belongsToMany(models.Permission, { through: 'User_Permissions', as: 'permissions' });
+    this.belongsToMany(models.Branch, { through: 'UserBranches', as: 'branches' });
   }
 }
+
+User.prototype.generateAuthToken = function() {
+  const payload = { id: this.id, username: this.username, operatorCode: this.operatorCode, email: this.email, position: this.position, phone: this.phone, firstName: this.firstName, lastName: this.lastName, clientId: this.clientId };
+
+  const token = jwt.sign(
+    payload,
+    'fiskalizimisecretkey',
+    { expiresIn: 3600 }
+  );
+
+  return token;
+};
 
 module.exports = User;

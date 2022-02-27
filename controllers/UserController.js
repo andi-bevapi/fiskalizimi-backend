@@ -2,8 +2,17 @@ const UserServices = require("../services/UserServices");
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await UserServices.getAllUsers(req.params.branchId);
+    const users = await UserServices.getAllUsers(req.params.clientId);
     res.ok(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCurrentUser = async (req, res, next) => {
+  try {
+    const user = await UserServices.getCurrentUser(req.headers.authorization);
+    res.ok(user);
   } catch (error) {
     next(error);
   }
@@ -36,4 +45,13 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers, createUser, updateUser, deleteUser };
+const loginUser = async (req, res, next) => {
+  try {
+    const response = await UserServices.login(req.body.username, req.body.password);
+    res.ok(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAllUsers, getCurrentUser, createUser, updateUser, deleteUser, loginUser };
