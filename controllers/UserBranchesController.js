@@ -28,4 +28,8 @@ const createUserBranches = async (req, res, next) => {
   }
 };
 
+const deleteUserBranches = async (req, res, next) => {
+
+}
+
 module.exports = { getUserBranches, createUserBranches };

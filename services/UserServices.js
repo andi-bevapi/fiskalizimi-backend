@@ -1,13 +1,15 @@
 const User = require("../db/models/user");
-const User_Permissions = require("../db/models/user_permissions");
 const GeneralError = require("../utils/GeneralError");
 
-const UserBranchesServices = require("./UserBranchesServices");
 var bcrypt = require("bcryptjs");
 
 const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
     where: { isActive: true, branchId: branchId },
+    // include: {
+    //   model: UserBranches,
+    //   as: 'branches'
+    // }
   });
   return allUsers;
 };
