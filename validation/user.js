@@ -13,7 +13,7 @@ const user = Joi.object({
     "string.empty": `"Email" nuk duhet te jete bosh`,
   }),
   phone: Joi.string().messages({
-    "string.empty": `"Email" nuk duhet te jete bosh`,
+    "string.empty": `"Numri i telefonit" nuk duhet te jete bosh`,
   }),
   position: Joi.string().messages({
     "string.base": `"Pozicioni" duhet te jete i formatit 'tekst'`,
@@ -43,15 +43,28 @@ const user = Joi.object({
     "string.max": `"Fjalekalimi" duhet te kete nje maksimum prej 255 karakteresh`,
     "any.required": `"Fjalekalimi" eshte nje fushe e detyrueshme`,
   }),
-  branchId: Joi.number().positive().greater(0).required().messages({
-    "any.required": `"BranchId" eshte nje fushe e detyrueshme`,
-  }),
   clientId: Joi.number().positive().greater(0).required().messages({
     "any.required": `"ClientId" eshte nje fushe e detyrueshme`,
   }),
   isFirstTimeLogin: Joi.boolean(),
   isActive: Joi.boolean(),
   isDeleted: Joi.boolean(),
+});
+
+const userLogin = Joi.object({
+  username: Joi.string().min(3).max(255).required().messages({
+    "string.base": `"Username" duhet te jete i formatit 'tekst'`,
+    "string.empty": `"Username" nuk duhet te jete bosh`,
+    "string.min": `"Username" duhet te kete nje limit prej 3 karakteresh`,
+    "string.max": `"Username" duhet te kete nje maksimum prej 255 karakteresh`,
+    "any.required": `"Username" eshte nje fushe e detyrueshme`,
+  }),
+  password: Joi.string().min(6).max(255).required().messages({
+    "string.empty": `"Fjalekalimi" nuk duhet te jet bosh`,
+    "string.min": `"Fjalekalimi" duhet te kete nje limit prej 6 karakteresh`,
+    "string.max": `"Fjalekalimi" duhet te kete nje maksimum prej 255 karakteresh`,
+    "any.required": `"Fjalekalimi" eshte nje fushe e detyrueshme`,
+  }),
 });
 
 const validateUser = async (req, res, next) => {
@@ -62,4 +75,15 @@ const validateUser = async (req, res, next) => {
   next();
 };
 
-module.exports = validateUser;
+const validateUserLogin = async (req, res, next) => {
+  const result = userLogin.validate(req.body);
+  if (result.error) {
+    return res.fail(result.error.details[0].message);
+  }
+  next();
+};
+
+module.exports = {
+  validateUser,
+  validateUserLogin
+};

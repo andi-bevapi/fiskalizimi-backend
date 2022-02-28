@@ -13,6 +13,15 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+const getCurrentUser = async (req, res, next) => {
+  try {
+    const user = await UserServices.getCurrentUser(req.headers.authorization);
+    res.ok(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createUser = async (req, res, next) => {
   try {
     console.log("BODY==", req.body);
@@ -48,4 +57,13 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers, createUser, updateUser, deleteUser };
+const loginUser = async (req, res, next) => {
+  try {
+    const response = await UserServices.login(req.body.username, req.body.password);
+    res.ok(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAllUsers, getCurrentUser, createUser, updateUser, deleteUser, loginUser };

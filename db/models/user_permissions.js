@@ -17,16 +17,6 @@ class User_Permissions extends Model {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      isActive: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true
-      },
-      isDeleted: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
