@@ -6,7 +6,7 @@ const getAllUsers = async (req, res, next) => {
   try {
     const users = await UserServices.getAllUsers(req.params.branchId);
     const branches = await UserBranchesServices.getUserBranches(req.params.branchId);
-    res.ok(users);
+    res.ok(users, branches);
   } catch (error) {
     console.log(error);
     next(error);
