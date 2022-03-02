@@ -4,8 +4,8 @@ const UserBranchesServices = require("../services/UserBranchesServices");
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await UserServices.getAllUsers(req.params.branchId);
-    const branches = await UserBranchesServices.getUserBranches(req.params.branchId);
+    const users = await UserServices.getAllUsers(req.params.clientId);
+    const branches = await UserBranchesServices.getUserBranches(req.params.clientId);
     res.ok(users, branches);
   } catch (error) {
     console.log(error);
