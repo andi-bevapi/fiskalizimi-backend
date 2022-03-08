@@ -2,7 +2,7 @@ const sellingUnit = require("../db/models/sellingunit");
 const GeneralError = require("../utils/GeneralError");
 
 const getAll  = async () =>{
-    const allSellingUnit = await sellingUnit.findAll({where:{isActive:true}});
+    const allSellingUnit = await sellingUnit.findAll({where:{isActive:true}, attributes: ['id','name']});
     return allSellingUnit;
 }
 
