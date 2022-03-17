@@ -61,7 +61,6 @@ class Branch extends Model {
 
   static associate(models) {
     this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
-    this.belongsToMany(models.User, { through: 'UserBranches' });
   }
 }
 
