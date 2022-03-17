@@ -39,7 +39,7 @@ const getCurrentUser = async (token) => {
 
   const newUser = user.toJSON();
 
-  newUser.permissions = newUser.permissions[0].name.split(',');
+  if(newUser.permissions.length > 0) newUser.permissions = newUser.permissions[0].name.split(',');
 
   return newUser;
 };
@@ -65,7 +65,7 @@ const createUser = async (user) => {
   user.user.password = hashed;
 
   const newUser = await User.create(user.user, { raw: true });
-
+  
   const userPermissions = user.permissions.map(permissionId => ({ userId: newUser.id, permissionId }));
   await User_Permissions.bulkCreate(userPermissions);
 

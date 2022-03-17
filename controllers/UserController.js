@@ -5,7 +5,6 @@ const getAllUsers = async (req, res, next) => {
     const users = await UserServices.getAllUsers(req.params.clientId);
     res.ok(users);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -24,7 +23,6 @@ const createUser = async (req, res, next) => {
     const createdUser = await UserServices.createUser(req.body);
     res.ok(createdUser, "Perdoruesi u krijua me sukses");
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

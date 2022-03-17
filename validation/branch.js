@@ -55,7 +55,6 @@ const branch = Joi.object({
 const validateBranch = async(req,res,next) =>{
     const result = branch.validate(req.body);
     if(result.error){
-        // console.log("result.error---",result.error);
        return res.fail(result.error.details[0].message);
     }
     next();
