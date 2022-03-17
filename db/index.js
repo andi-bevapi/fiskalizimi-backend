@@ -13,6 +13,7 @@ const TransportOrderItems = require('./models/transportorderitems');
 const User = require('./models/user');
 const Permission = require('./models/permission');
 const User_Permissions = require('./models/user_permissions');
+const UserBranches = require('./models/userbranches');
 
 const connection = new Sequelize(dbConfig);
 
@@ -33,6 +34,7 @@ TransportOrderDetails.init(connection);
 TransportOrderItems.init(connection);
 User.init(connection);
 Permission.init(connection);
+UserBranches.init(connection);
 User_Permissions.init(connection);
 
 Client.associate(connection.models);

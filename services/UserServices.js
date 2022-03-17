@@ -1,6 +1,7 @@
 const User = require("../db/models/user");
-const Permission = require("../db/models/permission");
 const GeneralError = require("../utils/GeneralError");
+
+const Permission = require("../db/models/permission");
 const bcrypt = require('bcryptjs');
 const sequelize = require('sequelize');
 const User_Permissions = require("../db/models/user_permissions");
