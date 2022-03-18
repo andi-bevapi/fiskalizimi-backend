@@ -76,6 +76,8 @@ const deleteProductService = async (id) => {
 };
 
 const updateProductService = async (id, data) => {
+  console.log("updateProduct----first load----",data);
+
   const checkById = await Product.findOne({
     where: {
       id,
@@ -84,24 +86,19 @@ const updateProductService = async (id, data) => {
   });
 
   if (!checkById) {
+    console.log("product not exists")
     throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
   }
-
-  if (data.name) {
-    const checkByName = await Product.findOne({
-      where: {
-        name: data.name,
-        branchId: data.branchId,
-        isDeleted: false,
-        isActive: true,
-      },
-    });
-    if (checkByName) {
-      throw new GeneralError("Ekziston tashme nje produkt me kete emer!", 409);
-    }
-  }
-
-  const productToUpdate = await Product.update(data, {
+  const productToUpdate = await Product.update({
+    id: data.id,
+    name: data.name,
+    price: data.price,
+    barcode: data.barcode,
+    stock: data.stock,
+    imageVirtualPath: data.imageVirtualPath,
+    branchId: data.branchId,
+    categoryId: data.category
+  }, {
     where: {
       id,
     },

@@ -33,6 +33,7 @@ const updateProduct = async (req, res, next) => {
       req.params.id,
       req.body
     );
+    
     res.ok(data, "Produkti u modifikua me sukses!");
   } catch (error) {
     next(error);
