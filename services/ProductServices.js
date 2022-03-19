@@ -76,8 +76,6 @@ const deleteProductService = async (id) => {
 };
 
 const updateProductService = async (id, data) => {
-  console.log("updateProduct----first load----",data);
-
   const checkById = await Product.findOne({
     where: {
       id,
@@ -86,7 +84,6 @@ const updateProductService = async (id, data) => {
   });
 
   if (!checkById) {
-    console.log("product not exists")
     throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
   }
   const productToUpdate = await Product.update({
