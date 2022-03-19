@@ -55,6 +55,15 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
+      branchId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Branches',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

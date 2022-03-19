@@ -1,11 +1,10 @@
 const User = require("../db/models/user");
-const Permission = require("../db/models/permission");
 const GeneralError = require("../utils/GeneralError");
+
+const Permission = require("../db/models/permission");
 const bcrypt = require('bcryptjs');
 const sequelize = require('sequelize');
 const User_Permissions = require("../db/models/user_permissions");
-const UserBranches = require("../db/models/userbranches");
-const Branch = require("../db/models/branch");
 const jwt = require('jsonwebtoken');
 
 const getAllUsers = async (clientId) => {
@@ -32,12 +31,7 @@ const getCurrentUser = async (token) => {
           [sequelize.fn('GROUP_CONCAT', sequelize.col('name')), 'name']
         ],
         group: ['name']
-      },
-      // {
-      //   model: Branch,
-      //   as: 'branches',
-      //   attributes: { exclude: ['UserBranches'] }
-      // }
+      }
     ]
   });
 
@@ -45,7 +39,7 @@ const getCurrentUser = async (token) => {
 
   const newUser = user.toJSON();
 
-  newUser.permissions = newUser.permissions[0].name.split(',');
+  if(newUser.permissions.length > 0) newUser.permissions = newUser.permissions[0].name.split(',');
 
   return newUser;
 };
@@ -71,12 +65,9 @@ const createUser = async (user) => {
   user.user.password = hashed;
 
   const newUser = await User.create(user.user, { raw: true });
-
+  
   const userPermissions = user.permissions.map(permissionId => ({ userId: newUser.id, permissionId }));
   await User_Permissions.bulkCreate(userPermissions);
-
-  // const userBranches = user.branches.map(branchId => ({ userId: newUser.id, branchId }));
-  // await UserBranches.bulkCreate(userBranches);
 
   return newUser;
 };

@@ -40,6 +40,8 @@ const { validateUser, validateUserLogin } = require("../validation/user");
  *           type: string
  *        clientId:
  *           type: number
+ *        branchId:
+ *           type: number
  *        isActive:
  *           type: boolean
  *        isDeleted:
@@ -49,10 +51,6 @@ const { validateUser, validateUserLogin } = require("../validation/user");
  *       updatedAt:
  *          type: string
  *      permissions:
- *          type: array
- *          items:
- *              type: integer
- *      branches:
  *          type: array
  *          items:
  *              type: integer

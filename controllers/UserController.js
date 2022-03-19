@@ -20,8 +20,8 @@ const getCurrentUser = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const createUser = await UserServices.createUser(req.body);
-    res.ok(createUser, "Perdoruesi u krijua me sukses");
+    const createdUser = await UserServices.createUser(req.body);
+    res.ok(createdUser, "Perdoruesi u krijua me sukses");
   } catch (error) {
     next(error);
   }
@@ -29,8 +29,8 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const updateUser = await UserServices.updateUser(req.params.id, req.body);
-    res.ok(updateUser, "Perdoruesi u perditesua me sukses");
+    const updatedUser = await UserServices.updateUser(req.params.id, req.body);
+    res.ok(updatedUser, "Perdoruesi u perditesua me sukses");
   } catch (error) {
     next(error);
   }
@@ -38,8 +38,8 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    const deleteUser = await UserServices.deleteUser(req.params.id);
-    res.ok(deleteUser);
+    const deletedUser = await UserServices.deleteUser(req.params.id);
+    res.ok(deletedUser);
   } catch (error) {
     next(error);
   }
