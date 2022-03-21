@@ -29,6 +29,7 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
+    console.log(req.body);
     const updatedUser = await UserServices.updateUser(req.params.id, req.body);
     res.ok(updatedUser, "Perdoruesi u perditesua me sukses");
   } catch (error) {
@@ -39,7 +40,7 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const deletedUser = await UserServices.deleteUser(req.params.id);
-    res.ok(deletedUser);
+    res.ok(deletedUser, "Perdoruesi u fshi me sukses!");
   } catch (error) {
     next(error);
   }
