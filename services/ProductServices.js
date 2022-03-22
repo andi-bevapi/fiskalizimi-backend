@@ -5,11 +5,12 @@ const Category = require("../db/models/category");
 const SellingUnit = require("../db/models/sellingunit");
 const Supplier = require("../db/models/supplier");
 
-const getProductsService = async () => {
+const getProductsService = async (branchId) => {
   const data = await Product.findAll({
     where: {
       isActive: true,
       isDeleted: false,
+      branchId
     },
     include: [
       {
@@ -31,6 +32,40 @@ const getProductsService = async () => {
     ],
   });
   return data;
+};
+
+const getProductByBarcodeService = async (barcode) => {
+  const product = await Product.findOne({
+    where: {
+      isActive: true,
+      isDeleted: false,
+      barcode,       
+    },
+    include: [
+      {
+        model: Branch,
+        as: "branch",
+      },
+      {
+        model: Category,
+        as: "category",
+      },
+      {
+        model: SellingUnit,
+        as: "sellingUnit",
+      },
+      {
+        model: Supplier,
+        as: "supplier",
+      },
+    ],
+  });
+
+  if(!product) {
+    throw new GeneralError("Produkt me kete barkod nuk ekziston!", 404);
+  }
+
+  return product;
 };
 
 const createProductService = async (product) => {
@@ -108,4 +143,5 @@ module.exports = {
   deleteProductService,
   updateProductService,
   getProductsService,
+  getProductByBarcodeService
 };

@@ -23,7 +23,8 @@ module.exports = {
       },
       barcode: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       vat: {
         allowNull: false,

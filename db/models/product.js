@@ -24,6 +24,7 @@ class Product extends Model {
       },
       barcode: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
       },
       vat: {
