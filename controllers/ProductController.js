@@ -9,6 +9,15 @@ const getProducts = async (req, res, next) => {
   }
 };
 
+const getProductByBarcode = async (req, res, next) => {
+  try {
+    const data = await productServices.getProductByBarcodeService(req.params.barcode);
+    res.ok(data, "Produkti");
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createProduct = async (req, res, next) => {
   try {
     const data = await productServices.createProductService(req.body);

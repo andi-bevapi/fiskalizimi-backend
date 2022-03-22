@@ -33,6 +33,35 @@ const getProductsService = async () => {
   return data;
 };
 
+const getProductByBarcodeService = async (barcode) => {
+  const data = await Product.findOne({
+    where: {
+      isActive: true,
+      isDeleted: false,
+      barcode,       
+    },
+    include: [
+      {
+        model: Branch,
+        as: "branch",
+      },
+      {
+        model: Category,
+        as: "category",
+      },
+      {
+        model: SellingUnit,
+        as: "sellingUnit",
+      },
+      {
+        model: Supplier,
+        as: "supplier",
+      },
+    ],
+  });
+  return data;
+};
+
 const createProductService = async (product) => {
   const checkIfExists = await Product.findAll({
     where: {
