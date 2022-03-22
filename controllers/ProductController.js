@@ -2,7 +2,7 @@ const productServices = require("../services/ProductServices");
 
 const getProducts = async (req, res, next) => {
   try {
-    const data = await productServices.getProductsService();
+    const data = await productServices.getProductsService(req.params.branchId);
     res.ok(data, "Lista e produkteve");
   } catch (error) {
     next(error);
@@ -12,7 +12,7 @@ const getProducts = async (req, res, next) => {
 const getProductByBarcode = async (req, res, next) => {
   try {
     const data = await productServices.getProductByBarcodeService(req.params.barcode);
-    res.ok(data, "Produkti");
+    res.ok(data);
   } catch (error) {
     next(error);
   }
@@ -53,4 +53,5 @@ module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
+  getProductByBarcode
 };

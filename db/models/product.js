@@ -15,7 +15,7 @@ class Product extends Model {
         unique: true
       },
       description: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false
       },
       price: {
@@ -24,6 +24,7 @@ class Product extends Model {
       },
       barcode: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
       },
       stock: {
