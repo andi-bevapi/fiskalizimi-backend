@@ -23,6 +23,8 @@ const productController = require("../controllers/ProductController");
  *          type: number
  *       barcode:
  *          type: string
+ *       vat:
+ *          type: number
  *       supplierId:
  *          type: number
  *       stock:
