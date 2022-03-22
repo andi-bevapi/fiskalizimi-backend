@@ -27,15 +27,6 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-const deleteProduct = async (req, res, next) => {
-  try {
-    const data = await productServices.deleteProductService(req.params.id);
-    res.ok(data, "Produkti u fshi me sukses!");
-  } catch (error) {
-    next(error);
-  }
-};
-
 const updateProduct = async (req, res, next) => {
   try {
     const data = await productServices.updateProductService(
@@ -48,6 +39,16 @@ const updateProduct = async (req, res, next) => {
     next(error);
   }
 };
+
+const deleteProduct = async (req, res, next) => {
+  try {
+    const data = await productServices.deleteProductService(req.params.id);
+    res.ok(data, "Produkti u fshi me sukses!");
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 module.exports = {
   getProducts,

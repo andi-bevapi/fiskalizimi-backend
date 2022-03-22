@@ -51,7 +51,9 @@ const config = {
 
 app.use(cors(config));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
-app.use(express.json());
+app.use(express.json({
+    limit: '50mb'
+}));
 app.use(express.urlencoded());
 app.response = Object.create(customResponse);
 app.use('/api', routes);

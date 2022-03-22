@@ -4,6 +4,7 @@ const Branch = require("../db/models/branch");
 const Category = require("../db/models/category");
 const SellingUnit = require("../db/models/sellingunit");
 const Supplier = require("../db/models/supplier");
+const { cloudinary } = require('../config/cloudinary');
 
 const getProductsService = async (branchId) => {
   const data = await Product.findAll({
@@ -82,8 +83,44 @@ const createProductService = async (product) => {
     throw new GeneralError("Ekziston tashme nje produkt me kete emer", 409);
   }
 
-  const data = await Product.create(product);
+  const uploadResponse = await cloudinary.uploader.upload(product.imageVirtualPath, {
+    upload_preset: 'posla_dev'
+  });
+
+  const data = await Product.create({
+    ...product,
+    imageVirtualPath: uploadResponse.secure_url
+  });
+
   return data;
+};
+
+const updateProductService = async (id, data) => {
+  const checkById = await Product.findOne({
+    where: {
+      id
+    },
+    raw: true,
+  });
+
+  if (!checkById) {
+    throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
+  }
+
+  const uploadResponse = await cloudinary.uploader.upload(data.imageVirtualPath, {
+    upload_preset: 'posla_dev'
+  });
+
+  const productToUpdate = await Product.update({
+    ...data,
+    imageVirtualPath: uploadResponse.secure_url
+  }, {
+    where: {
+      id,
+    },
+  });
+
+  return productToUpdate[0];
 };
 
 const deleteProductService = async (id) => {
@@ -108,34 +145,6 @@ const deleteProductService = async (id) => {
   );
 
   return productToDelete;
-};
-
-const updateProductService = async (id, data) => {
-  const checkById = await Product.findOne({
-    where: {
-      id,
-    },
-    raw: true,
-  });
-
-  if (!checkById) {
-    throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
-  }
-  const productToUpdate = await Product.update({
-    id: data.id,
-    name: data.name,
-    price: data.price,
-    barcode: data.barcode,
-    stock: data.stock,
-    imageVirtualPath: data.imageVirtualPath,
-    branchId: data.branchId,
-    categoryId: data.category
-  }, {
-    where: {
-      id,
-    },
-  });
-  return productToUpdate[0];
 };
 
 module.exports = {
