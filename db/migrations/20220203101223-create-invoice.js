@@ -40,8 +40,7 @@ module.exports = {
         allowNull: false
       },
       discount: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING,
@@ -53,27 +52,30 @@ module.exports = {
       },
       hasPayDeadline: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        defaultValue: false
       },
       payDeadline: {
-        type: Sequelize.DATE,
-        allowNull: false
+        type: Sequelize.DATE
       },
       isReturn: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        defaultValue: false
       },
       dateTime: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       NSLF: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       FIC: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
+      },
+      isDraft: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
       isActive: {
         type: Sequelize.BOOLEAN,

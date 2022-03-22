@@ -26,6 +26,10 @@ class Product extends Model {
         type: DataTypes.STRING,
         allowNull: false
       },
+      vat: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       stock: {
         type: DataTypes.FLOAT,
         allowNull: false
@@ -35,8 +39,7 @@ class Product extends Model {
         allowNull: false
       },
       imageVirtualPath: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       isActive: {
         type: DataTypes.BOOLEAN,
