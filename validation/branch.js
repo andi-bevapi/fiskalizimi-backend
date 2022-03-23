@@ -6,6 +6,7 @@ const branch = Joi.object({
         'number.min':  `"ID e klientit" duhet te ket nje limit prej 3 karakteresh`,
         'any.required': `"ID e klientit" eshte nje fushe e detyrueshme`
     }),
+    id: Joi.number(),
     name : Joi.string().min(3).max(50).required().messages({
         'string.base':  `"Emri" duhe te jet i formatit 'tekst'`,
         'string.empty': `"Emri" nuk duhet te jet bosh`,
