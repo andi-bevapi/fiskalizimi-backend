@@ -24,6 +24,11 @@ class Product extends Model {
       },
       barcode: {
         type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+      },
+      vat: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       stock: {
@@ -35,8 +40,7 @@ class Product extends Model {
         allowNull: false
       },
       imageVirtualPath: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       isActive: {
         type: DataTypes.BOOLEAN,

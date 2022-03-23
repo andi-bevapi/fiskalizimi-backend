@@ -17,14 +17,14 @@ const Joivalidation = require("../validation/supplier");
  *     properties:
  *      name:
  *        type: string
+ *      startDate: 
+ *        type: string
+ *      endDate:
+ *        type: string
  *      isActive:
  *        type: boolean
  *      isDeleted:
  *        type: boolean
- *      startDate: 
- *         type: string
- *      endDate:
- *          type: string
  */
 
 

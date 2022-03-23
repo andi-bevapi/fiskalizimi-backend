@@ -2,10 +2,10 @@ const User = require("../db/models/user");
 const GeneralError = require("../utils/GeneralError");
 
 const Permission = require("../db/models/permission");
-const bcrypt = require('bcryptjs');
-const sequelize = require('sequelize');
+const bcrypt = require("bcryptjs");
+const sequelize = require("sequelize");
 const User_Permissions = require("../db/models/user_permissions");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const getAllUsers = async (clientId) => {
   const allUsers = await User.findAll({
@@ -15,31 +15,32 @@ const getAllUsers = async (clientId) => {
 };
 
 const getCurrentUser = async (token) => {
-  token = token.split(' ')[1];
+  token = token.split(" ")[1];
   const decodedUser = jwt.decode(token);
 
-  if(!decodedUser) throw new GeneralError('Ky perdorues nuk u gjet!', 404);
+  if (!decodedUser) throw new GeneralError("Ky perdorues nuk u gjet!", 404);
 
   const user = await User.findOne({
     where: { id: decodedUser.id, isActive: true },
     include: [
       {
         model: Permission,
-        as: 'permissions',
+        as: "permissions",
         attributes: [
-          'name',
-          [sequelize.fn('GROUP_CONCAT', sequelize.col('name')), 'name']
+          "name",
+          [sequelize.fn("GROUP_CONCAT", sequelize.col("name")), "name"],
         ],
-        group: ['name']
-      }
-    ]
+        group: ["name"],
+      },
+    ],
   });
 
   if (user.id === null) throw new GeneralError("Ky perdorues nuk u gjet", 404); // To review
 
   const newUser = user.toJSON();
 
-  if(newUser.permissions.length > 0) newUser.permissions = newUser.permissions[0].name.split(',');
+  if (newUser.permissions.length > 0)
+    newUser.permissions = newUser.permissions[0].name.split(",");
 
   return newUser;
 };
@@ -65,8 +66,11 @@ const createUser = async (user) => {
   user.user.password = hashed;
 
   const newUser = await User.create(user.user, { raw: true });
-  
-  const userPermissions = user.permissions.map(permissionId => ({ userId: newUser.id, permissionId }));
+
+  const userPermissions = user.permissions.map((permissionId) => ({
+    userId: newUser.id,
+    permissionId,
+  }));
   await User_Permissions.bulkCreate(userPermissions);
 
   return newUser;
@@ -106,6 +110,14 @@ const updateUser = async (id, user) => {
     },
   });
 
+  await User_Permissions.destroy({ where: { userId: id } });
+
+  const userPermissions = user.permissions.map((permissionId) => ({
+    userId: id,
+    permissionId,
+  }));
+  await User_Permissions.bulkCreate(userPermissions);
+
   return userToUpdate[0];
 };
 
@@ -130,14 +142,16 @@ const deleteUser = async (id) => {
     }
   );
 
+  await User_Permissions.destroy({ where: { userId: id } });
+
   return userToDelete;
 };
 
 const login = async (username, password) => {
   const user = await User.findOne({
     where: {
-      username
-    }
+      username,
+    },
   });
 
   if (!user) {
@@ -154,4 +168,11 @@ const login = async (username, password) => {
   }
 };
 
-module.exports = { getAllUsers, getCurrentUser, createUser, updateUser, deleteUser, login };
+module.exports = {
+  getAllUsers,
+  getCurrentUser,
+  createUser,
+  updateUser,
+  deleteUser,
+  login,
+};

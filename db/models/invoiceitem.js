@@ -27,7 +27,7 @@ class InvoiceItem extends Model {
       },
       discountPerUnit: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        defaultValue: 0
       },
       isActive: {
         type: DataTypes.BOOLEAN,

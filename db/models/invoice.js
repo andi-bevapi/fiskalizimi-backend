@@ -23,8 +23,7 @@ class Invoice extends Model {
         allowNull: false
       },
       discount: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       description: {
         type: DataTypes.STRING,
@@ -36,27 +35,30 @@ class Invoice extends Model {
       },
       hasPayDeadline: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        defaultValue: false
       },
       payDeadline: {
-        type: DataTypes.DATE,
-        allowNull: false
+        type: DataTypes.DATE
       },
       isReturn: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        defaultValue: false
       },
       dateTime: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        defaultValue: literal('CURRENT_TIMESTAMP')
       },
       NSLF: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       FIC: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
+      },
+      isDraft: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
       isActive: {
         type: DataTypes.BOOLEAN,

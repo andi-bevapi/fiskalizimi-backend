@@ -62,7 +62,7 @@ module.exports = {
       },
       discountPerUnit: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        defaultValue: 0
       },
       isActive: {
         type: Sequelize.BOOLEAN,

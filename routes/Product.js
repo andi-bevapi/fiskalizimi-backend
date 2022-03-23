@@ -23,6 +23,8 @@ const productController = require("../controllers/ProductController");
  *          type: number
  *       barcode:
  *          type: string
+ *       vat:
+ *          type: number
  *       supplierId:
  *          type: number
  *       stock:
@@ -47,15 +49,22 @@ const productController = require("../controllers/ProductController");
  *          type: string
  */
 
-// @route   GET api/product
-// @desc    Get all products
+// @route   GET api/product/:branchId
+// @desc    Get all products by branch
 // @access  Private
 /**
  * @swagger
- * /api/product:
+ * /api/product/{branchId}:
  *  get:
  *    summary: Get all products
  *    tags: [Product]
+ *    parameters:
+ *      - in: path
+ *        name: branchId
+ *        schema:
+ *          type: number
+ *        description: branchId
+ *        required: true
  *    responses:
  *      200:
  *        description: Success
@@ -66,7 +75,35 @@ const productController = require("../controllers/ProductController");
  *              items:
  *                $ref: '#/components/schemas/Product'
  */
-router.get("/", productController.getProducts);
+router.get("/:branchId", productController.getProducts);
+
+// @route   GET api/product/:barcode
+// @desc    Get product by barcode
+// @access  Private
+/**
+ * @swagger
+ * /api/product/{barcode}:
+ *  get:
+ *    summary: Get product by barcode
+ *    tags: [Product]
+ *    parameters:
+ *      - in: path
+ *        name: barcode
+ *        schema:
+ *          type: string
+ *        description: product barcode
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Product'
+ */
+router.get("/:barcode", productController.getProductByBarcode);
 
 // @route   POST api/product/create
 // @desc    Create new product

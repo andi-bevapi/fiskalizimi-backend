@@ -23,7 +23,12 @@ module.exports = {
       },
       barcode: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
+      },
+      vat: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       supplierId: {
         type: Sequelize.INTEGER,
@@ -43,7 +48,6 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       imageVirtualPath: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       branchId: {
