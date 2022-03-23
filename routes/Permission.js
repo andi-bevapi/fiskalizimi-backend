@@ -23,15 +23,15 @@ const permissionController = require("../controllers/PermissionController");
  */
 
 
-// @route   GET api/permissions
+// @route   GET api/permission
 // @desc    Get all permissions
 // @access  Private
 /**
  * @swagger
- * /api/permissions:
+ * /api/permission:
  *  get:
  *    summary: Get all permissions
- *    tags: [Permision]
+ *    tags: [Permission]
  *    responses:
  *      200:
  *       description: Success
