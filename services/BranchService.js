@@ -48,7 +48,6 @@ const updateBranch = async (body, id) => {
 };
 
 const deleteBranch = async (id) => {
-  console.log("id-----",id);
   const checkBranch = await Branch.findOne({ where: { id } });
   if (checkBranch) {
     const categoryToDelete = await Branch.update(
