@@ -12,7 +12,7 @@ const getAllCategory = async (req, res, next) => {
 const createCategory = async (req, res, next) => {
     try {
         const categoryToCreate = await CategoryServices.createCategory(req.body.name.toUpperCase());
-        res.ok(categoryToCreate, "Category is created")
+        res.ok(categoryToCreate, "Kategoria u krijua me sukses!")
     } catch (error) {
         next(error);
     }
@@ -21,7 +21,7 @@ const createCategory = async (req, res, next) => {
 const updateCategory = async (req, res, next) => {
     try {
         const categoryToUpdate = await CategoryServices.updatedCategory(req.body.name.toUpperCase(), req.params.id);
-        res.ok(categoryToUpdate, "Category is updated");
+        res.ok(categoryToUpdate, "Kategoria u perditesua me sukses!");
     } catch (error) {
         next(error);
     }
@@ -30,7 +30,7 @@ const updateCategory = async (req, res, next) => {
 const deleteCategory = async (req, res, next) => {
     try {
         const categoryToDelete = await CategoryServices.deleteCategory(req.params.id);
-        res.ok(categoryToDelete, "Category is deleted");
+        res.ok(categoryToDelete, "Kategoria u fshi me sukses!");
     } catch (error) {
         next(error);
     }

@@ -21,7 +21,7 @@ const getClientBranches = async (req,res,next) => {
 const createBranch = async(req,res,next) =>{
     try{
         const branch = await BranchService.createBranch(req.body);
-        res.ok(branch,"Dega u krijuar me sukses ");
+        res.ok(branch,"Dega u krijua me sukses!");
     } catch(error){
         
         next(error);
@@ -31,7 +31,7 @@ const createBranch = async(req,res,next) =>{
 const updateBranch = async(req,res,next) =>{
     try{
         const branch = await BranchService.updateBranch(req.body, req.params.id);
-        res.ok(branch,"Dega u perditesua me sukses ");
+        res.ok(branch,"Dega u perditesua me sukses!");
     }catch(error){
         next(error);
     }
@@ -40,7 +40,7 @@ const updateBranch = async(req,res,next) =>{
 const deleteBranch = async(req,res,next) =>{
     try{
         const branch = await BranchService.deleteBranch(req.params.id);
-        res.ok(branch,"Dega u fshi me sukses ");
+        res.ok(branch,"Dega u fshi me sukses!");
     }catch(error){
         next(error)
     }

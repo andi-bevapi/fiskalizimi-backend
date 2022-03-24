@@ -4,7 +4,7 @@ const GeneralError = require("../utils/GeneralError");
 
 const getClients = async () => {
     const clients = await Client.findAll({
-        where:{isActive:true},
+        where: { isActive: true },
         include: [
             {
                 model: Branch,
@@ -15,29 +15,27 @@ const getClients = async () => {
     return clients;
 }
 
-const createClients = async(body) => {
+const createClients = async (body) => {
     const clients = await Client.create(body);
     return clients;
 }
 
-const updateClients = async(body,id) => {
-
-    const checkClients = await Client.findOne({where:{id}});
-    if(!checkClients){
-        throw new GeneralError("Ky klient nuk gjendet",404);
+const updateClients = async (body, id) => {
+    const checkClients = await Client.findOne({ where: { id } });
+    if (!checkClients) {
+        throw new GeneralError("Ky klient nuk gjendet", 404);
     }
-    const updateClient = await Client.update(body,{where: {id}});
+    const updateClient = await Client.update(body, { where: { id } });
     return updateClient;
 }
 
-const deleteClients = async(id) => {
-
-    const checkClients = await Client.findOne({where:{id}});
-    if(!checkClients){
-        throw new GeneralError("Ky klient nuk gjendet",404);
+const deleteClients = async (id) => {
+    const checkClients = await Client.findOne({ where: { id } });
+    if (!checkClients) {
+        throw new GeneralError("Ky klient nuk gjendet", 404);
     }
-    const updateClient = await Client.update({isActive : false , isDeleted : true},{where: {id}});
+    const updateClient = await Client.update({ isActive: false, isDeleted: true }, { where: { id } });
     return updateClient;
 }
 
-module.exports = {getClients , createClients , updateClients , deleteClients};
+module.exports = { getClients, createClients, updateClients, deleteClients };

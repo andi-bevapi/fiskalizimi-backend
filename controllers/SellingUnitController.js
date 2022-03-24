@@ -12,7 +12,7 @@ const getAllSellingUnit = async (req, res, next) => {
 const createSellingUnit = async (req, res, next) => {
     try {
         const createSellingUnit = await SellingUnitServices.create(req.body.name.toUpperCase());
-        res.ok(createSellingUnit, "Selling Unit is created")
+        res.ok(createSellingUnit, "Njesia matese u krijua me sukses!")
     } catch (error) {
         next(error);
     }
@@ -21,7 +21,7 @@ const createSellingUnit = async (req, res, next) => {
 const updatedSellingUnit = async (req, res, next) => {
     try {
         const updateSellingUnit = await SellingUnitServices.update(req.body.name.toUpperCase(), req.params.id);
-        res.ok(updateSellingUnit, "Selling Unit is updated");
+        res.ok(updateSellingUnit, "Njesia matese u perditesua me sukses!");
     } catch (error) {
         next(error);
     }
@@ -30,7 +30,7 @@ const updatedSellingUnit = async (req, res, next) => {
 const deleteSellingUnit = async (req, res, next) => {
     try {
         const deleteSellingUnit = await SellingUnitServices.deleteSellingUnit(req.params.id);
-        res.ok(deleteSellingUnit, "Selling Unit is deleted");
+        res.ok(deleteSellingUnit, "Njesia matese u fshi me sukses!");
     } catch (error) {
         next(error);
     }

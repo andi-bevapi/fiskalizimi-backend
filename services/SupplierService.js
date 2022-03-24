@@ -4,24 +4,24 @@ const GeneralError = require("../utils/GeneralError");
 const getAll = async () => {
   const allSupplier = await supplier.findAll({
     where: { isActive: true },
-    attributes: ["id", "name", "startDate", "endDate"],
+    attributes: ["id", "name"],
   });
   return allSupplier;
 };
 
-const create = async (name, startDate, endDate) => {
+const create = async (name) => {
   const checkIfExist = await supplier.findOne({
-    where: { name, isDeleted: false },
+    where: { name, isDeleted: false, isActive: true },
   });
   if (checkIfExist) {
     throw new GeneralError("Ky furnizues ekziston", 409);
   }
-  const newSuplier = await supplier.create({ name, startDate, endDate });
+  const newSuplier = await supplier.create({ name });
   return newSuplier;
 };
 
 const update = async (name, id) => {
-  const checkIfNameExists = await supplier.findOne({ where: { name } });
+  const checkIfNameExists = await supplier.findOne({ where: { name, isDeleted: false, isActive: true } });
   const checkIfIdExists = await supplier.findOne({ where: { id } });
 
   if (checkIfNameExists) {

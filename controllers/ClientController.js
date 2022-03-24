@@ -12,7 +12,7 @@ const getClients = async(req,res,next)=>{
 const createClients = async(req,res,next)=>{
     try{
         const clients = await clientService.createClients(req.body);
-        res.ok(clients,"Klienti u krijua me sukses ");
+        res.ok(clients,"Klienti u krijua me sukses!");
     }catch(error){
         next(error);
     }
@@ -21,7 +21,7 @@ const createClients = async(req,res,next)=>{
 const updateClients = async(req,res,next)=>{
     try{
         const clients = await clientService.updateClients(req.body,req.params.id);
-        res.ok(clients,"Klienti u perditesua   me sukses ");
+        res.ok(clients,"Klienti u perditesua me sukses!");
     }catch(error){
         next(error);
     }
@@ -30,7 +30,7 @@ const updateClients = async(req,res,next)=>{
 const deleteClients = async(req,res,next)=>{
     try{
         const clients = await clientService.deleteClients(req.params.id);
-        res.ok(clients,"Klienti u fshi me sukses ");
+        res.ok(clients,"Klienti u fshi me sukses!");
     }catch(error){
         next(error);
     }

@@ -8,8 +8,6 @@ const supplier = Joi.object({
         'string.max':   `"Emri" duhet te ket nje maksimum prej 20 karakteresh`,
         'any.required': `"Emri" eshte nje fushe e detyrueshme`
     }),
-    startDate : Joi.date().messages({'string.base': `"vlera" e startDate duhe te jet i formatit 'date'`,'string.empty': `"vlera" nuk duhet te jet bosh`,}),
-    endDate :   Joi.date().messages({'string.base': `"vlera" e endDate duhe te jet i formatit 'date'`,'string.empty': `"vlera" nuk duhet te jet bosh`,}),
     id: Joi.number(),
     isActive :  Joi.boolean(),
     isDeleted : Joi.boolean(),

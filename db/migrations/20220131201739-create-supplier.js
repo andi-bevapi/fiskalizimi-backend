@@ -13,14 +13,6 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true
       },
-      startDate: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      endDate: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
       isActive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

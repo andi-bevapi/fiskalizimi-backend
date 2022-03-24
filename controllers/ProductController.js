@@ -34,7 +34,7 @@ const updateProduct = async (req, res, next) => {
       req.body
     );
     
-    res.ok(data, "Produkti u modifikua me sukses!");
+    res.ok(data, "Produkti u perditesua me sukses!");
   } catch (error) {
     next(error);
   }
