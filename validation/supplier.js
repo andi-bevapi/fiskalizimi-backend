@@ -10,6 +10,7 @@ const supplier = Joi.object({
     }),
     startDate : Joi.date().messages({'string.base': `"vlera" e startDate duhe te jet i formatit 'date'`,'string.empty': `"vlera" nuk duhet te jet bosh`,}),
     endDate :   Joi.date().messages({'string.base': `"vlera" e endDate duhe te jet i formatit 'date'`,'string.empty': `"vlera" nuk duhet te jet bosh`,}),
+    id: Joi.number(),
     isActive :  Joi.boolean(),
     isDeleted : Joi.boolean(),
 })
