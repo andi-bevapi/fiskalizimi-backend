@@ -43,8 +43,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       paymentMethod: {
         type: Sequelize.STRING,
@@ -71,11 +70,6 @@ module.exports = {
       },
       FIC: {
         type: Sequelize.STRING
-      },
-      isDraft: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
       },
       isActive: {
         type: Sequelize.BOOLEAN,

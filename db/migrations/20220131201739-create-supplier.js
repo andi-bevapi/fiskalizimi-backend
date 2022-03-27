@@ -13,6 +13,15 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true
       },
+      branchId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Branches',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

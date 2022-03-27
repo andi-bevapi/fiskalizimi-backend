@@ -2,7 +2,7 @@ const SupplierService = require("../services/SupplierService");
 
 const getAllSupplier = async (req, res, next) => {
     try {
-        const allSuplier = await SupplierService.getAll();
+        const allSuplier = await SupplierService.getAll(req.params.branchId);
         res.ok(allSuplier);
     } catch (error) {
         next(error);
@@ -11,7 +11,7 @@ const getAllSupplier = async (req, res, next) => {
 
 const createSupplier = async (req, res, next) => {
     try {
-        const createSupplier = await SupplierService.create(req.body.name.toUpperCase());
+        const createSupplier = await SupplierService.create(req.body);
         res.ok(createSupplier, "Furnitori u krijua me sukses!");
     } catch (error) {
         next(error);
@@ -20,7 +20,7 @@ const createSupplier = async (req, res, next) => {
 
 const updatedSupplier = async (req, res, next) => {
     try {
-        const updateSupplier = await SupplierService.update(req.body.name.toUpperCase(), req.params.id);
+        const updateSupplier = await SupplierService.update(req.body, req.params.id);
         res.ok(updateSupplier, "Furnitori u perditesua me sukses!");
     } catch (error) {
         next(error);

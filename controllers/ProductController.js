@@ -2,7 +2,7 @@ const productServices = require("../services/ProductServices");
 
 const getProducts = async (req, res, next) => {
   try {
-    const data = await productServices.getProductsService(req.params.branchId);
+    const data = await productServices.getProductsService(req.params.branchId, req.query);
     res.ok(data, "Lista e produkteve");
   } catch (error) {
     next(error);

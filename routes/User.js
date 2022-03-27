@@ -61,14 +61,14 @@ const { validateUser, validateUserLogin } = require("../validation/user");
 // @access  Private
 /**
  * @swagger
- * /api/user/{clientId}:
+ * /api/user/{branchId}:
  *   get:
  *       summary: Get users
  *       tags: [User]
  *       description: Get users based on client
  *       parameters:
  *         - in: path
- *           name: clientId
+ *           name: branchId
  *           schema:
  *             type: number
  *           description: Client id
@@ -83,7 +83,7 @@ const { validateUser, validateUserLogin } = require("../validation/user");
  *           "500":
  *              description: Internal server error
  */
-router.get("/:clientId", userController.getAllUsers);
+router.get("/:branchId", userController.getAllUsers);
 
 // @route   GET api/user/current/info
 // @desc    Get user

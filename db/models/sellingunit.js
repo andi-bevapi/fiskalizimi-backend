@@ -39,6 +39,10 @@ class SellingUnit extends Model {
       modelName: 'SellingUnit'
     })
   }
+
+  static associate(models) {
+    this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
+  }
 }
 
 module.exports = SellingUnit;

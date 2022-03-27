@@ -55,11 +55,6 @@ class Invoice extends Model {
       FIC: {
         type: DataTypes.STRING
       },
-      isDraft: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-      },
       isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

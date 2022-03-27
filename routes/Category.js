@@ -17,6 +17,8 @@ const Joivalidation = require("../validation/category");
  *     properties:
  *      name:
  *        type: string
+ *      branchId:
+ *        type: number
  *      isActive :
  *        type: boolean
  *      isDeleted:
@@ -24,15 +26,22 @@ const Joivalidation = require("../validation/category");
  */
 
 
-// @route   GET api/categories
+// @route   GET api/categories/:branchId
 // @desc    Get all categories
 // @access  Private
 /**
  * @swagger
- * /api/categories:
+ * /api/categories/{branchId}:
  *  get:
  *    summary: Get all categories
  *    tags: [Category]
+ *    parameters:
+ *      - in: path
+ *        name: branchId
+ *        schema:
+ *          type: number
+ *        description: branchId
+ *        required: true
  *    responses:
  *      200:
  *       description: Success
@@ -43,7 +52,7 @@ const Joivalidation = require("../validation/category");
  *             items:
  *               $ref: '#/components/schemas/Category'
  */
-router.get("/", categoryController.getAllCategory);
+router.get("/:branchId", categoryController.getAllCategory);
 
 // @route   POST api/categories/create
 // @desc    Create new category

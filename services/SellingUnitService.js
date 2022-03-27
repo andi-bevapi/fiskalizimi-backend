@@ -1,22 +1,22 @@
 const sellingUnit = require("../db/models/sellingunit");
 const GeneralError = require("../utils/GeneralError");
 
-const getAll = async () => {
-    const allSellingUnit = await sellingUnit.findAll({ where: { isActive: true }, attributes: ['id', 'name'] });
+const getAll = async (branchId) => {
+    const allSellingUnit = await sellingUnit.findAll({ where: { branchId, isActive: true } });
     return allSellingUnit;
 }
 
-const create = async (name) => {
-    const checkIfExist = await sellingUnit.findOne({ where: { name, isDeleted: false, isActive: true } });
+const create = async (body) => {
+    const checkIfExist = await sellingUnit.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
     if (checkIfExist) {
         throw new GeneralError("Kjo njesi ekziston", 409);
     }
-    const newSellingUnit = await sellingUnit.create({ name });
+    const newSellingUnit = await sellingUnit.create({ name: body.name.toUpperCase(), branchId: body.branchId });
     return newSellingUnit;
 }
 
-const update = async (name, id) => {
-    const checkIfNameExists = await sellingUnit.findOne({ where: { name, isDeleted: false, isActive: true } });
+const update = async (body, id) => {
+    const checkIfNameExists = await sellingUnit.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
     const checkIfIdExists = await sellingUnit.findOne({ where: { id } });
 
     if (checkIfNameExists) {
@@ -27,7 +27,7 @@ const update = async (name, id) => {
         throw new GeneralError("Kjo njesi nuk gjendet", 404);
     }
 
-    const updatedSellingUnit = await sellingUnit.update({ name }, { where: { id }, plain: true });
+    const updatedSellingUnit = await sellingUnit.update({ name: body.name.toUpperCase(), branchId: body.branchId }, { where: { id }, plain: true });
     return updatedSellingUnit;
 }
 

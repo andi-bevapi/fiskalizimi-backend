@@ -1,27 +1,26 @@
 const supplier = require("../db/models/supplier");
 const GeneralError = require("../utils/GeneralError");
 
-const getAll = async () => {
+const getAll = async (branchId) => {
   const allSupplier = await supplier.findAll({
-    where: { isActive: true },
-    attributes: ["id", "name"],
+    where: { branchId, isActive: true }
   });
   return allSupplier;
 };
 
-const create = async (name) => {
+const create = async (body) => {
   const checkIfExist = await supplier.findOne({
-    where: { name, isDeleted: false, isActive: true },
+    where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true },
   });
   if (checkIfExist) {
     throw new GeneralError("Ky furnizues ekziston", 409);
   }
-  const newSuplier = await supplier.create({ name });
+  const newSuplier = await supplier.create({ name: body.name.toUpperCase(), branchId: body.branchId });
   return newSuplier;
 };
 
-const update = async (name, id) => {
-  const checkIfNameExists = await supplier.findOne({ where: { name, isDeleted: false, isActive: true } });
+const update = async (body, id) => {
+  const checkIfNameExists = await supplier.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
   const checkIfIdExists = await supplier.findOne({ where: { id } });
 
   if (checkIfNameExists) {
@@ -32,7 +31,7 @@ const update = async (name, id) => {
     throw new GeneralError("Ky furnizues nuk gjendet", 404);
   }
 
-  const updatedSuplier = await supplier.update({ name }, { where: { id } });
+  const updatedSuplier = await supplier.update({ name: body.name.toUpperCase(), branchId: body.branchId }, { where: { id } });
   return updatedSuplier;
 };
 

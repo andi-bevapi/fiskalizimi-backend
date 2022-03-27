@@ -5,13 +5,21 @@ const Category = require("../db/models/category");
 const SellingUnit = require("../db/models/sellingunit");
 const Supplier = require("../db/models/supplier");
 const { cloudinary } = require('../config/cloudinary');
+const { Op } = require('sequelize');
 
-const getProductsService = async (branchId) => {
+const getProductsService = async (branchId, { categoryId, sellingUnitId, supplierId, searchText = "" }) => {
   const data = await Product.findAll({
     where: {
       isActive: true,
       isDeleted: false,
-      branchId
+      branchId,
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: "%" + searchText + "%",
+          }
+        }
+      ],
     },
     include: [
       {
@@ -21,14 +29,23 @@ const getProductsService = async (branchId) => {
       {
         model: Category,
         as: "category",
+        where: categoryId && {
+          id: categoryId
+        }
       },
       {
         model: SellingUnit,
         as: "sellingUnit",
+        where: sellingUnitId && {
+          id: sellingUnitId
+        }
       },
       {
         model: Supplier,
         as: "supplier",
+        where: supplierId && {
+          id: supplierId
+        }
       },
     ],
   });

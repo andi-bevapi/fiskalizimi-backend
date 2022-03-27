@@ -2,7 +2,7 @@ const SellingUnitServices = require("../services/SellingUnitService");
 
 const getAllSellingUnit = async (req, res, next) => {
     try {
-        const sellingUnit = await SellingUnitServices.getAll();
+        const sellingUnit = await SellingUnitServices.getAll(req.params.branchId);
         res.ok(sellingUnit);
     } catch (error) {
         next(error);
@@ -11,7 +11,7 @@ const getAllSellingUnit = async (req, res, next) => {
 
 const createSellingUnit = async (req, res, next) => {
     try {
-        const createSellingUnit = await SellingUnitServices.create(req.body.name.toUpperCase());
+        const createSellingUnit = await SellingUnitServices.create(req.body);
         res.ok(createSellingUnit, "Njesia matese u krijua me sukses!")
     } catch (error) {
         next(error);
@@ -20,7 +20,7 @@ const createSellingUnit = async (req, res, next) => {
 
 const updatedSellingUnit = async (req, res, next) => {
     try {
-        const updateSellingUnit = await SellingUnitServices.update(req.body.name.toUpperCase(), req.params.id);
+        const updateSellingUnit = await SellingUnitServices.update(req.body, req.params.id);
         res.ok(updateSellingUnit, "Njesia matese u perditesua me sukses!");
     } catch (error) {
         next(error);

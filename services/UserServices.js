@@ -7,10 +7,10 @@ const sequelize = require("sequelize");
 const User_Permissions = require("../db/models/user_permissions");
 const jwt = require("jsonwebtoken");
 
-const getAllUsers = async (clientId) => {
+const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
     attributes: {exclude: ['password']},
-    where: { isActive: true, clientId },
+    where: { isActive: true, branchId },
   });
   return allUsers;
 };

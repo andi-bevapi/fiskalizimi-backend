@@ -39,6 +39,10 @@ class Category extends Model {
       modelName: 'Category'
     })
   }
+
+  static associate(models) {
+    this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
+  }
 }
 
 module.exports = Category;

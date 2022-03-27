@@ -24,15 +24,22 @@ const Joivalidation = require("../validation/sellingUnit");
  */
 
 
-// @route   GET api/selling-units
+// @route   GET api/selling-units/:branchId
 // @desc    Get all selling-units
 // @access  Private
 /**
  * @swagger
- * /api/selling-units:
+ * /api/selling-units/{branchId}:
  *  get:
  *    summary: Get all selling unit
  *    tags: [SellingUnits]
+ *    parameters:
+ *      - in: path
+ *        name: branchId
+ *        schema:
+ *          type: number
+ *        description: branchId
+ *        required: true
  *    responses:
  *      200:
  *       description: Success
@@ -43,7 +50,7 @@ const Joivalidation = require("../validation/sellingUnit");
  *             items:
  *               $ref: '#/components/schemas/SellingUnits'
  */
-router.get("/", sellingUnitController.getAllSellingUnit);
+router.get("/:branchId", sellingUnitController.getAllSellingUnit);
 
 // @route   POST api/selling-units/create
 // @desc    Create new selling unit

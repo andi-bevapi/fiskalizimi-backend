@@ -2,7 +2,7 @@ const CategoryServices = require("../services/CategoryServices");
 
 const getAllCategory = async (req, res, next) => {
     try {
-        const categories = await CategoryServices.getAllCategory();
+        const categories = await CategoryServices.getAllCategory(req.params.branchId);
         res.ok(categories);
     } catch (error) {
         next(error);
@@ -11,7 +11,7 @@ const getAllCategory = async (req, res, next) => {
 
 const createCategory = async (req, res, next) => {
     try {
-        const categoryToCreate = await CategoryServices.createCategory(req.body.name.toUpperCase());
+        const categoryToCreate = await CategoryServices.createCategory(req.body);
         res.ok(categoryToCreate, "Kategoria u krijua me sukses!")
     } catch (error) {
         next(error);
@@ -20,7 +20,7 @@ const createCategory = async (req, res, next) => {
 
 const updateCategory = async (req, res, next) => {
     try {
-        const categoryToUpdate = await CategoryServices.updatedCategory(req.body.name.toUpperCase(), req.params.id);
+        const categoryToUpdate = await CategoryServices.updatedCategory(req.body, req.params.id);
         res.ok(categoryToUpdate, "Kategoria u perditesua me sukses!");
     } catch (error) {
         next(error);

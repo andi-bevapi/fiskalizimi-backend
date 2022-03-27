@@ -1,6 +1,8 @@
 const Joi = require("joi");
 
 const category = Joi.object({
+    id: Joi.number(),
+    branchId: Joi.number(),
     name : Joi.string().min(2).max(20).required(),
     isActive : Joi.boolean(),
     isDeleted : Joi.boolean()
@@ -18,7 +20,6 @@ const validateCat = async(req,res,next) =>{
        return res.fail(result.error.details[0].message);
     }
     next();
-    
 }
 
 module.exports = validateCat;
