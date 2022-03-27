@@ -44,4 +44,28 @@ const permissionController = require("../controllers/PermissionController");
  */
 router.get("/", permissionController.getAllPermissions);
 
+// @route   POST api/permission
+// @desc    Insert permissions
+// @access  Private
+/**
+ *@swagger
+ * /api/permission:
+ *   post:
+ *       summary: Insert permissions
+ *       tags: [Permission]
+ *       description: Insert permissions
+ *       requestBody:
+ *           required: true
+ *           content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Permission'
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "500":
+ *              description: internal server error
+ */
+router.post("/", permissionController.createPermissions);
+
 module.exports = router;

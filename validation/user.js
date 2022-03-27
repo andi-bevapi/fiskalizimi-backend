@@ -1,35 +1,34 @@
 const Joi = require("joi");
 
 const user = Joi.object({
-  username: Joi.string().min(3).max(255).required().messages({
+  id : Joi.number(),
+  username: Joi.string().min(2).max(255).required().messages({
     "string.base": `"Username" duhet te jete i formatit 'tekst'`,
     "string.empty": `"Username" nuk duhet te jete bosh`,
-    "string.min": `"Username" duhet te kete nje limit prej 3 karakteresh`,
+    "string.min": `"Username" duhet te kete nje limit prej 2 karakteresh`,
     "string.max": `"Username" duhet te kete nje maksimum prej 255 karakteresh`,
     "any.required": `"Username" eshte nje fushe e detyrueshme`,
   }),
   email: Joi.string().messages({
-    "string.base": `"Email" duhet te jete i formatit 'tekst'`,
-    "string.empty": `"Email" nuk duhet te jete bosh`,
+    "string.base": `"Email" duhet te jete i formatit 'tekst'`
   }),
   phone: Joi.string().messages({
-    "string.empty": `"Numri i telefonit" nuk duhet te jete bosh`,
+    "string.empty": `"Numri i telefonit" duhet te jete i formatit 'tekst'`
   }),
   position: Joi.string().messages({
-    "string.base": `"Pozicioni" duhet te jete i formatit 'tekst'`,
-    "string.empty": `"Pozicioni" nuk duhet te jete bosh`,
+    "string.base": `"Pozicioni" duhet te jete i formatit 'tekst'`
   }),
-  firstName: Joi.string().min(3).max(255).required().messages({
+  firstName: Joi.string().min(2).max(255).required().messages({
     "string.base": `"Emri" duhet te jete i formatit 'tekst'`,
     "string.empty": `"Emri" nuk duhet te jete bosh`,
-    "string.min": `"Emri" duhet te kete nje limit prej 3 karakteresh`,
+    "string.min": `"Emri" duhet te kete nje limit prej 2 karakteresh`,
     "string.max": `"Emri" duhet te kete nje maksimum prej 255 karakteresh`,
     "any.required": `"Emri" eshte nje fushe e detyrueshme`,
   }),
-  lastName: Joi.string().min(3).max(255).required().messages({
+  lastName: Joi.string().min(2).max(255).required().messages({
     "string.base": `"Mbiemri" duhet te jete i formatit 'tekst'`,
     "string.empty": `"Mbiemri" nuk duhet te jete bosh`,
-    "string.min": `"Mbiemri" duhet te kete nje limit prej 3 karakteresh`,
+    "string.min": `"Mbiemri" duhet te kete nje limit prej 2 karakteresh`,
     "string.max": `"Mbiemri" duhet te kete nje maksimum prej 255 karakteresh`,
     "any.required": `"Mbiemri" eshte nje fushe e detyrueshme`,
   }),
@@ -43,11 +42,11 @@ const user = Joi.object({
     "string.max": `"Fjalekalimi" duhet te kete nje maksimum prej 255 karakteresh`,
     "any.required": `"Fjalekalimi" eshte nje fushe e detyrueshme`,
   }),
-  clientId: Joi.number().positive().greater(0).required().messages({
-    "any.required": `"ClientId" eshte nje fushe e detyrueshme`,
-  }),
   branchId: Joi.number().positive().greater(0).required().messages({
     "any.required": `"BranchId" eshte nje fushe e detyrueshme`,
+  }),
+  clientId: Joi.number().positive().greater(0).required().messages({
+    "any.required": `"ClientId" eshte nje fushe e detyrueshme`,
   }),
   isFirstTimeLogin: Joi.boolean(),
   isActive: Joi.boolean(),
@@ -55,10 +54,10 @@ const user = Joi.object({
 });
 
 const userLogin = Joi.object({
-  username: Joi.string().min(3).max(255).required().messages({
+  username: Joi.string().min(2).max(255).required().messages({
     "string.base": `"Username" duhet te jete i formatit 'tekst'`,
     "string.empty": `"Username" nuk duhet te jete bosh`,
-    "string.min": `"Username" duhet te kete nje limit prej 3 karakteresh`,
+    "string.min": `"Username" duhet te kete nje limit prej 2 karakteresh`,
     "string.max": `"Username" duhet te kete nje maksimum prej 255 karakteresh`,
     "any.required": `"Username" eshte nje fushe e detyrueshme`,
   }),

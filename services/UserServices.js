@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 
 const getAllUsers = async (clientId) => {
   const allUsers = await User.findAll({
+    attributes: {exclude: ['password']},
     where: { isActive: true, clientId },
   });
   return allUsers;

@@ -83,13 +83,17 @@ const createProductService = async (product) => {
     throw new GeneralError("Ekziston tashme nje produkt me kete emer", 409);
   }
 
-  const uploadResponse = await cloudinary.uploader.upload(product.imageVirtualPath, {
-    upload_preset: 'posla_dev'
-  });
+  let uploadResponse = null;
+
+  if(product.imageVirtualPath) {
+    uploadResponse = await cloudinary.uploader.upload(product.imageVirtualPath, {
+      upload_preset: 'posla_dev'
+    });
+  }
 
   const data = await Product.create({
     ...product,
-    imageVirtualPath: uploadResponse.secure_url
+    imageVirtualPath: uploadResponse ? uploadResponse.secure_url : null
   });
 
   return data;
@@ -107,13 +111,17 @@ const updateProductService = async (id, data) => {
     throw new GeneralError("Nuk ekziston nje produkt me kete id", 404);
   }
 
-  const uploadResponse = await cloudinary.uploader.upload(data.imageVirtualPath, {
-    upload_preset: 'posla_dev'
-  });
+  let uploadResponse = null;
+
+  if(data.imageVirtualPath) {
+    uploadResponse = await cloudinary.uploader.upload(data.imageVirtualPath, {
+      upload_preset: 'posla_dev'
+    });
+  }
 
   const productToUpdate = await Product.update({
     ...data,
-    imageVirtualPath: uploadResponse.secure_url
+    imageVirtualPath: uploadResponse ? uploadResponse.secure_url : null
   }, {
     where: {
       id,
