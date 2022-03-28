@@ -87,6 +87,19 @@ const getProductByBarcodeService = async (barcode) => {
 };
 
 const createProductService = async (product) => {
+ 
+  const checkProductWithBarcode = await Product.findAll({
+    where: {
+      barcode: product.barcode,
+      isDeleted: false,
+    },
+    raw: true,
+  });
+
+  if (checkProductWithBarcode.length > 0) {
+    throw new GeneralError("Ekziston tashme nje produkt me kete barkod", 409);
+  }
+
   const checkIfExists = await Product.findAll({
     where: {
       name: product.name,
