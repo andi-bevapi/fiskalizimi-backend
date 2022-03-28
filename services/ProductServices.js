@@ -7,7 +7,7 @@ const Supplier = require("../db/models/supplier");
 const { cloudinary } = require('../config/cloudinary');
 const { Op } = require('sequelize');
 
-const getProductsService = async (branchId, { categoryId, sellingUnitId, supplierId, searchText = "" }) => {
+const getProductsService = async (branchId, { categoryId, sellingUnitId, supplierId, barcode = "", searchText = "" }) => {
   const data = await Product.findAll({
     where: {
       isActive: true,
@@ -15,6 +15,9 @@ const getProductsService = async (branchId, { categoryId, sellingUnitId, supplie
       branchId,
       [Op.or]: [
         {
+          barcode: {
+            [Op.like]: "%" + barcode + "%",
+          },
           name: {
             [Op.like]: "%" + searchText + "%",
           }
@@ -50,40 +53,6 @@ const getProductsService = async (branchId, { categoryId, sellingUnitId, supplie
     ],
   });
   return data;
-};
-
-const getProductByBarcodeService = async (barcode) => {
-  const product = await Product.findOne({
-    where: {
-      isActive: true,
-      isDeleted: false,
-      barcode,       
-    },
-    include: [
-      {
-        model: Branch,
-        as: "branch",
-      },
-      {
-        model: Category,
-        as: "category",
-      },
-      {
-        model: SellingUnit,
-        as: "sellingUnit",
-      },
-      {
-        model: Supplier,
-        as: "supplier",
-      },
-    ],
-  });
-
-  if(!product) {
-    throw new GeneralError("Produkt me kete barkod nuk ekziston!", 404);
-  }
-
-  return product;
 };
 
 const createProductService = async (product) => {
@@ -176,6 +145,5 @@ module.exports = {
   createProductService,
   deleteProductService,
   updateProductService,
-  getProductsService,
-  getProductByBarcodeService
+  getProductsService
 };

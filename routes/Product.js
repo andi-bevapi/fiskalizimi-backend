@@ -77,34 +77,6 @@ const productController = require("../controllers/ProductController");
  */
 router.get("/:branchId", productController.getProducts);
 
-// @route   GET api/product/:barcode
-// @desc    Get product by barcode
-// @access  Private
-/**
- * @swagger
- * /api/product/{barcode}:
- *  get:
- *    summary: Get product by barcode
- *    tags: [Product]
- *    parameters:
- *      - in: path
- *        name: barcode
- *        schema:
- *          type: string
- *        description: product barcode
- *        required: true
- *    responses:
- *      200:
- *        description: Success
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Product'
- */
-router.get("/:barcode", productController.getProductByBarcode);
-
 // @route   POST api/product/create
 // @desc    Create new product
 // @access  Private
