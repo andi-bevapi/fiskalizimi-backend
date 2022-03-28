@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../controllers/ProductController");
-
+const Joivalidation = require("../validation/product");
 /**
  * @swagger
  * tags:
@@ -102,7 +102,7 @@ router.get("/:branchId", productController.getProducts);
  *              description: Internal server error
  */
 
-router.post("/create", productController.createProduct);
+router.post("/create",Joivalidation ,productController.createProduct);
 
 // @route   PUT api/product/delete/{id}
 // @desc    Delete one product
@@ -166,6 +166,6 @@ router.put("/delete/:id", productController.deleteProduct);
  *              description: Internal server error
  */
 
-router.put("/update/:id", productController.updateProduct);
+router.put("/update/:id", Joivalidation,productController.updateProduct);
 
 module.exports = router;
