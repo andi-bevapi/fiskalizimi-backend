@@ -23,7 +23,6 @@ const createProduct = async (req, res, next) => {
     const data = await productServices.createProductService(req.body);
     res.ok(data, "Produkti u krijua me sukses!");
   } catch (error) {
-    console.log("error---createProduct--",error)
     next(error);
   }
 };

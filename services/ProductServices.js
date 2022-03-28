@@ -91,6 +91,7 @@ const createProductService = async (product) => {
   const checkProductWithBarcode = await Product.findAll({
     where: {
       barcode: product.barcode,
+      isActive: true,
       isDeleted: false,
     },
     raw: true,

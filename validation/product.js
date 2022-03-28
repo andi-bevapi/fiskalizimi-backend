@@ -40,8 +40,7 @@ const product = Joi.object({
     }),
     stockCheck: Joi.boolean(),
     imageVirtualPath: Joi.string().messages({
-        'string.base':  `"Imazhi" duhe te jet i formatit 'tekst'`,
-        'any.required': `"Imazhi" eshte nje fushe e detyrueshme`
+        'string.base':  `"Imazhi" duhe te jet i formatit 'tekst'`
     }),
     isActive:Joi.boolean(),
     isDeleted:Joi.boolean(),
@@ -53,9 +52,7 @@ const product = Joi.object({
 
 const validateProduct = async(req,res,next) =>{
     const result = product.validate(req.body);
-    console.log("result--before error----",result);
     if(result.error){
-        console.log("result--in-error----",result.error);
        return res.fail(result.error.details[0].message);
     }
     next();
