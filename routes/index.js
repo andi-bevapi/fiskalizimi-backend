@@ -10,6 +10,7 @@ const supplier = require("./Supplier");
 const sellingUnits = require("./SellingUnit");
 const user = require("./User");
 const permission = require("./Permission");
+const invoice = require('./Invoice');
 
 router.use("/categories",category);
 router.use('/client', client);
@@ -20,5 +21,6 @@ router.use("/supplier",supplier);
 router.use("/selling-units",sellingUnits);
 router.use("/user", user);
 router.use("/permission", permission);
+router.use("/invoice", invoice);
 
 module.exports = router;

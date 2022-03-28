@@ -34,7 +34,7 @@ const client = Joi.object({
         'boolean.empty': `"hasVat" nuk duhet te jet bosh`,
         'any.required': `"hasVat" eshte nje fushe e detyrueshme`
     }),
-    vat : Joi.number().required().messages({
+    vat : Joi.string().required().messages({
         'any.required': `"vat" eshte nje fushe e detyrueshme`
     }),
     email : Joi.string().required().messages({

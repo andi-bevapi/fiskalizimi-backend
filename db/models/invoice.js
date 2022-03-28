@@ -26,8 +26,7 @@ class Invoice extends Model {
         type: DataTypes.STRING
       },
       description: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       paymentMethod: {
         type: DataTypes.STRING,
@@ -54,6 +53,10 @@ class Invoice extends Model {
       },
       FIC: {
         type: DataTypes.STRING
+      },
+      status: {
+        type: DataTypes.STRING,
+        defaultValue: 'active'
       },
       isActive: {
         type: DataTypes.BOOLEAN,
@@ -82,6 +85,7 @@ class Invoice extends Model {
   }
 
   static associate(models) {
+    this.hasMany(models.InvoiceItem, { foreignKey: 'invoiceId', as: 'items' });
     this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
     this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
   }

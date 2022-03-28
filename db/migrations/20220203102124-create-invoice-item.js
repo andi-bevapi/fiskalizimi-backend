@@ -26,27 +26,8 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      sellingUnitId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'SellingUnits',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-      branchId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Branches',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
       description: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       quantity: {
         type: Sequelize.INTEGER,

@@ -71,6 +71,10 @@ module.exports = {
       FIC: {
         type: Sequelize.STRING
       },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'active'
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

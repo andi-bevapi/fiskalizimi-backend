@@ -10,8 +10,7 @@ class InvoiceItem extends Model {
         type: DataTypes.INTEGER
       },
       description: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       quantity: {
         type: DataTypes.INTEGER,
@@ -56,10 +55,8 @@ class InvoiceItem extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Invoice, { foreignKey: 'invoiceId', as: 'invoice' });
+    this.belongsTo(models.Invoice, { foreignKey: 'invoiceId', as: 'items' });
     this.belongsTo(models.Product, { foreignKey: 'productId', as: 'product' });
-    this.belongsTo(models.SellingUnit, { foreignKey: 'sellingUnitId', as: 'sellingUnit' });
-    this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
   }
 }
 
