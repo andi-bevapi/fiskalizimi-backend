@@ -9,8 +9,15 @@ const jwt = require("jsonwebtoken");
 
 const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
-    attributes: {exclude: ['password']},
+    attributes: { exclude: ["password"] },
     where: { isActive: true, branchId },
+    joinTableAttributes: ['permissionId'],
+    include: [
+      {
+        model: Permission,
+        as: "permissions",
+      },
+    ],
   });
   return allUsers;
 };
