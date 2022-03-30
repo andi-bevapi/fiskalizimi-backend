@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/UserController");
-const { validateUser, validateUserLogin } = require("../validation/user");
+const { validateUser, validateUserLogin , validateUserUpdate } = require("../validation/user");
 
 /**
  * @swagger
@@ -27,6 +27,8 @@ const { validateUser, validateUserLogin } = require("../validation/user");
  *        email:
  *           type: string
  *        password:
+ *           type: string
+ *        passwordNew:
  *           type: string
  *        isFirstTimeLogin:
  *           type: boolean
@@ -170,7 +172,7 @@ router.post("/create", validateUser, userController.createUser);
  *              description: Internal server error
  */
 
-router.put("/update/:id", validateUser, userController.updateUser);
+router.put("/update/:id", validateUserUpdate, userController.updateUser);
 
 // @route   PUT api/user/delete/{id}
 // @desc    Delete one user

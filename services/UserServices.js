@@ -109,8 +109,24 @@ const updateUser = async (id, user) => {
     throw new GeneralError("Ekziston tashme nje perdorues me kete emer!", 409);
   }
 
-  var hashed = await bcrypt.hash(user.user.password, 10);
-  user.user.password = hashed;
+  if(user.user.password === ""){
+    delete user.user["password"]
+    delete user.user["passwordNew"]
+    console.log("user pass is empty-----");
+    console.log("user.user-----",user.user);
+
+  } else {
+    const userPassword = checkById.password;
+    const checkPassword = await bcrypt.compare(user.user.password,userPassword);
+
+    if(!checkPassword){
+      throw new GeneralError("Fjalekalimi aktual nuk eshte i sakte!", 409);
+    }
+
+    var hashed = await bcrypt.hash(user.user.passwordNew, 10);
+    user.user.password = hashed;
+  }
+
 
   const userToUpdate = await User.update(user.user, {
     where: {
