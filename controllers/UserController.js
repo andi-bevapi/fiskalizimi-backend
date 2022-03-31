@@ -29,7 +29,6 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    // console.log("req.body----",req.body);
     const updatedUser = await UserServices.updateUser(req.params.id, req.body);
     res.ok(updatedUser, "Perdoruesi u perditesua me sukses");
   } catch (error) {
