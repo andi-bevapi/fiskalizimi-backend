@@ -155,9 +155,39 @@ const deleteProductService = async (id) => {
   return productToDelete;
 };
 
+const getProductByBarcodeService = async (barcode) => {
+   const data = await Product.findOne({
+     where: {
+       isActive: true,
+       isDeleted: false,
+       barcode
+     },
+     include: [
+      {
+        model: Branch,
+        as: "branch",
+      },
+      {
+        model: Category,
+        as: "category",
+      },
+      {
+        model: SellingUnit,
+        as: "sellingUnit",
+      },
+      {
+        model: Supplier,
+        as: "supplier",
+      },
+    ],
+   });
+   return data;
+}
+
 module.exports = {
   createProductService,
   deleteProductService,
   updateProductService,
-  getProductsService
+  getProductsService,
+  getProductByBarcodeService
 };
