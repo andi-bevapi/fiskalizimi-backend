@@ -144,7 +144,6 @@ const validateUserLogin = async (req, res, next) => {
 const validateUserUpdate = async (req, res, next) => {
   const result = userUpdate.validate(req.body.user);
   if (result.error) {
-    console.log("error-----",result.error);
     return res.fail(result.error.details[0].message);
   }
   next();
