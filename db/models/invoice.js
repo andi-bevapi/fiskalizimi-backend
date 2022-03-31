@@ -18,7 +18,19 @@ class Invoice extends Model {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      totalAmountNoVAT: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       totalVat: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      totalVat6: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      totalVat20: {
         type: DataTypes.INTEGER,
         allowNull: false
       },

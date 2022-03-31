@@ -58,7 +58,7 @@ const { validateUser, validateUserLogin , validateUserUpdate } = require("../val
  *              type: integer
  */
 
-// @route   GET api/user/{clientId}
+// @route   GET api/user/:branchId
 // @desc    Get all users
 // @access  Private
 /**
@@ -67,13 +67,13 @@ const { validateUser, validateUserLogin , validateUserUpdate } = require("../val
  *   get:
  *       summary: Get users
  *       tags: [User]
- *       description: Get users based on client
+ *       description: Get users based on branch
  *       parameters:
  *         - in: path
  *           name: branchId
  *           schema:
  *             type: number
- *           description: Client id
+ *           description: Branch id
  *           required: true
  *       responses:
  *           "200":

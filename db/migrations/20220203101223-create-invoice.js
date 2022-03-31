@@ -35,7 +35,19 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      totalAmountNoVAT: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       totalVat: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      totalVat6: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      totalVat20: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
