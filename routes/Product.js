@@ -172,11 +172,12 @@ router.put("/update/:id", Joivalidation,productController.updateProduct);
 // @desc    Get product by barcode
 // @access  Private
 /**
- * @swagger
+ *@swagger
  * /api/product/barcode/{barcode}:
- *  get:
- *    summary: Get product by barcode
- *    tags: [Product]
+ *   get:
+ *       summary: Get product by barcode
+ *       tags: [Product]
+ *       description: Get product by barcode
  *       parameters:
  *         - in: path
  *           name: barcode
@@ -184,22 +185,17 @@ router.put("/update/:id", Joivalidation,productController.updateProduct);
  *             type: string
  *           description: barcode
  *           required: true
- *       requestBody:
- *           required: true
- *           content:
- *              application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Product'
  *       responses:
- *           "200":
- *             description: Success
- *           "404":
- *              description: Not found, Product with barcode not found
- *           "500":
- *              description: Internal server error
+ *         200:
+ *           description: Success
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/Product'
  */
+
  router.get("/barcode/:barcode", productController.getProductByBarcode);
 
 module.exports = router;
