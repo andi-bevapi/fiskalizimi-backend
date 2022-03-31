@@ -2,12 +2,11 @@ const Configuration = require("../db/models/configuration");
 const GeneralError = require("../utils/GeneralError");
 
 const getConfigurations = async (branchId) => {
-  const configurations = await Configuration.findAll();
+  const configurations = await Configuration.findAll({ where: { branchId } });
   return configurations;
 };
 
 const createConfiguration = async (body) => {
-
   let doesExists = false;
 
   if (body.id) {
