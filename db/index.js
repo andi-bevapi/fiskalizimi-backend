@@ -15,6 +15,7 @@ const Permission = require('./models/permission');
 const User_Permissions = require('./models/user_permissions');
 const Invoice = require('./models/invoice');
 const InvoiceItem = require('./models/invoiceitem');
+const Configuration = require('./models/configuration');
 
 const connection = new Sequelize(dbConfig);
 
@@ -38,6 +39,7 @@ Permission.init(connection);
 User_Permissions.init(connection);
 Invoice.init(connection);
 InvoiceItem.init(connection);
+Configuration.init(connection);
 
 Client.associate(connection.models);
 Branch.associate(connection.models);
@@ -52,5 +54,6 @@ User.associate(connection.models);
 Permission.associate(connection.models);
 Invoice.associate(connection.models);
 InvoiceItem.associate(connection.models);
+Configuration.associate(connection.models);
 
 module.exports = connection;
