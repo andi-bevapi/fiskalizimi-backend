@@ -33,6 +33,7 @@ const createPermissions = async () => {
     { name: 'permission.user.create' },
     { name: 'permission.user.update' },
     { name: 'permission.user.delete' },
+    { name: 'permission.reports.view' },
   ]
 
   await Permission.bulkCreate(permissions);

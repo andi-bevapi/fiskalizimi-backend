@@ -39,9 +39,7 @@ const product = Joi.object({
         'any.required': `"Stoku" eshte nje fushe e detyrueshme`
     }),
     stockCheck: Joi.boolean(),
-    imageVirtualPath: Joi.string().messages({
-        'string.base':  `"Imazhi" duhe te jet i formatit 'tekst'`
-    }),
+    imageVirtualPath: Joi.optional(),
     isActive:Joi.boolean(),
     isDeleted:Joi.boolean(),
     branchId: Joi.number().positive().greater(0).required(),

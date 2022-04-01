@@ -12,6 +12,7 @@ const user = require("./User");
 const permission = require("./Permission");
 const invoice = require('./Invoice');
 const configuration = require('./Configuration');
+const reports = require('./Reports');
 
 router.use("/categories",category);
 router.use('/client', client);
@@ -24,5 +25,6 @@ router.use("/user", user);
 router.use("/permission", permission);
 router.use("/invoice", invoice);
 router.use("/configuration", configuration);
+router.use("/reports", reports);
 
 module.exports = router;

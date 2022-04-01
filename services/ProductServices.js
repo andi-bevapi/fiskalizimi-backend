@@ -8,20 +8,34 @@ const { cloudinary } = require('../config/cloudinary');
 const { Op } = require('sequelize');
 
 const getProductsService = async (branchId, { categoryId, sellingUnitId, supplierId, barcode = "", searchText = "" }) => {
-  const data = await Product.findAll({
+  return await Product.findAll({
     where: {
       isActive: true,
       isDeleted: false,
       branchId,
-      [Op.or]: [
+      [Op.and]: [
         {
           barcode: {
             [Op.like]: "%" + barcode + "%",
-          },
+          }, 
+        }
+      ],
+      [Op.or]: [
+        {
+          barcode: {
+            [Op.like]: "%" + searchText + "%",
+          }, 
+        },
+        {
           name: {
             [Op.like]: "%" + searchText + "%",
           }
-        }
+        },
+        {
+          description: {
+            [Op.like]: "%" + searchText + "%",
+          }
+        },
       ],
     },
     include: [
@@ -52,11 +66,10 @@ const getProductsService = async (branchId, { categoryId, sellingUnitId, supplie
       },
     ],
   });
-  return data;
 };
 
 const createProductService = async (product) => {
- 
+
   const checkProductWithBarcode = await Product.findAll({
     where: {
       barcode: product.barcode,
@@ -85,7 +98,7 @@ const createProductService = async (product) => {
 
   let uploadResponse = null;
 
-  if(product.imageVirtualPath) {
+  if (product.imageVirtualPath) {
     uploadResponse = await cloudinary.uploader.upload(product.imageVirtualPath, {
       upload_preset: 'posla_dev'
     });
@@ -113,7 +126,7 @@ const updateProductService = async (id, data) => {
 
   let uploadResponse = null;
 
-  if(data.imageVirtualPath) {
+  if (data.imageVirtualPath) {
     uploadResponse = await cloudinary.uploader.upload(data.imageVirtualPath, {
       upload_preset: 'posla_dev'
     });
