@@ -40,10 +40,20 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
+const getProductByBarcode = async (req, res, next) => {
+  try{
+    const data = await productServices.getProductByBarcodeService(req.params.barcode);
+    res.ok(data, "Produkti me barcode-in e specifikuar");
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 module.exports = {
   getProducts,
   createProduct,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  getProductByBarcode
 };
