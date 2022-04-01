@@ -31,7 +31,7 @@ const product = Joi.object({
         'any.required': `"TVSH" eshte nje fushe e detyrueshme`,
         'number.positive':"TVSH duhet te jete nje numer pozitiv"
     }),
-    stock: Joi.number().positive().required().messages({
+    stock: Joi.number().min(0).required().messages({
         'number.base':  `"Stoku" duhe te jet i formatit 'numer'`,
         'number.empty': `"Stoku" nuk duhet te jet bosh`,
         'number.min':   `"Stoku" duhet te ket nje limit prej 2 karakteresh`,
