@@ -2,7 +2,7 @@ const InvoiceService = require("../services/InvoiceService");
 
 const getInvoices = async (req, res, next) => {
     try {
-        const result = await InvoiceService.getAllInvoices(req.params.branchId);
+        const result = await InvoiceService.getAllInvoices(req.params.branchId, req.query.status);
         res.ok(result);
     } catch (error) {
         next(error);
