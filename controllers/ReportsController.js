@@ -2,7 +2,7 @@ const ReportsService = require("../services/ReportsService");
 
 const getDashboardReports = async (req, res, next) => {
     try {
-        const data = await ReportsService.getAllDashboardReports(req.params.clientId);
+        const data = await ReportsService.getAllDashboardReports(req.params.clientId, req.query.startDate, req.query.endDate);
         res.ok(data);
     } catch (error) {
         next(error);
@@ -11,7 +11,7 @@ const getDashboardReports = async (req, res, next) => {
 
 const getChartReports = async (req, res, next) => {
     try {
-        const data = await ReportsService.getAllChartReports(req.params.clientId);
+        const data = await ReportsService.getAllChartReports(req.params.clientId, req.query.startDate, req.query.endDate);
         res.ok(data);
     } catch (error) {
         next(error);
