@@ -136,4 +136,34 @@ router.get('/:branchId', invoiceController.getInvoices);
  */
  router.post("/", invoiceController.createInvoice);
 
+ // @route   DELETE api/invoice/delete/{id}
+// @desc    delete one invoice
+// @access  Private
+/**
+ * @swagger
+ * /api/invoice/delete/{id}:
+ *  put:
+ *    summary: Delete one invoice
+ *    tags: [Invoice]
+ *    description: Delete invoice
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: number
+ *        description: invoice id
+ *        required: true
+ *    responses:
+ *      200:
+ *         description: Success
+ *         content:
+ *            application/json:
+ *               schema:
+ *                   items:
+ *                     $ref: '#/components/schemas/Invoice'
+ *      500:
+ *        description: internal server error
+ */
+router.put("/delete/:id", invoiceController.deleteInvoice);
+
 module.exports = router;

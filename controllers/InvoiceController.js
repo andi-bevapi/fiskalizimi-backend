@@ -2,7 +2,7 @@ const InvoiceService = require("../services/InvoiceService");
 
 const getInvoices = async (req, res, next) => {
     try {
-        const result = await InvoiceService.getAllInvoices(req.params.branchId);
+        const result = await InvoiceService.getAllInvoices(req.params.branchId, req.query.status);
         res.ok(result);
     } catch (error) {
         next(error);
@@ -28,4 +28,13 @@ const createInvoice = async (req, res, next) => {
     }
 }
 
-module.exports = { getInvoices, getSingleInvoice, createInvoice };
+const deleteInvoice = async (req, res, next) => {
+    try {
+        const result = await InvoiceService.deleteInvoice(req.params.id);
+        res.ok(result);
+    } catch (error) {
+        next (error);
+    }
+}
+
+module.exports = { getInvoices, getSingleInvoice, createInvoice, deleteInvoice };

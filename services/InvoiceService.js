@@ -125,4 +125,17 @@ const insertInvoiceItems = async (invoiceId, invoiceItems) => {
     await InvoiceItem.bulkCreate(tempItems);
 }
 
-module.exports = { getAllInvoices, getInvoiceById, createInvoice };
+const deleteInvoice = async (id) => {
+    const checkIfExist = await Invoice.findOne({ where: { id } });
+    if (checkIfExist) {
+        const invoiceToDelete = await Invoice.update(
+            { isActive: false, isDeleted: true },
+            { where: { id } }
+        );
+        return invoiceToDelete;
+    }
+    throw new GeneralError("Kjo fature nuk ekziston", 404);
+
+}
+
+module.exports = { getAllInvoices, getInvoiceById, createInvoice, deleteInvoice };
