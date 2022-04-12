@@ -22,6 +22,14 @@ class Configuration extends Model {
         allowNull: false,
         defaultValue: true
       },
+      billMessage:{
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      billDescription:{
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

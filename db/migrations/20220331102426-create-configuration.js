@@ -1,46 +1,54 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Configurations', {
+    await queryInterface.createTable("Configurations", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       language: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       printer: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       allowSellsWithZero: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       branchId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Branches',
-          key: 'id'
+          model: "Branches",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+      billMessage: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      billDescription: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Configurations');
-  }
+    await queryInterface.dropTable("Configurations");
+  },
 };

@@ -7,6 +7,7 @@ const getConfigurations = async (branchId) => {
 };
 
 const createConfiguration = async (body) => {
+  console.log("body-------",body)
   let doesExists = false;
 
   if (body.id) {
