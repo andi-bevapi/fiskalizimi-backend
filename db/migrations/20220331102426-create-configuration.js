@@ -30,11 +30,11 @@ module.exports = {
       },
       billMessage: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       billDescription: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
