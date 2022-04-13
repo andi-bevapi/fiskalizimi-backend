@@ -8,7 +8,6 @@ const getConfigurations = async (branchId) => {
 
 const createConfiguration = async (body) => {
   let doesExists = false;
-
   if (body.id) {
     doesExists = await Configuration.findOne({
       where: {
