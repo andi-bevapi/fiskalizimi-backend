@@ -27,9 +27,8 @@ const product = Joi.object({
         'string.max':   `"Barkodi" duhet te ket nje maksimum prej 18 karakteresh`,
         'any.required': `"Barkodi" eshte nje fushe e detyrueshme`
     }),
-    vat: Joi.number().positive().greater(0).required().messages({
+    vat: Joi.number().required().messages({
         'any.required': `"TVSH" eshte nje fushe e detyrueshme`,
-        'number.positive':"TVSH duhet te jete nje numer pozitiv"
     }),
     stock: Joi.number().min(0).required().messages({
         'number.base':  `"Stoku" duhe te jet i formatit 'numer'`,
