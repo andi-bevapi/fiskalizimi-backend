@@ -16,7 +16,7 @@ const product = Joi.object({
         'string.max':   `"Pershkrimi" duhet te ket nje maksimum prej 20 karakteresh`,
         'any.required': `"Pershkrimi" eshte nje fushe e detyrueshme`
     }),
-    price: Joi.number().positive().greater(0).required().messages({
+    price: Joi.number().greater(-1).required().messages({
         'any.required': `"Cmimi" eshte nje fushe e detyrueshme`,
         'number.positive':"Cmimi duhet te jete nje numer pozitiv"
     }),
