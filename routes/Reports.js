@@ -74,4 +74,10 @@ router.get("/:clientId", reportsController.getDashboardReports);
  */
  router.get("/analytics/:clientId", reportsController.getAnalyticsReports);
 
+router.get("/analytics/:clientId/:id", reportsController.getAnalyticsReportsForSingleInvoice);
+
+router.get("/sold-products/category/:clientId", reportsController.getSoldProductsReportByCategory);
+
+router.get("/sold-products/supplier/:clientId", reportsController.getSoldProductsReportBySupplier);
+
 module.exports = router;
