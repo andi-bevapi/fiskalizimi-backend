@@ -15,6 +15,7 @@ const configuration = require('./Configuration');
 const reports = require('./Reports');
 const arkat = require('./Arka');
 const arkaHistory = require('./ArkaHistory');
+const shiftHistory = require("./ShiftHistory");
 
 router.use("/categories",category);
 router.use('/client', client);
@@ -30,5 +31,6 @@ router.use("/configuration", configuration);
 router.use("/reports", reports);
 router.use("/arkat", arkat);
 router.use("/arka-history", arkaHistory);
+router.use("/shift-history", shiftHistory);
 
 module.exports = router;

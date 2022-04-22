@@ -26,21 +26,21 @@ const arkaHistoryController = require("../controllers/ArkaHistoryController");
  */
 
 
-// @route   GET api/arka-history/:branchId
+// @route   GET api/arka-history/:arkaId
 // @desc    Get all arkaHistory
 // @access  Private
 /**
  * @swagger
- * /api/arka-history/{branchId}:
+ * /api/arka-history/{arkaId}:
  *  get:
  *    summary: Get all arka history
  *    tags: [ArkaHistory]
  *    parameters:
  *      - in: path
- *        name: branchId
+ *        name: arkaId
  *        schema:
  *          type: number
- *        description: branchId
+ *        description: arkaId
  *        required: true
  *    responses:
  *      200:
@@ -69,7 +69,7 @@ router.get("/:arkaId", arkaHistoryController.getLastAmount);
  *           content:
  *              application/json:
  *                 schema:
- *                    $ref: '#/components/schemas/Arka'
+ *                    $ref: '#/components/schemas/ArkaHistory'
  *       responses:
  *           "200":
  *             description: Success

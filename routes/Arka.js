@@ -104,7 +104,7 @@ router.get("/:branchId", arkaController.getAllArka);
  *         content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Category'
+ *                $ref: '#/components/schemas/Arka'
  *    responses:
  *      200:
  *         description: Success
@@ -112,7 +112,7 @@ router.get("/:branchId", arkaController.getAllArka);
  *            application/json:
  *               schema:
  *                   items:
- *                     $ref: '#/components/schemas/Category'
+ *                     $ref: '#/components/schemas/Arka'
  *      500:
  *        description: internal server error
  */

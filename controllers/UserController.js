@@ -14,6 +14,7 @@ const getCurrentUser = async (req, res, next) => {
     const user = await UserServices.getCurrentUser(req.headers.authorization);
     res.ok(user);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

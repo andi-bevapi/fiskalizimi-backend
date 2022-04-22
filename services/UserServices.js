@@ -6,12 +6,14 @@ const bcrypt = require("bcryptjs");
 const sequelize = require("sequelize");
 const User_Permissions = require("../db/models/user_permissions");
 const jwt = require("jsonwebtoken");
+const ShiftHistory = require("../db/models/shifthistory");
+const Op = require("sequelize").Op;
 
 const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
     attributes: { exclude: ["password"] },
     where: { isActive: true, branchId },
-    joinTableAttributes: ['permissionId'],
+    joinTableAttributes: ["permissionId"],
     include: [
       {
         model: Permission,
@@ -109,24 +111,26 @@ const updateUser = async (id, user) => {
     throw new GeneralError("Ekziston tashme nje perdorues me kete emer!", 409);
   }
 
-  if(user.user.password === ""){
-    delete user.user["password"]
-    delete user.user["passwordNew"]
+  if (user.user.password === "") {
+    delete user.user["password"];
+    delete user.user["passwordNew"];
   } else {
-   if(user.user.passwordNew){
-    const userPassword = checkById.password;
-    const checkPassword = await bcrypt.compare(user.user.password,userPassword);
-      if(!checkPassword){
+    if (user.user.passwordNew) {
+      const userPassword = checkById.password;
+      const checkPassword = await bcrypt.compare(
+        user.user.password,
+        userPassword
+      );
+      if (!checkPassword) {
         throw new GeneralError("Fjalekalimi aktual nuk eshte i sakte!", 409);
       }
       var hashed = await bcrypt.hash(user.user.passwordNew, 10);
       user.user.password = hashed;
-   }else{
-    var hashed = await bcrypt.hash(user.user.password, 10);
-    user.user.password = hashed;
-   }
+    } else {
+      var hashed = await bcrypt.hash(user.user.password, 10);
+      user.user.password = hashed;
+    }
   }
-
 
   const userToUpdate = await User.update(user.user, {
     where: {
@@ -185,6 +189,23 @@ const login = async (username, password) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (isMatch) {
+    const shiftHistory = await ShiftHistory.findAll({
+      where: {
+        userId: user.id,
+        shiftStart: {
+          [Op.gt]: new Date().setHours(0, 0, 0, 0),
+          [Op.lt]: new Date(),
+        },
+      },
+    });
+    if (shiftHistory.length === 0) {
+      await ShiftHistory.create({
+        shiftStart: new Date(),
+        userId: user.id,
+        arkaId: 1,
+      });
+    }
+
     const token = await user.generateAuthToken();
     return token;
   } else {
