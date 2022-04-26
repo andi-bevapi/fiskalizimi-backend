@@ -5,7 +5,6 @@ const getLastAmount = async (req, res, next) => {
     const records = await ArkaHistoryServices.getLastAmount(req.params.arkaId);
     res.ok(records);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

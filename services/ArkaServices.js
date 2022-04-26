@@ -22,9 +22,16 @@ const createArka = async (body) => {
   return newArka;
 };
 
-const updateArka = async (branchId) => {
-  const allCategory = await arka.findAll({ where: { branchId } });
-  return allCategory;
+const updateArka = async (body, id) => {
+  const checkIfNameExist = await arka.findOne({
+    where: { name: body.name, branchId: body.branchId },
+  });
+  if (checkIfNameExist && checkIfNameExist.id != id) {
+    throw new GeneralError("Kjo arke me kete emer ekziston", 409);
+  }
+
+  const updatedArka = await arka.update(body, { where: { id } });
+  return updatedArka;
 };
 
 module.exports = { getAllArka, createArka, updateArka };
