@@ -16,6 +16,9 @@ const User_Permissions = require('./models/user_permissions');
 const Invoice = require('./models/invoice');
 const InvoiceItem = require('./models/invoiceitem');
 const Configuration = require('./models/configuration');
+const Arka = require("./models/arka");
+const ArkaHistory = require("./models/arkahistory");
+const ShiftHistory = require("./models/shifthistory");
 
 const connection = new Sequelize(dbConfig);
 
@@ -40,6 +43,9 @@ User_Permissions.init(connection);
 Invoice.init(connection);
 InvoiceItem.init(connection);
 Configuration.init(connection);
+Arka.init(connection);
+ArkaHistory.init(connection);
+ShiftHistory.init(connection);
 
 Client.associate(connection.models);
 Branch.associate(connection.models);
@@ -55,5 +61,8 @@ Permission.associate(connection.models);
 Invoice.associate(connection.models);
 InvoiceItem.associate(connection.models);
 Configuration.associate(connection.models);
+Arka.associate(connection.models);
+ArkaHistory.associate(connection.models);
+ShiftHistory.associate(connection.models);
 
 module.exports = connection;
