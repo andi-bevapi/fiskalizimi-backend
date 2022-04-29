@@ -9,12 +9,9 @@ const product = Joi.object({
         'string.max':   `"Emri" duhet te ket nje maksimum prej 20 karakteresh`,
         'any.required': `"Emri" eshte nje fushe e detyrueshme`
     }),
-    description: Joi.string().min(2).max(20).required().messages({
+    description: Joi.string().allow(null, '').max(20).messages({
         'string.base':  `"Pershkrimi" duhe te jet i formatit 'tekst'`,
-        'string.empty': `"Pershkrimi" nuk duhet te jet bosh`,
-        'string.min':   `"Pershkrimi" duhet te ket nje limit prej 2 karakteresh`,
-        'string.max':   `"Pershkrimi" duhet te ket nje maksimum prej 20 karakteresh`,
-        'any.required': `"Pershkrimi" eshte nje fushe e detyrueshme`
+        'string.max':   `"Pershkrimi" duhet te ket nje maksimum prej 20 karakteresh`
     }),
     price: Joi.number().greater(-1).required().messages({
         'any.required': `"Cmimi" eshte nje fushe e detyrueshme`,
