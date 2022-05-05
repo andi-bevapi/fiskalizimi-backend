@@ -20,11 +20,20 @@ const createArka = async (req, res, next) => {
 
 const updateArka = async (req, res, next) => {
   try {
-    const arkaToUpdate = ArkaServices.updateArka(req.body, req.params.id);
+    const arkaToUpdate = await ArkaServices.updateArka(req.body, req.params.id);
     res.ok(arkaToUpdate, "Arka u perditesua me sukses!");
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { getAllArka, createArka, updateArka };
+const deleteArka = async (req, res, next) => {
+  try {
+    const arkaToDelete = await ArkaServices.deleteArka(req.params.id);
+    res.ok(arkaToDelete, "Arka u fshi me sukses!");
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getAllArka, createArka, updateArka, deleteArka };

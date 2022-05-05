@@ -34,4 +34,9 @@ const updateArka = async (body, id) => {
   return updatedArka;
 };
 
-module.exports = { getAllArka, createArka, updateArka };
+const deleteArka = async (id) => {
+  const arkaToDelete = await arka.destroy({where: {id}});
+  return arkaToDelete;
+}
+
+module.exports = { getAllArka, createArka, updateArka, deleteArka };
