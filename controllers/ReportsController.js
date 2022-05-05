@@ -2,7 +2,7 @@ const ReportsService = require("../services/ReportsService");
 
 const getDashboardReports = async (req, res, next) => {
     try {
-        const data = await ReportsService.getAllDashboardReports(req.params.clientId, req.query.option);
+        const data = await ReportsService.getAllDashboardReports(req.params.clientId, req.query.startDate, req.query.endDate);
         res.ok(data);
     } catch (error) {
         next(error);
@@ -23,6 +23,7 @@ const getAnalyticsReports = async (req, res, next) => {
         const data = await ReportsService.getAllAnalyticsReports(req.params.clientId, req.query.startDate, req.query.endDate);
         res.ok(data);
     } catch (error) {
+        console.log(error)
         next(error);
     }
 }
@@ -37,9 +38,9 @@ const getAnalyticsReportsForSingleInvoice = async (req, res, next) => {
     }
 }
 
-const getSoldProductsReportByCategory = async (req, res, next) => {
+const getSoldProductsReport = async (req, res, next) => {
     try {
-        const data = await ReportsService.getReportForSoldProductsByCategory(req.params.clientId);
+        const data = await ReportsService.getReportForSoldProducts(req.params.clientId, req.query);
         res.ok(data);
     } catch (error) {
         console.log(error)
@@ -47,9 +48,9 @@ const getSoldProductsReportByCategory = async (req, res, next) => {
     }
 }
 
-const getSoldProductsReportBySupplier = async (req, res, next) => {
+const getOperatorsReport = async (req, res, next) => {
     try {
-        const data = await ReportsService.getReportForSoldProductsBySupplier(req.params.clientId);
+        const data = await ReportsService.getReportForOperators(req.params.clientId, req.query);
         res.ok(data);
     } catch (error) {
         console.log(error)
@@ -57,4 +58,14 @@ const getSoldProductsReportBySupplier = async (req, res, next) => {
     }
 }
 
-module.exports = { getDashboardReports, getChartReports, getAnalyticsReports, getAnalyticsReportsForSingleInvoice, getSoldProductsReportByCategory, getSoldProductsReportBySupplier };
+const getDailyTurnoverReport = async (req, res, next) => {
+    try {
+        const data = await ReportsService.getReportForDailyTurnover(req.query);
+        res.ok(data);
+    } catch (error) {
+        console.log(error)
+        next(error);
+    }
+}
+
+module.exports = { getDashboardReports, getChartReports, getAnalyticsReports, getAnalyticsReportsForSingleInvoice, getSoldProductsReport, getOperatorsReport, getDailyTurnoverReport };

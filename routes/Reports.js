@@ -76,8 +76,10 @@ router.get("/:clientId", reportsController.getDashboardReports);
 
 router.get("/analytics/:clientId/:id", reportsController.getAnalyticsReportsForSingleInvoice);
 
-router.get("/sold-products/category/:clientId", reportsController.getSoldProductsReportByCategory);
+router.get("/sold-products/:clientId", reportsController.getSoldProductsReport);
 
-router.get("/sold-products/supplier/:clientId", reportsController.getSoldProductsReportBySupplier);
+router.get("/operators/:clientId", reportsController.getOperatorsReport);
+
+router.get("/daily/turnover", reportsController.getDailyTurnoverReport);
 
 module.exports = router;
