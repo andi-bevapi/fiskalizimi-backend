@@ -8,7 +8,6 @@
 # Node artifact files
 node_modules/
 dist/
-db/data/db.sqlite3
 
 # Compiled Java class files
 *.class
@@ -50,5 +49,3 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
-db/data/db.sqlite3

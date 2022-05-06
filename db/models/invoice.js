@@ -100,6 +100,7 @@ class Invoice extends Model {
     this.hasMany(models.InvoiceItem, { foreignKey: 'invoiceId', as: 'items' });
     this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
     this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
+    this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
   }
 }
 
