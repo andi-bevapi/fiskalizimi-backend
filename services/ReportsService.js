@@ -163,7 +163,7 @@ const getReportForOperators = async (clientId, query) => {
     const start = `${startDate} 00:00:00`;
     const end = `${endDate} 23:59:59`;
 
-    let queryString = `SELECT MIN(i.createdAt) as startDate, MAX(i.createdAt) as endDate, u.username, sum(totalAmountNoVAT) as totalAmountNoVAT, sum(totalAmount) as totalAmount, sum(totalVat) as totalVat, sum(totalVat6) as totalVat6, sum(totalVat20) as totalVat20 from Invoices i
+    let queryString = `SELECT u.username, sum(totalAmountNoVAT) as totalAmountNoVAT, sum(totalAmount) as totalAmount, sum(totalVat) as totalVat, sum(totalVat6) as totalVat6, sum(totalVat20) as totalVat20 from Invoices i
     join Users u on u.id = i.userId
     where i.createdAt >= :start AND i.createdAt <= :end AND i.clientId = :clientId GROUP by i.userId`;
 
