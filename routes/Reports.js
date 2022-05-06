@@ -82,4 +82,6 @@ router.get("/operators/:clientId", reportsController.getOperatorsReport);
 
 router.get("/daily/turnover", reportsController.getDailyTurnoverReport);
 
+router.get("/daily-summary/:userId", reportsController.getDailySummaryReport);
+
 module.exports = router;

@@ -68,4 +68,14 @@ const getDailyTurnoverReport = async (req, res, next) => {
     }
 }
 
-module.exports = { getDashboardReports, getChartReports, getAnalyticsReports, getAnalyticsReportsForSingleInvoice, getSoldProductsReport, getOperatorsReport, getDailyTurnoverReport };
+const getDailySummaryReport = async (req, res, next) => {
+    try {
+        const data = await ReportsService.getReportForDailySummary(req.params.userId);
+        res.ok(data);
+    } catch (error) {
+        console.log(error)
+        next(error);
+    }
+}
+
+module.exports = { getDashboardReports, getChartReports, getAnalyticsReports, getAnalyticsReportsForSingleInvoice, getSoldProductsReport, getOperatorsReport, getDailyTurnoverReport, getDailySummaryReport };

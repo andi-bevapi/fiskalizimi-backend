@@ -200,4 +200,15 @@ const getReportForDailyTurnover = async (query) => {
     );
 }
 
-module.exports = { getAllDashboardReports, getAllChartReports, getAllAnalyticsReports, getSingleInvoiceAnalytics, getReportForSoldProducts, getReportForOperators, getReportForDailyTurnover };
+const getReportForDailySummary = async (userId) => {
+    return await sequelize.query(`SELECT sum(i.totalAmount) as totalAmount, sum(i.totalAmountNoVAT) as totalAmountNoVAT, sum(i.totalVat6) as totalVat6, sum(i.totalVat20) as totalVat20 from Invoices i
+    join ShiftHistories sh on sh.userId = i.userId
+    where i.createdAt >= sh.shiftStart AND i.createdAt <= sh.shiftEnd AND i.userId = :userId;`,
+        {
+            replacements: { userId },
+            type: sequelize.QueryTypes.SELECT
+        }
+    );
+}
+
+module.exports = { getAllDashboardReports, getAllChartReports, getAllAnalyticsReports, getSingleInvoiceAnalytics, getReportForSoldProducts, getReportForOperators, getReportForDailyTurnover, getReportForDailySummary };
