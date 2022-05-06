@@ -18,4 +18,13 @@ const updateAmount = async (req, res, next) => {
   }
 };
 
-module.exports = { getLastAmount, updateAmount };
+const getArkaHistory = async (req, res, next) => {
+  try {
+    const history = await ArkaHistoryServices.getArkaHistory(req.params.arkaId);
+    res.ok(history);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getLastAmount, updateAmount, getArkaHistory };
