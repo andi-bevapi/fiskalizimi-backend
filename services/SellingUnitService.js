@@ -19,7 +19,7 @@ const update = async (body, id) => {
     const checkIfNameExists = await sellingUnit.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
     const checkIfIdExists = await sellingUnit.findOne({ where: { id } });
 
-    if (checkIfNameExists) {
+    if (checkIfNameExists && checkIfNameExists.id != id) {
         throw new GeneralError("Kjo njesi me kete emer ekziston", 409);
     }
 

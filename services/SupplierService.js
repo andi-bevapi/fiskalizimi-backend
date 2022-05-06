@@ -23,7 +23,7 @@ const update = async (body, id) => {
   const checkIfNameExists = await supplier.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
   const checkIfIdExists = await supplier.findOne({ where: { id } });
 
-  if (checkIfNameExists) {
+  if (checkIfNameExists && checkIfNameExists.id != id) {
     throw new GeneralError("Ky furnizues me kete emer ekziston", 409);
   }
 

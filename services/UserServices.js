@@ -28,6 +28,8 @@ const getAllUsers = async (branchId) => {
 };
 
 const getCurrentUser = async (token) => {
+  var arkaConnected = await findArkaConnected();
+
   token = token.split(" ")[1];
   const decodedUser = jwt.decode(token);
 
@@ -55,6 +57,7 @@ const getCurrentUser = async (token) => {
   if (newUser.permissions.length > 0)
     newUser.permissions = newUser.permissions[0].name.split(",");
 
+  newUser.arka = arkaConnected;
   return newUser;
 };
 
@@ -179,8 +182,6 @@ const deleteUser = async (id) => {
 };
 
 const login = async (username, password) => {
-  var arkaConnected = await findArkaConnected();
-
   const user = await User.findOne({
     where: {
       username,
@@ -212,7 +213,7 @@ const login = async (username, password) => {
     }
 
     const token = await user.generateAuthToken();
-    return {token: token, arka: arkaConnected};
+    return token;
   } else {
     throw new GeneralError("Fjalekalim i gabuar", 400);
   }
