@@ -119,4 +119,35 @@ router.get("/:branchId", arkaController.getAllArka);
 
 router.put("/update/:id", arkaController.updateArka);
 
+// @route   DELETE api/arkat/delete/{id}
+// @desc    delete one arkat
+// @access  Private
+/**
+ * @swagger
+ * /api/arkat/delete/{id}:
+ *  put:
+ *    summary: Delete arka
+ *    tags: [Arka]
+ *    description: Delete arka
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: number
+ *        description: arka id
+ *        required: true
+ *    responses:
+ *      200:
+ *         description: Success
+ *         content:
+ *            application/json:
+ *               schema:
+ *                   items:
+ *                     $ref: '#/components/schemas/Arka'
+ *      500:
+ *        description: internal server error
+ */
+
+ router.put("/delete/:id", arkaController.deleteArka);
+
 module.exports = router;

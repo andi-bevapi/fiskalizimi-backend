@@ -25,7 +25,6 @@ const arkaHistoryController = require("../controllers/ArkaHistoryController");
  *        type: string
  */
 
-
 // @route   GET api/arka-history/:arkaId
 // @desc    Get all arkaHistory
 // @access  Private
@@ -76,6 +75,34 @@ router.get("/:arkaId", arkaHistoryController.getLastAmount);
  *           "500":
  *              description: internal server error
  */
- router.post("/create", arkaHistoryController.updateAmount);
+router.post("/create", arkaHistoryController.updateAmount);
 
- module.exports = router;
+// @route   GET api/arka-history/todays/:arkaId
+// @desc    Get all arkaHistory
+// @access  Private
+/**
+ * @swagger
+ * /api/arka-history/todays/{arkaId}:
+ *  get:
+ *    summary: Get todays arka history
+ *    tags: [ArkaHistory]
+ *    parameters:
+ *      - in: path
+ *        name: arkaId
+ *        schema:
+ *          type: number
+ *        description: arkaId
+ *        required: true
+ *    responses:
+ *      200:
+ *       description: Success
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               $ref: '#/components/schemas/ArkaHistory'
+ */
+router.get("/todays/:arkaId", arkaHistoryController.getArkaHistory);
+
+module.exports = router;

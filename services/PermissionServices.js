@@ -33,6 +33,10 @@ const createPermissions = async () => {
     { name: 'permission.user.create' },
     { name: 'permission.user.update' },
     { name: 'permission.user.delete' },
+    { name: 'permission.arka.view' },
+    { name: 'permission.arka.create' },
+    { name: 'permission.arka.update' },
+    { name: 'permission.arka.delete' },
     { name: 'permission.reports.view' },
   ]
 
