@@ -19,7 +19,7 @@ const updatedCategory = async (body, id) => {
     const checkIfExist = await category.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
     const checkIfIdExists = await category.findOne({ where: { id } });
 
-    if (checkIfExist) {
+    if (checkIfExist && checkIfExist.id != id) {
         throw new GeneralError("Kjo kategori ekziston", 409);
     }
 
