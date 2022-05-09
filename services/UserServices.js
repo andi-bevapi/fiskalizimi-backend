@@ -7,7 +7,10 @@ const sequelize = require("sequelize");
 const User_Permissions = require("../db/models/user_permissions");
 const jwt = require("jsonwebtoken");
 const ShiftHistory = require("../db/models/shifthistory");
+const Arka = require("../db/models/arka");
 const Op = require("sequelize").Op;
+var usbDetect = require("usb-detection");
+usbDetect.startMonitoring();
 
 const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
@@ -25,6 +28,8 @@ const getAllUsers = async (branchId) => {
 };
 
 const getCurrentUser = async (token) => {
+  var arkaConnected = await findArkaConnected();
+
   token = token.split(" ")[1];
   const decodedUser = jwt.decode(token);
 
@@ -52,6 +57,7 @@ const getCurrentUser = async (token) => {
   if (newUser.permissions.length > 0)
     newUser.permissions = newUser.permissions[0].name.split(",");
 
+  newUser.arka = arkaConnected;
   return newUser;
 };
 
@@ -211,6 +217,19 @@ const login = async (username, password) => {
   } else {
     throw new GeneralError("Fjalekalim i gabuar", 400);
   }
+};
+
+const findArkaConnected = async () => {
+  const devices = await usbDetect.find();
+  for (var index in devices) {
+    const findArka = await Arka.findOne({
+      where: { serialNumber: devices[index].serialNumber },
+    });
+    if (findArka) {
+      return findArka;
+    }
+  }
+  return null;
 };
 
 module.exports = {
