@@ -1,5 +1,6 @@
 const ShiftHistory = require("../db/models/shifthistory");
 const Op = require("sequelize").Op;
+const Arka_Shifts = require("../db/models/arka_shifts");
 
 const getTodayShift = async (userId) => {
   const todaysShift = ShiftHistory.findOne({
@@ -16,6 +17,7 @@ const getTodayShift = async (userId) => {
 
 const createShift = async (body) => {
   const newShift = await ShiftHistory.create(body, { shiftStart: new Date() });
+  await Arka_Shifts.create({arkaId: 1, shiftId: newShift.id});
   return newShift;
 };
 

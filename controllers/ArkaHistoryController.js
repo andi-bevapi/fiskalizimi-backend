@@ -20,7 +20,7 @@ const updateAmount = async (req, res, next) => {
 
 const getArkaHistory = async (req, res, next) => {
   try {
-    const history = await ArkaHistoryServices.getArkaHistory(req.params.arkaId);
+    const history = await ArkaHistoryServices.getArkaHistory(req.params.arkaId, req.query.startDate, req.query.endDate);
     res.ok(history);
   } catch (error) {
     next(error);

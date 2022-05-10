@@ -15,13 +15,15 @@ const updateAmount = async (body) => {
   return newRecord;
 };
 
-const getArkaHistory = async (arkaId) => {
+const getArkaHistory = async (arkaId, startDate, endDate) => {
+  const start = new Date(startDate).setHours(0,0,0,0);
+  const end = new Date(endDate).setHours(23,59,59,59);
   const history = await arkaHistory.findAll({
     where: {
       arkaId,
       actionTime: {
-        [Op.gt]: new Date().setHours(0, 0, 0, 0),
-        [Op.lt]: new Date(),
+        [Op.gt]: start,
+        [Op.lt]: end,
       },
     },
     attributes: {exclude: ['createdAt', 'updatedAt', 'arkaId', 'userId']},
