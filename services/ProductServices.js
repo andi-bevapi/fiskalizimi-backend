@@ -68,6 +68,67 @@ const getProductsService = async (branchId, { categoryId, sellingUnitId, supplie
   });
 };
 
+const getProductsServiceByClientId = async (clientId, { categoryId, sellingUnitId, supplierId, barcode = "", searchText = "" }) => {
+  return await Product.findAll({
+    where: {
+      isActive: true,
+      isDeleted: false,
+      clientId,
+      [Op.and]: [
+        {
+          barcode: {
+            [Op.like]: "%" + barcode + "%",
+          }, 
+        }
+      ],
+      [Op.or]: [
+        {
+          barcode: {
+            [Op.like]: "%" + searchText + "%",
+          }, 
+        },
+        {
+          name: {
+            [Op.like]: "%" + searchText + "%",
+          }
+        },
+        {
+          description: {
+            [Op.like]: "%" + searchText + "%",
+          }
+        },
+      ],
+    },
+    include: [
+      {
+        model: Branch,
+        as: "branch",
+      },
+      {
+        model: Category,
+        as: "category",
+        where: categoryId && {
+          id: categoryId
+        }
+      },
+      {
+        model: SellingUnit,
+        as: "sellingUnit",
+        where: sellingUnitId && {
+          id: sellingUnitId
+        }
+      },
+      {
+        model: Supplier,
+        as: "supplier",
+        where: supplierId && {
+          id: supplierId
+        }
+      },
+    ],
+  });
+};
+
 const createProductService = async (product) => {
 
   const checkProductWithBarcode = await Product.findAll({
@@ -202,5 +263,6 @@ module.exports = {
   deleteProductService,
   updateProductService,
   getProductsService,
-  getProductByBarcodeService
+  getProductByBarcodeService,
+  getProductsServiceByClientId
 };

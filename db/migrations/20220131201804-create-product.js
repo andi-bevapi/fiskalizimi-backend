@@ -50,6 +50,15 @@ module.exports = {
       imageVirtualPath: {
         type: Sequelize.STRING
       },
+      clientId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Clients',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       branchId: {
         type: Sequelize.INTEGER,
         references: {

@@ -9,6 +9,15 @@ const getAllSupplier = async (req, res, next) => {
     }
 }
 
+const getAllSupplierByClientId = async (req, res, next) => {
+    try {
+        const allSuplier = await SupplierService.getAllByClientId(req.params.clientId);
+        res.ok(allSuplier);
+    } catch (error) {
+        next(error);
+    }
+}
+
 const createSupplier = async (req, res, next) => {
     try {
         const createSupplier = await SupplierService.create(req.body);
@@ -36,4 +45,4 @@ const deleteSupplier = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllSupplier, createSupplier, updatedSupplier, deleteSupplier };
+module.exports = { getAllSupplier, createSupplier, updatedSupplier, deleteSupplier, getAllSupplierByClientId };

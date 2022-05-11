@@ -52,6 +52,34 @@ const Joivalidation = require("../validation/supplier");
  */
 router.get("/:branchId", supplierController.getAllSupplier);
 
+// @route   GET api/supplier/clientId/:clientId
+// @desc    Get all supplier
+// @access  Private
+/**
+ * @swagger
+ * /api/supplier/clientId/{clientId}:
+ *  get:
+ *    summary: Get all supplier
+ *    tags: [Supplier]
+ *    parameters:
+ *      - in: path
+ *        name: clientId
+ *        schema:
+ *          type: number
+ *        description: clientId
+ *        required: true
+ *    responses:
+ *      200:
+ *       description: Success
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               $ref: '#/components/schemas/Supplier'
+ */
+ router.get("/clientId/:clientId", supplierController.getAllSupplierByClientId);
+
 // @route   POST api/supplier/create
 // @desc    Create new supplier
 // @access  Private

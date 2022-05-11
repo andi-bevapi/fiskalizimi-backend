@@ -2,6 +2,7 @@ const Joi = require("joi");
 
 const supplier = Joi.object({
     id: Joi.number(),
+    clientId: Joi.number(),
     branchId: Joi.number(),
     name : Joi.string().min(2).max(20).required().messages({
         'string.base':  `"Emri" duhe te jet i formatit 'tekst'`,
