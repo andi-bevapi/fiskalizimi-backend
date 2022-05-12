@@ -68,7 +68,7 @@ const getProductsService = async (branchId, { categoryId, sellingUnitId, supplie
   });
 };
 
-const getProductsServiceByClientId = async (clientId, { categoryId, sellingUnitId, supplierId, barcode = "", searchText = "" }) => {
+const getProductsServiceByClientId = async (clientId, { branchId, categoryId, sellingUnitId, supplierId, barcode = "", searchText = "" }) => {
   return await Product.findAll({
     where: {
       isActive: true,
@@ -103,6 +103,9 @@ const getProductsServiceByClientId = async (clientId, { categoryId, sellingUnitI
       {
         model: Branch,
         as: "branch",
+        where: branchId && {
+          id: branchId
+        }
       },
       {
         model: Category,

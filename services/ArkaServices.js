@@ -6,6 +6,11 @@ const getAllArka = async (branchId) => {
   return allArka;
 };
 
+const getAllArkaByClientId = async (clientId) => {
+  const allArka = await arka.findAll({ where: { clientId } });
+  return allArka;
+};
+
 const createArka = async (body) => {
   const checkIfNameExist = await arka.findOne({ where: { name: body.name } });
   if (checkIfNameExist) {
@@ -39,4 +44,4 @@ const deleteArka = async (id) => {
   return arkaToDelete;
 }
 
-module.exports = { getAllArka, createArka, updateArka, deleteArka };
+module.exports = { getAllArka, createArka, updateArka, deleteArka, getAllArkaByClientId };
