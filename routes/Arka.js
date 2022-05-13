@@ -25,6 +25,8 @@ const arkaController = require("../controllers/ArkaController");
  *        type: string
  *      validTo:
  *        type: string
+ *      branchId:
+ *        type: number
  */
 
 

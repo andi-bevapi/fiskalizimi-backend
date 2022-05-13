@@ -23,6 +23,10 @@ const arkaHistoryController = require("../controllers/ArkaHistoryController");
  *        type: string
  *      actionTime:
  *        type: string
+ *      arkaId:
+ *        type: number
+ *      userId:
+ *        type: number
  */
 
 // @route   GET api/arka-history/:arkaId
