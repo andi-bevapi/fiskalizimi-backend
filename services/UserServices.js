@@ -27,6 +27,21 @@ const getAllUsers = async (branchId) => {
   return allUsers;
 };
 
+const getAllUsersByClientId = async (clientId) => {
+  const allUsers = await User.findAll({
+    attributes: { exclude: ["password"] },
+    where: { isActive: true, clientId },
+    joinTableAttributes: ["permissionId"],
+    include: [
+      {
+        model: Permission,
+        as: "permissions",
+      },
+    ],
+  });
+  return allUsers;
+};
+
 const getCurrentUser = async (token) => {
   var arkaConnected = await findArkaConnected();
 
@@ -236,6 +251,7 @@ const findArkaConnected = async () => {
 
 module.exports = {
   getAllUsers,
+  getAllUsersByClientId,
   getCurrentUser,
   createUser,
   updateUser,
