@@ -19,6 +19,7 @@ const Configuration = require('./models/configuration');
 const Arka = require("./models/arka");
 const ArkaHistory = require("./models/arkahistory");
 const ShiftHistory = require("./models/shifthistory");
+const Arka_Shifts = require('./models/arka_shifts');
 
 const connection = new Sequelize(dbConfig);
 
@@ -46,6 +47,7 @@ Configuration.init(connection);
 Arka.init(connection);
 ArkaHistory.init(connection);
 ShiftHistory.init(connection);
+Arka_Shifts.init(connection);
 
 Client.associate(connection.models);
 Branch.associate(connection.models);

@@ -8,6 +8,7 @@ const User_Permissions = require("../db/models/user_permissions");
 const jwt = require("jsonwebtoken");
 const ShiftHistory = require("../db/models/shifthistory");
 const Arka = require("../db/models/arka");
+const Arka_Shifts = require("../db/models/arka_shifts");
 const Op = require("sequelize").Op;
 var usbDetect = require("usb-detection");
 usbDetect.startMonitoring();
@@ -221,11 +222,11 @@ const login = async (username, password) => {
         },
       });
       if (shiftHistory.length === 0) {
-        await ShiftHistory.create({
+        const newShift = await ShiftHistory.create({
           shiftStart: new Date(),
           userId: user.id,
-          arkaId: 1,
         });
+        await Arka_Shifts.create({arkaId: 1, shiftId: newShift.id});
       }
     }
 

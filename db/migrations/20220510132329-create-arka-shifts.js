@@ -1,27 +1,20 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ShiftHistories', {
+    await queryInterface.createTable('Arka_Shifts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      shiftStart: {
-        type: Sequelize.DATE
-      },
-      shiftEnd: {
-        type: Sequelize.DATE
-      },
-      userId: {
+      arkaId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: "id"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        allowNull: false
+      },
+      shiftId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +29,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ShiftHistories');
+    await queryInterface.dropTable('Arka_Shifts');
   }
 };
