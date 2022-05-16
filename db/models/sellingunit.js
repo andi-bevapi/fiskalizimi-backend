@@ -41,6 +41,7 @@ class SellingUnit extends Model {
   }
 
   static associate(models) {
+    this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
     this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
   }
 }

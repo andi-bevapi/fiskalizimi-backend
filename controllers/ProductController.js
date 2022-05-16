@@ -9,6 +9,15 @@ const getProducts = async (req, res, next) => {
   }
 };
 
+const getProductsByClientId = async (req, res, next) => {
+  try {
+    const data = await productServices.getProductsServiceByClientId(req.params.clientId, req.query);
+    res.ok(data, "Lista e produkteve");
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createProduct = async (req, res, next) => {
   try {
     const data = await productServices.createProductService(req.body);
@@ -55,5 +64,6 @@ module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
-  getProductByBarcode
+  getProductByBarcode,
+  getProductsByClientId
 };

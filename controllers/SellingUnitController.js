@@ -9,6 +9,15 @@ const getAllSellingUnit = async (req, res, next) => {
     }
 }
 
+const getAllSellingUnitByClientId = async (req, res, next) => {
+    try {
+        const sellingUnit = await SellingUnitServices.getAllByClientId(req.params.clientId);
+        res.ok(sellingUnit);
+    } catch (error) {
+        next(error);
+    }
+}
+
 const createSellingUnit = async (req, res, next) => {
     try {
         const createSellingUnit = await SellingUnitServices.create(req.body);
@@ -36,4 +45,4 @@ const deleteSellingUnit = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllSellingUnit, createSellingUnit, updatedSellingUnit, deleteSellingUnit };
+module.exports = { getAllSellingUnit, createSellingUnit, updatedSellingUnit, deleteSellingUnit, getAllSellingUnitByClientId };

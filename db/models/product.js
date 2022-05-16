@@ -69,6 +69,7 @@ class Product extends Model {
   }
 
   static associate(models) {
+    this.belongsTo(models.Client, { foreignKey: 'clientId', as: 'client' });
     this.belongsTo(models.Branch, { foreignKey: 'branchId', as: 'branch' });
     this.belongsTo(models.Category, { foreignKey: 'categoryId', as: 'category' });
     this.belongsTo(models.SellingUnit, { foreignKey: 'sellingUnitId', as: 'sellingUnit' });

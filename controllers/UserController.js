@@ -9,6 +9,15 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+const getAllUsersByClientId = async (req, res, next) => {
+  try {
+    const users = await UserServices.getAllUsersByClientId(req.params.clientId);
+    res.ok(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getCurrentUser = async (req, res, next) => {
   try {
     const user = await UserServices.getCurrentUser(req.headers.authorization);
@@ -54,4 +63,4 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers, getCurrentUser, createUser, updateUser, deleteUser, loginUser };
+module.exports = { getAllUsers, getCurrentUser, createUser, updateUser, deleteUser, loginUser, getAllUsersByClientId };

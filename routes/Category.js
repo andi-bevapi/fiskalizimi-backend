@@ -54,6 +54,35 @@ const Joivalidation = require("../validation/category");
  */
 router.get("/:branchId", categoryController.getAllCategory);
 
+
+// @route   GET api/categories/clientId/:clientId
+// @desc    Get all categories
+// @access  Private
+/**
+ * @swagger
+ * /api/categories/clientId/{clientId}:
+ *  get:
+ *    summary: Get all categories
+ *    tags: [Category]
+ *    parameters:
+ *      - in: path
+ *        name: clientId
+ *        schema:
+ *          type: number
+ *        description: clientId
+ *        required: true
+ *    responses:
+ *      200:
+ *       description: Success
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               $ref: '#/components/schemas/Category'
+ */
+ router.get("/clientId/:clientId", categoryController.getAllCategoryByClientId);
+
 // @route   POST api/categories/create
 // @desc    Create new category
 // @access  Private

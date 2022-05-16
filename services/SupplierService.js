@@ -8,6 +8,13 @@ const getAll = async (branchId) => {
   return allSupplier;
 };
 
+const getAllByClientId = async (clientId) => {
+  const allSupplier = await supplier.findAll({
+    where: { clientId, isActive: true }
+  });
+  return allSupplier;
+};
+
 const create = async (body) => {
   const checkIfExist = await supplier.findOne({
     where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true },
@@ -15,7 +22,7 @@ const create = async (body) => {
   if (checkIfExist) {
     throw new GeneralError("Ky furnizues ekziston", 409);
   }
-  const newSuplier = await supplier.create({ name: body.name.toUpperCase(), branchId: body.branchId });
+  const newSuplier = await supplier.create({ name: body.name.toUpperCase(), branchId: body.branchId, clientId: body.clientId });
   return newSuplier;
 };
 
@@ -47,4 +54,4 @@ const deletedSupplier = async (id) => {
   throw new GeneralError("Kjo furnizues nuk ekziston", 404);
 };
 
-module.exports = { getAll, create, update, deletedSupplier };
+module.exports = { getAll, create, update, deletedSupplier, getAllByClientId };
