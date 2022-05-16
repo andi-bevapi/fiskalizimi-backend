@@ -203,7 +203,7 @@ const getReportForDailyTurnover = async (query) => {
 const getReportForDailySummary = async (userId) => {
     return await sequelize.query(`SELECT sum(i.totalAmount) as totalAmount, sum(i.totalAmountNoVAT) as totalAmountNoVAT, sum(i.totalVat6) as totalVat6, sum(i.totalVat20) as totalVat20 from Invoices i
     join ShiftHistories sh on sh.userId = i.userId
-    where i.createdAt >= sh.shiftStart AND i.createdAt <= sh.shiftEnd AND i.userId = :userId;`,
+    where i.createdAt >= sh.shiftStart AND i.userId = :userId;`,
         {
             replacements: { userId },
             type: sequelize.QueryTypes.SELECT
