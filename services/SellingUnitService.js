@@ -6,12 +6,17 @@ const getAll = async (branchId) => {
     return allSellingUnit;
 }
 
+const getAllByClientId = async (clientId) => {
+    const allSellingUnit = await sellingUnit.findAll({ where: { clientId, isActive: true } });
+    return allSellingUnit;
+}
+
 const create = async (body) => {
     const checkIfExist = await sellingUnit.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
     if (checkIfExist) {
         throw new GeneralError("Kjo njesi ekziston", 409);
     }
-    const newSellingUnit = await sellingUnit.create({ name: body.name.toUpperCase(), branchId: body.branchId });
+    const newSellingUnit = await sellingUnit.create({ name: body.name.toUpperCase(), branchId: body.branchId, clientId: body.clientId });
     return newSellingUnit;
 }
 
@@ -43,4 +48,4 @@ const deleteSellingUnit = async (id) => {
     throw new GeneralError("Kjo njesi nuk ekziston", 404);
 };
 
-module.exports = { getAll, create, update, deleteSellingUnit };
+module.exports = { getAll, create, update, deleteSellingUnit, getAllByClientId};

@@ -38,6 +38,7 @@ const product = Joi.object({
     imageVirtualPath: Joi.optional(),
     isActive:Joi.boolean(),
     isDeleted:Joi.boolean(),
+    clientId: Joi.number().required(),
     branchId: Joi.number().positive().greater(0).required(),
     categoryId: Joi.number().positive().greater(0).required(),
     sellingUnitId: Joi.number().positive().greater(0).required(),

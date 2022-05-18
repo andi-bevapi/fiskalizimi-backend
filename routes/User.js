@@ -1,14 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/UserController");
-const { validateUser, validateUserLogin , validateUserUpdate } = require("../validation/user");
+const {
+  validateUser,
+  validateUserLogin,
+  validateUserUpdate,
+} = require("../validation/user");
 
 /**
  * @swagger
  * tags:
  *  name: User
  */
-
 
 /**
  * @swagger
@@ -87,6 +90,35 @@ const { validateUser, validateUserLogin , validateUserUpdate } = require("../val
  */
 router.get("/:branchId", userController.getAllUsers);
 
+// @route   GET api/user/clientId/:clientId
+// @desc    Get all users
+// @access  Private
+/**
+ * @swagger
+ * /api/user/clientId/{clientId}:
+ *   get:
+ *       summary: Get users
+ *       tags: [User]
+ *       description: Get users based on branch
+ *       parameters:
+ *         - in: path
+ *           name: clientId
+ *           schema:
+ *             type: number
+ *           description: Client id
+ *           required: true
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "404":
+ *              description: Not found, User not found
+ *           "409":
+ *              description: Conflict, User already exists
+ *           "500":
+ *              description: Internal server error
+ */
+router.get("/clientId/:clientId", userController.getAllUsersByClientId);
+
 // @route   GET api/user/current/info
 // @desc    Get user
 // @access  Private
@@ -109,7 +141,7 @@ router.get("/:branchId", userController.getAllUsers);
  *           "500":
  *              description: Internal server error
  */
- router.get("/current/info", userController.getCurrentUser);
+router.get("/current/info", userController.getCurrentUser);
 
 // @route   POST api/user/create
 // @desc    Create new user
@@ -231,6 +263,6 @@ router.put("/delete/:id", userController.deleteUser);
  *           "500":
  *              description: Internal server error
  */
-router.post('/login', validateUserLogin, userController.loginUser);
+router.post("/login", validateUserLogin, userController.loginUser);
 
 module.exports = router;

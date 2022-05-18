@@ -77,6 +77,34 @@ const Joivalidation = require("../validation/product");
  */
 router.get("/:branchId", productController.getProducts);
 
+// @route   GET api/product/clientId/:clientId
+// @desc    Get all products by client
+// @access  Private
+/**
+ * @swagger
+ * /api/product/clientId/{clientId}:
+ *  get:
+ *    summary: Get all products
+ *    tags: [Product]
+ *    parameters:
+ *      - in: path
+ *        name: clientId
+ *        schema:
+ *          type: number
+ *        description: clientId
+ *        required: true
+ *    responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Product'
+ */
+ router.get("/clientId/:clientId", productController.getProductsByClientId);
+
 // @route   POST api/product/create
 // @desc    Create new product
 // @access  Private

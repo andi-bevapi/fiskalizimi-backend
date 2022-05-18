@@ -42,7 +42,7 @@ const user = Joi.object({
     "string.max": `"Fjalekalimi" duhet te kete nje maksimum prej 255 karakteresh`,
     "any.required": `"Fjalekalimi" eshte nje fushe e detyrueshme`,
   }),
-  branchId: Joi.number().positive().greater(0).required().messages({
+  branchId: Joi.number().positive().greater(0).allow(null).messages({
     "any.required": `"BranchId" eshte nje fushe e detyrueshme`,
   }),
   clientId: Joi.number().positive().greater(0).required().messages({

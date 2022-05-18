@@ -9,6 +9,15 @@ const getAllArka = async (req, res, next) => {
   }
 };
 
+const getAllArkaByClientId = async (req, res, next) => {
+  try {
+    const arkat = await ArkaServices.getAllArkaByClientId(req.params.clientId);
+    res.ok(arkat);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createArka = async (req, res, next) => {
   try {
     const newArka = await ArkaServices.createArka(req.body);
@@ -36,4 +45,4 @@ const deleteArka = async (req, res, next) => {
   }
 }
 
-module.exports = { getAllArka, createArka, updateArka, deleteArka };
+module.exports = { getAllArka, createArka, updateArka, deleteArka, getAllArkaByClientId };

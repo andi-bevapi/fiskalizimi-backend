@@ -13,6 +13,15 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true
       },
+      clientId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Clients',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       branchId: {
         type: Sequelize.INTEGER,
         references: {

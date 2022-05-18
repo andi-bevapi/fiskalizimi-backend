@@ -9,6 +9,15 @@ const getAllCategory = async (req, res, next) => {
     }
 }
 
+const getAllCategoryByClientId = async (req, res, next) => {
+    try {
+        const categories = await CategoryServices.getAllCategoryByClientId(req.params.clientId);
+        res.ok(categories);
+    } catch (error) {
+        next(error);
+    }
+}
+
 const createCategory = async (req, res, next) => {
     try {
         const categoryToCreate = await CategoryServices.createCategory(req.body);
@@ -36,4 +45,4 @@ const deleteCategory = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllCategory, createCategory, updateCategory, deleteCategory };
+module.exports = { getAllCategory, createCategory, updateCategory, deleteCategory, getAllCategoryByClientId };

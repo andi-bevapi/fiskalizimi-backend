@@ -6,12 +6,17 @@ const getAllCategory = async (branchId) => {
     return allCategory;
 }
 
+const getAllCategoryByClientId = async (clientId) => {
+    const allCategory = await category.findAll({ where: { clientId, isActive: true } });
+    return allCategory;
+}
+
 const createCategory = async (body) => {
     const checkIfExist = await category.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
     if (checkIfExist) {
         throw new GeneralError("Kjo kategori ekziston", 409);
     }
-    const newCategory = await category.create({ name: body.name.toUpperCase(), branchId: body.branchId });
+    const newCategory = await category.create({ name: body.name.toUpperCase(), branchId: body.branchId, clientId: body.clientId });
     return newCategory;
 }
 
@@ -43,4 +48,4 @@ const deleteCategory = async (id) => {
     throw new GeneralError("Kjo kategori nuk ekziston", 404);
 };
 
-module.exports = { getAllCategory, createCategory, updatedCategory, deleteCategory };
+module.exports = { getAllCategory, createCategory, updatedCategory, deleteCategory, getAllCategoryByClientId };

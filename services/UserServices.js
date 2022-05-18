@@ -8,6 +8,7 @@ const User_Permissions = require("../db/models/user_permissions");
 const jwt = require("jsonwebtoken");
 const ShiftHistory = require("../db/models/shifthistory");
 const Arka = require("../db/models/arka");
+const Arka_Shifts = require("../db/models/arka_shifts");
 const Op = require("sequelize").Op;
 var usbDetect = require("usb-detection");
 usbDetect.startMonitoring();
@@ -16,6 +17,21 @@ const getAllUsers = async (branchId) => {
   const allUsers = await User.findAll({
     attributes: { exclude: ["password"] },
     where: { isActive: true, branchId },
+    joinTableAttributes: ["permissionId"],
+    include: [
+      {
+        model: Permission,
+        as: "permissions",
+      },
+    ],
+  });
+  return allUsers;
+};
+
+const getAllUsersByClientId = async (clientId) => {
+  const allUsers = await User.findAll({
+    attributes: { exclude: ["password"] },
+    where: { isActive: true, clientId },
     joinTableAttributes: ["permissionId"],
     include: [
       {
@@ -195,21 +211,23 @@ const login = async (username, password) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (isMatch) {
-    const shiftHistory = await ShiftHistory.findAll({
-      where: {
-        userId: user.id,
-        shiftStart: {
-          [Op.gt]: new Date().setHours(0, 0, 0, 0),
-          [Op.lt]: new Date(),
+    if (user.branchId) {
+      const shiftHistory = await ShiftHistory.findAll({
+        where: {
+          userId: user.id,
+          shiftStart: {
+            [Op.gt]: new Date().setHours(0, 0, 0, 0),
+            [Op.lt]: new Date(),
+          },
         },
-      },
-    });
-    if (shiftHistory.length === 0) {
-      await ShiftHistory.create({
-        shiftStart: new Date(),
-        userId: user.id,
-        arkaId: 1,
       });
+      if (shiftHistory.length === 0) {
+        const newShift = await ShiftHistory.create({
+          shiftStart: new Date(),
+          userId: user.id,
+        });
+        await Arka_Shifts.create({arkaId: 1, shiftId: newShift.id});
+      }
     }
 
     const token = await user.generateAuthToken();
@@ -234,6 +252,7 @@ const findArkaConnected = async () => {
 
 module.exports = {
   getAllUsers,
+  getAllUsersByClientId,
   getCurrentUser,
   createUser,
   updateUser,

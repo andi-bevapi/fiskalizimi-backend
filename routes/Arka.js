@@ -25,6 +25,8 @@ const arkaController = require("../controllers/ArkaController");
  *        type: string
  *      validTo:
  *        type: string
+ *      branchId:
+ *        type: number
  */
 
 
@@ -55,6 +57,34 @@ const arkaController = require("../controllers/ArkaController");
  *               $ref: '#/components/schemas/Arka'
  */
 router.get("/:branchId", arkaController.getAllArka);
+
+// @route   GET api/arkat/clientId/:clientId
+// @desc    Get all arkat
+// @access  Private
+/**
+ * @swagger
+ * /api/arkat/clientId/{clientId}:
+ *  get:
+ *    summary: Get all arkat
+ *    tags: [Arka]
+ *    parameters:
+ *      - in: path
+ *        name: clientId
+ *        schema:
+ *          type: number
+ *        description: clientId
+ *        required: true
+ *    responses:
+ *      200:
+ *       description: Success
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               $ref: '#/components/schemas/Arka'
+ */
+ router.get("/clientId/:clientId", arkaController.getAllArkaByClientId);
 
 // @route   POST api/arkat/create
 // @desc    Create new arka
