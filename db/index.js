@@ -24,7 +24,7 @@ const Arka_Shifts = require('./models/arka_shifts');
 const connection = new Sequelize(dbConfig);
 
 connection.authenticate().then(() => {
-    console.log('Connected to DB');
+    console.log(`Connected to DB: ${process.env.DB_HOST}`);
 }).catch((error) => {
     console.log('Connection Error: ', error);
 })

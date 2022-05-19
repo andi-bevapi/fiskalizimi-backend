@@ -54,7 +54,7 @@ module.exports = {
       },
       signature: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       certificate: {
         allowNull: false,

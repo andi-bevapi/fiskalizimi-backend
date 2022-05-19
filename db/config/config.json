@@ -1,23 +1,16 @@
 {
   "development": {
-    "username": null,
-    "password": null,
-    "database": "db",
-    "storage": "./data/db.sqlite3",
-    "dialect": "sqlite"
-  },
-  "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "root",
+    "database": "posla-dev",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+  "test": {
+    "username": "ukqekkzqgvczxvhu",
+    "password": "06amzGNqoiYa6KkaIN4Y",
+    "database": "b3yf26atnl5fnu9shdqy",
+    "host": "b3yf26atnl5fnu9shdqy-mysql.services.clever-cloud.com",
     "dialect": "mysql"
   }
 }
