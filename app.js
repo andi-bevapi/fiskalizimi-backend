@@ -58,4 +58,4 @@ app.use(express.urlencoded());
 app.response = Object.create(customResponse);
 app.use('/api', routes);
 app.use(errorHandler);
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}!`));
