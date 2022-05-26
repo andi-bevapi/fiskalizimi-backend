@@ -24,14 +24,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      hasVat: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
-      },
-      vat: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       email: {
         allowNull: false,
         type: Sequelize.STRING
@@ -41,10 +33,6 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       phoneNumber: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      TCRCode: {
         allowNull: false,
         type: Sequelize.STRING
       },

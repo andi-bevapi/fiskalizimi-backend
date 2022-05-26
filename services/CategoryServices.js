@@ -12,7 +12,7 @@ const getAllCategoryByClientId = async (clientId) => {
 }
 
 const createCategory = async (body) => {
-    const checkIfExist = await category.findOne({ where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true } });
+    const checkIfExist = await category.findOne({ where: { name: body.name.toUpperCase(), clientid: body.clientId, branchId: body.branchId, isDeleted: false, isActive: true } });
     if (checkIfExist) {
         throw new GeneralError("Kjo kategori ekziston", 409);
     }
