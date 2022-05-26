@@ -1,6 +1,7 @@
 const Branch = require('../db/models/branch');
 const Client = require('../db/models/client');
 const GeneralError = require("../utils/GeneralError");
+const { cloudinary } = require('../config/cloudinary');
 
 const getClients = async () => {
     const clients = await Client.findAll({
@@ -16,11 +17,19 @@ const getClients = async () => {
 }
 
 const createClients = async (body) => {
-    const clients = await Client.create(body);
+    let uploadResponse = null;
+
+    if (body.logoVirtualPath) {
+        uploadResponse = await cloudinary.uploader.upload(body.logoVirtualPath, {
+          upload_preset: 'posla_dev'
+        });
+    }
+    const clients = await Client.create({...body, logoVirtualPath: uploadResponse ? uploadResponse.secure_url : null});
     return clients;
 }
 
 const updateClients = async (body, id) => {
+    console.log(body);
     const checkClients = await Client.findOne({ where: { id } });
     if (!checkClients) {
         throw new GeneralError("Ky klient nuk gjendet", 404);

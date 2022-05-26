@@ -109,13 +109,6 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }
-    // , {
-    //   uniqueKeys: {
-    //     Products_unique: {
-    //       fields: ['name', 'clientId', 'branchId']
-    //     }
-    //   }
-    // }
     );
   },
   async down(queryInterface, Sequelize) {

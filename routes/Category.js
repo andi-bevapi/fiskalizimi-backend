@@ -19,6 +19,8 @@ const Joivalidation = require("../validation/category");
  *        type: string
  *      branchId:
  *        type: number
+ *      clientId:
+ *        type: number
  *      isActive :
  *        type: boolean
  *      isDeleted:

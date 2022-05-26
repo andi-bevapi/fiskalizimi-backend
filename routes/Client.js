@@ -25,25 +25,17 @@ const Joivalidation = require("../validation/clients");
  *          type: string
  *       logoVirtualPath:
  *          type: string
- *       hasVat:
- *          type: boolean
- *       vat:
- *          type: string
  *       email:
  *          type: string
  *       numberOfUsers:
  *          type: number
  *       phoneNumber:
  *          type: string
- *       TCRCode:
- *          type: string
  *       softCode:
  *          type: string
  *       signature:
  *          type: string
  *       certificate:
- *          type: string
- *       typeOfTCR:
  *          type: string
  *       validFrom:
  *          type: string

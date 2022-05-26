@@ -48,10 +48,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      typeOfTCR: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       validFrom: {
         allowNull: false,
         type: Sequelize.DATE

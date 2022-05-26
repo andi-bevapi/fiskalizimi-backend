@@ -49,10 +49,6 @@ class Client extends Model {
         type: DataTypes.STRING,
         allowNull: false
       },
-      typeOfTCR: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       validFrom: {
         type: DataTypes.DATE,
         allowNull: false
