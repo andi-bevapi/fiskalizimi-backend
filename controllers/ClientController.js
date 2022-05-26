@@ -20,7 +20,6 @@ const createClients = async(req,res,next)=>{
 
 const updateClients = async(req,res,next)=>{
     try{
-        console.log(req.body);
         const clients = await clientService.updateClients(req.body,req.params.id);
         res.ok(clients,"Klienti u perditesua me sukses!");
     }catch(error){

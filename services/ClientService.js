@@ -29,7 +29,6 @@ const createClients = async (body) => {
 }
 
 const updateClients = async (body, id) => {
-    console.log(body);
     const checkClients = await Client.findOne({ where: { id } });
     if (!checkClients) {
         throw new GeneralError("Ky klient nuk gjendet", 404);
