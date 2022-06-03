@@ -25,14 +25,6 @@ class Client extends Model {
         type: DataTypes.STRING,
         allowNull: false
       },
-      hasVat: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-      },
-      vat: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       email: {
         type: DataTypes.STRING,
         allowNull: false
@@ -45,10 +37,6 @@ class Client extends Model {
         type: DataTypes.STRING,
         allowNull: false
       },
-      TCRCode: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       softCode: {
         type: DataTypes.STRING,
         allowNull: false
@@ -58,10 +46,6 @@ class Client extends Model {
         allowNull: false
       },
       certificate: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      typeOfTCR: {
         type: DataTypes.STRING,
         allowNull: false
       },

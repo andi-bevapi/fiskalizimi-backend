@@ -11,7 +11,7 @@ module.exports = {
       name: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true
+        unique: "compositeIndex",
       },
       clientId: {
         type: Sequelize.INTEGER,
@@ -19,6 +19,7 @@ module.exports = {
           model: 'Clients',
           key: 'id'
         },
+        unique: "compositeIndex",
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
@@ -28,6 +29,7 @@ module.exports = {
           model: 'Branches',
           key: 'id'
         },
+        unique: "compositeIndex",
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },

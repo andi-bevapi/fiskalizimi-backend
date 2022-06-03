@@ -17,6 +17,10 @@ const Joivalidation = require("../validation/supplier");
  *     properties:
  *      name:
  *        type: string
+ *      branchId:
+ *        type: number
+ *      clientId:
+ *        type: number
  *      isActive:
  *        type: boolean
  *      isDeleted:

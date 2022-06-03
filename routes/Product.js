@@ -35,6 +35,8 @@ const Joivalidation = require("../validation/product");
  *          type: string
  *       branchId:
  *          type: number
+ *       clientId:
+ *          type: number
  *       sellingUnitId:
  *          type: number
  *       categoryId:

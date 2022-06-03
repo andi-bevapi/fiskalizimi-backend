@@ -45,7 +45,7 @@ const user = Joi.object({
   branchId: Joi.number().positive().greater(0).allow(null).messages({
     "any.required": `"BranchId" eshte nje fushe e detyrueshme`,
   }),
-  clientId: Joi.number().positive().greater(0).required().messages({
+  clientId: Joi.number().positive().greater(0).allow(null).messages({
     "any.required": `"ClientId" eshte nje fushe e detyrueshme`,
   }),
   isFirstTimeLogin: Joi.boolean(),
