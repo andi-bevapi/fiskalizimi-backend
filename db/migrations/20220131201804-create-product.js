@@ -11,7 +11,7 @@ module.exports = {
       name: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true
+        unique: "compositeIndex"
       },
       description: {
         allowNull: false,
@@ -56,6 +56,7 @@ module.exports = {
           model: 'Clients',
           key: 'id'
         },
+        unique: "compositeIndex",
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
@@ -65,6 +66,7 @@ module.exports = {
           model: 'Branches',
           key: 'id'
         },
+        unique: "compositeIndex",
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
@@ -106,7 +108,8 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    }
+    );
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Products');

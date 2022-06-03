@@ -17,7 +17,7 @@ const getAllByClientId = async (clientId) => {
 
 const create = async (body) => {
   const checkIfExist = await supplier.findOne({
-    where: { name: body.name.toUpperCase(), isDeleted: false, isActive: true },
+    where: { name: body.name.toUpperCase(), branchId: body.branchId, isDeleted: false, isActive: true },
   });
   if (checkIfExist) {
     throw new GeneralError("Ky furnizues ekziston", 409);

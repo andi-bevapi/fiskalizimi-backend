@@ -24,14 +24,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      hasVat: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
-      },
-      vat: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       email: {
         allowNull: false,
         type: Sequelize.STRING
@@ -44,10 +36,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      TCRCode: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       softCode: {
         allowNull: false,
         type: Sequelize.STRING
@@ -57,10 +45,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       certificate: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      typeOfTCR: {
         allowNull: false,
         type: Sequelize.STRING
       },
