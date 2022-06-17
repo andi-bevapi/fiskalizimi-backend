@@ -1,4 +1,5 @@
 const arkaHistory = require("../db/models/arkahistory");
+const GeneralError = require("../utils/GeneralError");
 const user = require('../db/models/user');
 const Op = require("sequelize").Op;
 
@@ -11,9 +12,71 @@ const getLastAmount = async (arkaId) => {
 };
 
 const updateAmount = async (body) => {
-  const newRecord = await arkaHistory.create(body);
-  return newRecord;
+  console.log("body-----",body);
+
+  const { arkaId, userId} = body;
+  const TODAY_START = new Date().setHours(0, 0, 0, 0);
+  const NOW = new Date();
+  const checkArkAction = await arkaHistory.findOne({
+    where: {
+            arkaId,
+            userId,
+            action: 'Gjendje Fillestare',
+            createdAt: {
+                [Op.gt]: TODAY_START,
+                [Op.lt]: NOW
+            }
+          }
+      });
+    if(checkArkAction){
+      throw new GeneralError("Ky aksion eshte selektuar me pare", 409);
+    } else{
+      return await arkaHistory.create(body);
+    }
 };
+
+const autoInsertDeclaration = async (body) =>{
+  //nese eshte ora 23:59 dhe nuk ka ne tabele per ate dite rekord me action: 'Gjendje Fillestare' bej update ,
+  //by default do behet inser me vleren 0
+
+  const{ arkaId, userId } = body.deposit;
+  
+  const TODAY_START = new Date().setHours(0, 0, 0, 0);
+  const MID_NIGHT = new Date().setHours(23,59,59,59);
+  const WHEN_USER_DECIDE = new Date().getTime();
+
+  const todayAction = await arkaHistory.findOne({
+    where:{
+        action: 'Gjendje Fillestare',
+        createdAt:{
+          [Op.gt]: TODAY_START
+      }
+    }
+  });
+
+  // body----- {
+  //   totalAmount: 50,
+  //   arkaId: 1,
+  //   userId: 4,
+  //   action: 'Gjendje Fillestare',
+  //   actionTime: '2022-06-17T16:15:14.903Z'
+  // }
+
+  if(todayAction){
+    console.log("if---")
+    throw new GeneralError("Ky aksion eshte selektuar me pare", 409);
+  } else if(MID_NIGHT === WHEN_USER_DECIDE & !todayAction){
+    return await arkaHistory.create({
+      totalAmount : 0,
+      arkaId: arkaId, 
+      userId : userId
+    });
+  }else{
+    console.log("else-----");
+    return todayAction;
+  }
+
+}
 
 const getArkaHistory = async (arkaId, startDate, endDate) => {
   const start = new Date(startDate).setHours(0,0,0,0);
@@ -39,4 +102,4 @@ const getArkaHistory = async (arkaId, startDate, endDate) => {
   });
   return history;
 };
-module.exports = { getLastAmount, updateAmount, getArkaHistory };
+module.exports = { getLastAmount, updateAmount, getArkaHistory , autoInsertDeclaration };
