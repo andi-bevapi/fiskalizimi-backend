@@ -12,8 +12,6 @@ const getLastAmount = async (arkaId) => {
 };
 
 const updateAmount = async (body) => {
-  console.log("body-----",body);
-
   const { arkaId, userId} = body;
   const TODAY_START = new Date().setHours(0, 0, 0, 0);
   const NOW = new Date();
@@ -54,28 +52,16 @@ const autoInsertDeclaration = async (body) =>{
     }
   });
 
-  // body----- {
-  //   totalAmount: 50,
-  //   arkaId: 1,
-  //   userId: 4,
-  //   action: 'Gjendje Fillestare',
-  //   actionTime: '2022-06-17T16:15:14.903Z'
-  // }
-
   if(todayAction){
-    console.log("if---")
     throw new GeneralError("Ky aksion eshte selektuar me pare", 409);
-  } else if(MID_NIGHT === WHEN_USER_DECIDE & !todayAction){
+  } else if(MID_NIGHT === WHEN_USER_DECIDE && !todayAction){
     return await arkaHistory.create({
       totalAmount : 0,
-      arkaId: arkaId, 
-      userId : userId
+      arkaId,
+      userId
     });
-  }else{
-    console.log("else-----");
-    return todayAction;
   }
-
+  return todayAction;
 }
 
 const getArkaHistory = async (arkaId, startDate, endDate) => {
