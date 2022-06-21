@@ -27,4 +27,13 @@ const getArkaHistory = async (req, res, next) => {
   }
 }
 
-module.exports = { getLastAmount, updateAmount, getArkaHistory };
+const autoInsertDeclaration = async (req, res, next) => {
+  try {
+    const result = await ArkaHistoryServices.autoInsertDeclaration(req.body);
+    res.ok(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getLastAmount, updateAmount, getArkaHistory , autoInsertDeclaration };

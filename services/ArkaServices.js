@@ -1,8 +1,17 @@
 const arka = require("../db/models/arka");
 const GeneralError = require("../utils/GeneralError");
+const ArkaHistory = require("../db/models/arkahistory");
 
 const getAllArka = async (branchId) => {
-  const allArka = await arka.findAll({ where: { branchId } });
+  const allArka = await arka.findAll({ 
+      where: { branchId },
+      joinTableAttributes: ["arkaId"],
+      include: [
+        {
+          model: ArkaHistory
+        },
+      ], 
+   });
   return allArka;
 };
 
