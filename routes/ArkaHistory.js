@@ -109,4 +109,30 @@ router.post("/create", arkaHistoryController.updateAmount);
  */
 router.get("/todays/:arkaId", arkaHistoryController.getArkaHistory);
 
+router.get("/:arkaId", arkaHistoryController.getLastAmount);
+
+// @route   POST api/arka-history/autoInsertDeclaration
+// @desc    Create new arka histoy record
+// @access  Private
+/**
+ *@swagger
+ * /api/arka-history/create:
+ *   post:
+ *       summary: Auto Insert Declaration
+ *       tags: [ArkaHistory]
+ *       description:  Auto Insert Declaration
+ *       requestBody:
+ *           required: true
+ *           content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/ArkaHistory'
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "500":
+ *              description: internal server error
+ */
+router.post("/autoInsert", arkaHistoryController.autoInsertDeclaration);
+
 module.exports = router;
