@@ -15,31 +15,30 @@ const updateAmount = async (body) => {
   const { arkaId, userId} = body;
   const TODAY_START = new Date().setHours(0, 0, 0, 0);
   const NOW = new Date();
-  const checkArkAction = await arkaHistory.findOne({
-    where: {
-            arkaId,
-            userId,
-            action: 'Gjendje Fillestare',
-            createdAt: {
-                [Op.gt]: TODAY_START,
-                [Op.lt]: NOW
-            }
-          }
-      });
-    if(checkArkAction){
-      throw new GeneralError("Ky aksion eshte selektuar me pare", 409);
-    } else{
+  // const checkArkAction = await arkaHistory.findOne({
+  //   where: {
+  //           arkaId,
+  //           userId,
+  //           action: 'Gjendje Fillestare',
+  //           createdAt: {
+  //               [Op.gt]: TODAY_START,
+  //               [Op.lt]: NOW
+  //           }
+  //         }
+  //     });
+  //   if(checkArkAction){
+  //     throw new GeneralError("Ky aksion eshte selektuar me pare", 409);
+  //   } else{
       return await arkaHistory.create(body);
-    }
+    // }
 };
 
 const autoInsertDeclaration = async (body) =>{
   //nese eshte ora 23:59 dhe nuk ka ne tabele per ate dite rekord me action: 'Gjendje Fillestare' bej update ,
   //by default do behet inser me vleren 0
 
- 
   const arkaId = body.item.id;
-  const userId = body.item.ArkaHistories[0].userId;
+  const userId = body.userId;
 
   const TODAY_START = new Date().setHours(0, 0, 0, 0);
   const MID_NIGHT = new Date().setHours(23,59,59,59);

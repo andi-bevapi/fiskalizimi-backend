@@ -111,16 +111,17 @@ router.get("/todays/:arkaId", arkaHistoryController.getArkaHistory);
 
 router.get("/:arkaId", arkaHistoryController.getLastAmount);
 
-// @route   POST api/arka-history/autoInsertDeclaration
-// @desc    Create new arka histoy record
+
+// @route   POST api/arka-history/autoInsert
+// @desc    Check if new depozit exist
 // @access  Private
 /**
  *@swagger
- * /api/arka-history/create:
+ * /api/arka-history/autoInsert:
  *   post:
- *       summary: Auto Insert Declaration
+ *       summary: Check if new depozit exist
  *       tags: [ArkaHistory]
- *       description:  Auto Insert Declaration
+ *       description:  Check if new depozit exist
  *       requestBody:
  *           required: true
  *           content:
