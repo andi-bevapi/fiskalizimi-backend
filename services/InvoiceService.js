@@ -6,6 +6,7 @@ const ShiftHistory = require("../db/models/shifthistory");
 const Op = require("sequelize").Op;
 
 const { identifierGenerator } = require("../helpers");
+const fiscalizedInvoice = require("../xmlStructure/FiskalizimiFatures");
 
 const getAllInvoices = async (branchId, status = "active") => {
   return await Invoice.findAll({
@@ -41,7 +42,9 @@ const getInvoiceById = async (id) => {
 };
 
 const createInvoice = async (body) => {
+
   const invoiceItems = body.invoiceItems;
+
   delete body.invoiceItems;
   
   const todaysShift = await ShiftHistory.findOne({
@@ -103,10 +106,14 @@ const createInvoice = async (body) => {
     },
   });
 
+  // console.log("clientBranch------",clientBranch);
+
   const newInvoice = await Invoice.create({
     invoiceCode: identifierGenerator(clientInvoices.length, clientBranch.code),
     ...body,
   });
+
+  fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
 
   insertInvoiceItems(newInvoice.id, invoiceItems);
 
