@@ -4,6 +4,8 @@ const Client = require("../db/models/client");
 const Branch = require("../db/models/branch");
 const ShiftHistory = require("../db/models/shifthistory");
 const Op = require("sequelize").Op;
+const xmlParser = require("xml-parser");
+
 
 const { identifierGenerator } = require("../helpers");
 const fiscalizedInvoice = require("../xmlStructure/FiskalizimiFatures");
@@ -106,14 +108,21 @@ const createInvoice = async (body) => {
     },
   });
 
-  // console.log("clientBranch------",clientBranch);
-
   const newInvoice = await Invoice.create({
     invoiceCode: identifierGenerator(clientInvoices.length, clientBranch.code),
     ...body,
   });
+  
+  const result = await fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
 
-  fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
+
+  if(result){
+    const parsedXml = xmlParser(result.data);
+    const fic = parsedXml.root.children[1].children[0].children[1].content;
+    
+    console.log("fic----",fic);
+    await Invoice.update({FIC:fic},{where:{id:newInvoice.id}})
+  }
 
   insertInvoiceItems(newInvoice.id, invoiceItems);
 

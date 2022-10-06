@@ -1,58 +1,83 @@
-const invoiceFiscalized = (params) =>{
+const SignedXml = require("xml-crypto").SignedXml;
+const fs = require("fs");
+const axios = require('axios');
 
-    console.log("params------",params.invoiceItems);
+const invoiceFiscalized = async (params) =>{
 
+    // console.log("invoiceCode-------",params.newInvoice.dataValues.invoiceCode.substring(0,2));
     const softCode="zz463gy579";
+   
+    function signXml(xml, xpath, key) {
+      const sig = new SignedXml();
+      sig.signingKey = fs.readFileSync(__dirname +"/"+ key);
 
-    const xml = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">'+
+      sig.canonicalizationAlgorithm = "http://www.w3.org/2001/10/xml-exc-c14n#";
+      sig.signatureAlgorithm = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
+      sig.addReference(xpath, [
+        "http://www.w3.org/2000/09/xmldsig#enveloped-signature",
+        "http://www.w3.org/2001/10/xml-exc-c14n#",
+      ], ["http://www.w3.org/2001/04/xmlenc#sha256"]);
+      const publicKey = 'MIIFKTCCBBGgAwIBAgIMQwKhWXABWRovMc8KMA0GCSqGSIb3DQEBCwUAMEsxCzAJBgNVBAYTAkFMMQ0wCwYDVQQKEwROQUlTMS0wKwYDVQQDEyROQUlTIENsYXNzIDMgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkwHhcNMjIwODE3MTMzMDUzWhcNMjMwODE3MTMzMDUzWjCBgzEPMA0GA1UEBxMGVGlyYW5hMRUwEwYDVQQKEwxPVkxBIFN5c3RlbXMxCzAJBgNVBAsTAklUMQ0wCwYDVQQMEwRUZXN0MRgwFgYDVQQDEw9PVkxBIFN5c3RlbXMgICAxDjAMBgNVBAUTBU1PUzI3MRMwEQYDVQQEEwpNMTE0MjMwMTlPMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0j+6sPdloJ8xEVjF24iAe+OSN6S/1AvXmmOu91lnaH00Klprm3tXZISS33b4Ov0PdD2HilTrl1da4CayvbXcrEE1MxHWf8AIV/URxGhxEV5OEHsmctuBumYGMiC4qPYjNkTX5tVlOAPzF9zD5mHPoTmrBwLdrsfZBeFGpUCAq8GApE9QLXaV1i2w59JXm0F+w9KAB6p2IKJi+X8upK6Gw5+4rFzktvNhWqsyJlyj4/JJkuDj625H2zUTn7UZVINS9DipYv9KSqSe3d3NfJ8cNeyQVj1Jn1/WtpKDpevic/J2APD6/pMkviSLJIMtUbkqr1638J5cv4Tbm+y1L/QoEwIDAQABo4IB0jCCAc4wZgYIKwYBBQUHAQEEWjBYMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5ha3NoaS5nb3YuYWwwMAYIKwYBBQUHMAKGJGh0dHA6Ly9jZXJ0cy5ha3NoaS5nb3YuYWwvY2xhc3MzLmNydDAOBgNVHQ8BAf8EBAMCBPAwHwYDVR0jBBgwFoAUhyao+9srUZs50JjW9MYzVkdc2AUwHQYDVR0OBBYEFAAXNSQpD6bOrwQBhOADHVYzGS3jMEsGA1UdIAREMEIwQAYMKwYBBAGCsWwKAQEDMDAwLgYIKwYBBQUHAgEWImh0dHA6Ly93d3cuYWtzaGkuZ292LmFsL3JlcG9zaXRvcnkwgacGA1UdHwSBnzCBnDCBmaCBlqCBk4YiaHR0cDovL2NybC5ha3NoaS5nb3YuYWwvY2xhc3MzLmNybIZtbGRhcDovL2xkYXAuYWtzaGkuZ292LmFsL0NOPU5BSVMgQ2xhc3MgMyBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSxPPU5BSVMsQz1BTD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0O2JpbmFyeTAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwDQYJKoZIhvcNAQELBQADggEBAA7rR2wdN7Udk9xMUc13J8uGzAMWMOFey6cs1KD+kA/igJ/MxTgGobo/ydWEJ9Jebo8kbMvgEl8JnBhqXaWp3MpscJ3mT87WabqIw14LhPnk6sghOOJaYl77azZnFJpE/I/S392FfLJttQBEOzqHwz7cJByd4l8Imhd/b/LLbdCMeWEbmGnnLWoowdtAw/H5kDVKnYuZIyifzo/Se4xV/9KnZoJMFPVz2+lEkgjt0S4DSh3C3V07HztoZwPMeFvbKTIaxdRu1D8CWH6VK8cjJvEX7IrGwN7pVF5m7rS79zYduB01096HCs9oXQgTijT1B52ktK6Q8VuNaOLT+/ORK4M=';
+      
+      sig.keyInfoProvider = {
+        getKeyInfo: () => {
+          return `<X509Data><X509Certificate>${publicKey}</X509Certificate></X509Data>`;
+        },
+      };
+      sig.computeSignature(xml, {
+        location: { reference: "//*[local-name(.)='Invoice']", action: "after" },
+      });
+      return sig.getSignedXml();
+    }
+
+    // tcr bussines rg724gt177
+    // iy100lf082
+    // params.body.nuis
+    // nipt M11423019O
+
+    const xmlDocument = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">'+
     '<SOAP-ENV:Header/>'+
     '<SOAP-ENV:Body>'+
-    '<RegisterInvoiceRequest xmlns="https://eFiskalizimi.tatime.gov.al/FiscalizationService/schema" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" Id="Request" Version="2">'+
-    '<Header UUID="56b37523-3677-416a-8bc0-e0dd77296fd8" SendDateTime="2022-09-13T11:52:01+01:00"/>'+
-    `<Invoice TypeOfInv="CASH" IsSimplifiedInv="true" IssueDateTime="${params.body.date}" InvNum="${params.newInvoice.dataValues.invoiceCode}" InvOrdNum="${params.newInvoice.dataValues.invoiceCode.substring(0,2)}" TCRCode="iy100lf082" IsIssuerInVAT="true/false" TotPriceWoVAT=${params.body.totalAmountNoVAT} TotVATAmt=${params.body.totalVat} TotPrice=${params.body.totalAmount} OperatorCode="${params.body.operatorCode}" BusinUnitCode="${params.clientBranch.businessUnitCode}" SoftCode="${softCode}" PayDeadline="${params.body.date}" IsEinvoice="false">`+
-    `<PayMethod Type="BANKNOTE" Amt="${params.body.totalAmount}">`+
-    '</Invoice>'+
-    `<Seller IDType="NUIS" IDNum="${params.body.nuis}" Name="${params.clientBranch.dataValues.name}" Address="${params.clientBranch.dataValues.adress}" Town="${params.clientBranch.dataValues.city}">`+
-    '</Seller>'+
+    '<RegisterInvoiceRequest xmlns="https://eFiskalizimi.tatime.gov.al/FiscalizationService/schema" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" Id="Request" Version="3">'+
+    `<Header SendDateTime="${params.body.date}" UUID="56b37523-3677-416a-8bc0-e0dd77296fd8"/>`+
+    `<Invoice BusinUnitCode="rg724gt177" IssueDateTime="${params.body.date}" IIC="4AD5A215BEAF85B0416235736A6DACAB" IICSignature="83D728C8E10BA04C430BE64CE98612B0256C0FE618C167F28BF62A0C0CB38C51824F152AB00510AE076508E53ACE4F877D25D51C7830F043E09BB1500D3A0AEA233ECC6175A45FE58CBF53E517FD9EA1D06CBABC055EEE6B430A16560C96D3A27720A6E5C9BA5C8D18A7AE5C2A7F1D8E46B293F56D32847FCEE199D2AFDC6E5BC1164BA974A6E29D6F40FBD8C51D40A99BC97DD6DB2AE9EC0582F2E74E9C7841AC5A854DE92B1D778A809CACCBBEF4DC325C852487BCF035AA2D54594DC6BDD859E250782CCCDD7CC89EE80A2FE1030AAAD615DA5D728322F8590D9F56E6DDE5975A738F304F56BB832996763624B72C77E97881D9C647B50709F20AFBFA0602" InvNum="${params.newInvoice.dataValues.invoiceCode}" InvOrdNum="${params.newInvoice.dataValues.invoiceCode.substring(0,1)}" IsIssuerInVAT="true" IsReverseCharge="false" IsSimplifiedInv="false" OperatorCode="${params.body.operatorCode}" SoftCode="${softCode}" TCRCode="iy100lf082" TotPrice=${params.body.totalAmount + ".00"} TotPriceWoVAT="${params.body.totalAmountNoVAT + "0"}" TotVATAmt="${params.body.totalVat + "0"}" TypeOfInv="CASH">`+
+    '<PayMethods>'+
+    `<PayMethod Amt="${params.body.totalAmount + ".00"}" Type="BANKNOTE"/>`+
+    '</PayMethods>'+
+    `<Seller Address="${params.clientBranch.dataValues.address}" Country="ALB" IDType="NUIS" IDNum="M11423019O" Name="${params.clientBranch.dataValues.name}" Town="${params.clientBranch.dataValues.city}"/>`+
     '<Items>'+
       params.invoiceItems.map((el,index)=>{
-        //console.log("el-------",el);
-          return `<I N="${el.productName}" C="${el.barcode}" U="" Q="${el.quantity}" UPB="${el.originalPrice}" UPA="${el.finalPrice}" R="0" RR="false" PB="${el.originalPrice * el.quantity}" VR="20%" VA="${el.originalPrice}* VR">' + '</I>`
+          return `<I C="${el.barcode}" N="${el.productName}" PA="${params.body.totalAmount + ".00"}" PB="${el.originalPrice * el.quantity + '0'}" Q="${el.quantity}" R="0" RR="true" U="metra" UPB="${el.originalPrice + "0"}" UPA="${el.finalPrice + ".00"}" VA="${params.newInvoice.dataValues.totalVat + "0"}" VR="${el.vat + ".00"}"> </I>`
       })
     +'</Items>'+
     '<SameTaxes>'+
-        '<SameTax NumOfItems="nr total i artikujve" PriceBefVAT="tatalAmountNoVAT" VATRate="norma e tvsh" ExemptFromVAT="" VATAmt="total vat">'+
+        `<SameTax NumOfItems="${params.invoiceItems.length}" PriceBefVAT="${params.body.totalAmountNoVAT + "0"}" VATAmt="${params.newInvoice.dataValues.totalVat + "0"}"/>`+
     '</SameTax>'+
-    '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">'+
-    '<SignedInfo>'+
-		'<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>'+
-			'<SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>'+
-					'<Reference URI="#Request">'+
-						'<Transforms>'+
-							'<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>'+
-							'<Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>'+
-						'</Transforms>'+
-						'<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>'+
-						'<DigestValue>TPTxhFLbLwS49tDl9DwdcjTHTi5LH5ZucZB2Wgz0IMA=</DigestValue>'+
-					'</Reference>'+
-				'</SignedInfo>'+
-
-				'<SignatureValue>R60S3xQ9hlTCEdplEJ1HgD0fr5kpZjhft2WUgG20DFUj038MyBmiOnSSgpN1/NMbTXXgY7GNAkfeQxzUM5hNqg5jJgbZDByvNsalPLn1uqv3QmHzvLYH2al1ZX7fCSu6DdoI/HKsvJ8JBfYrlg4jogQjxxBG6rSNNUwC98/AE4uPtGnkksINe2UBE2aB5IDOKPlA4biBuaVYYri+LoOcyLyBTBKb8V8BXMYToA87luYKEbyN46MQgZ+yfHr/wyYN+VYvZSCWfK6EvAN7Fdgaa/Z7fY32BnjO/Pepa177rHQtL94zZKtg0z+cqYix+leCAnhZonCk5x5/CBh7OYRLNA==</SignatureValue>'+
-				'<KeyInfo>'+
-					'<X509Data>'+
-						'<X509Certificate>MIIFKTCCBBGgAwIBAgIMQwKhWXABWRovMc8KMA0GCSqGSIb3DQEBCwUAMEsxCzAJBgNVBAYTAkFMMQ0wCwYDVQQKEwROQUlTMS0wKwYDVQQDEyROQUlTIENsYXNzIDMgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkwHhcNMjIwODE3MTMzMDUzWhcNMjMwODE3MTMzMDUzWjCBgzEPMA0GA1UEBxMGVGlyYW5hMRUwEwYDVQQKEwxPVkxBIFN5c3RlbXMxCzAJBgNVBAsTAklUMQ0wCwYDVQQMEwRUZXN0MRgwFgYDVQQDEw9PVkxBIFN5c3RlbXMgICAxDjAMBgNVBAUTBU1PUzI3MRMwEQYDVQQEEwpNMTE0MjMwMTlPMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0j+6sPdloJ8xEVjF24iAe+OSN6S/1AvXmmOu91lnaH00Klprm3tXZISS33b4Ov0PdD2HilTrl1da4CayvbXcrEE1MxHWf8AIV/URxGhxEV5OEHsmctuBumYGMiC4qPYjNkTX5tVlOAPzF9zD5mHPoTmrBwLdrsfZBeFGpUCAq8GApE9QLXaV1i2w59JXm0F+w9KAB6p2IKJi+X8upK6Gw5+4rFzktvNhWqsyJlyj4/JJkuDj625H2zUTn7UZVINS9DipYv9KSqSe3d3NfJ8cNeyQVj1Jn1/WtpKDpevic/J2APD6/pMkviSLJIMtUbkqr1638J5cv4Tbm+y1L/QoEwIDAQABo4IB0jCCAc4wZgYIKwYBBQUHAQEEWjBYMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5ha3NoaS5nb3YuYWwwMAYIKwYBBQUHMAKGJGh0dHA6Ly9jZXJ0cy5ha3NoaS5nb3YuYWwvY2xhc3MzLmNydDAOBgNVHQ8BAf8EBAMCBPAwHwYDVR0jBBgwFoAUhyao+9srUZs50JjW9MYzVkdc2AUwHQYDVR0OBBYEFAAXNSQpD6bOrwQBhOADHVYzGS3jMEsGA1UdIAREMEIwQAYMKwYBBAGCsWwKAQEDMDAwLgYIKwYBBQUHAgEWImh0dHA6Ly93d3cuYWtzaGkuZ292LmFsL3JlcG9zaXRvcnkwgacGA1UdHwSBnzCBnDCBmaCBlqCBk4YiaHR0cDovL2NybC5ha3NoaS5nb3YuYWwvY2xhc3MzLmNybIZtbGRhcDovL2xkYXAuYWtzaGkuZ292LmFsL0NOPU5BSVMgQ2xhc3MgMyBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSxPPU5BSVMsQz1BTD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0O2JpbmFyeTAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwDQYJKoZIhvcNAQELBQADggEBAA7rR2wdN7Udk9xMUc13J8uGzAMWMOFey6cs1KD+kA/igJ/MxTgGobo/ydWEJ9Jebo8kbMvgEl8JnBhqXaWp3MpscJ3mT87WabqIw14LhPnk6sghOOJaYl77azZnFJpE/I/S392FfLJttQBEOzqHwz7cJByd4l8Imhd/b/LLbdCMeWEbmGnnLWoowdtAw/H5kDVKnYuZIyifzo/Se4xV/9KnZoJMFPVz2+lEkgjt0S4DSh3C3V07HztoZwPMeFvbKTIaxdRu1D8CWH6VK8cjJvEX7IrGwN7pVF5m7rS79zYduB01096HCs9oXQgTijT1B52ktK6Q8VuNaOLT+/ORK4M=</X509Certificate>'+
-					'</X509Data>'+
-				'</KeyInfo>'+
-			'</Signature>'+
-
-    `<TCR BusinUnitCode="rg724gt177" IssuerNUIS="M11423019O" MaintainerCode="mn946ff174" SoftCode="${softCode}" TCRIntID="3" ValidFrom="2022-09-13" Type="REGULAR" />`+
+    '</SameTaxes>'+
+    '</Invoice>'+
     '</RegisterInvoiceRequest>'+
     '</SOAP-ENV:Body>'+
-    '</SOAP-ENV:Envelope>'
+    '</SOAP-ENV:Envelope>';
 
-    //console.log("xml------",xml);
+    const signedXml = signXml(xmlDocument, "//*[@Id='Request']","cert.pem");
 
-    return xml;
+    try{
+      const result = await axios ({
+        method: "post",
+        url: 'https://efiskalizimi-test.tatime.gov.al/FiscalizationService-v3/FiscalizationService.wsdl',
+        headers: {'Content-Type': 'text/xml'},
+        data: signedXml
+      });
+  
+     if(result.status === 200){
+        return result;
+     } else {
+        return false;
+     }
+    }catch(err){
+      console.log("error----",err);
+    }
+
 }
 
 module.exports = {invoiceFiscalized};
