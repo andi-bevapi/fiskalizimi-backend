@@ -112,15 +112,12 @@ const createInvoice = async (body) => {
     invoiceCode: identifierGenerator(clientInvoices.length, clientBranch.code),
     ...body,
   });
-  
+
   const result = await fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
-
-
+  
   if(result){
     const parsedXml = xmlParser(result.data);
     const fic = parsedXml.root.children[1].children[0].children[1].content;
-    
-    console.log("fic----",fic);
     await Invoice.update({FIC:fic},{where:{id:newInvoice.id}})
   }
 

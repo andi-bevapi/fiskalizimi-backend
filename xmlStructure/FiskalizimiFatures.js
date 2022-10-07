@@ -1,10 +1,11 @@
 const SignedXml = require("xml-crypto").SignedXml;
 const fs = require("fs");
 const axios = require('axios');
+const GeneralError = require("../utils/GeneralError");
 
 const invoiceFiscalized = async (params) =>{
 
-    // console.log("invoiceCode-------",params.newInvoice.dataValues.invoiceCode.substring(0,2));
+    console.log("invoiceCode-------",params.newInvoice.dataValues.invoiceCode.substring(0,2));
     const softCode="zz463gy579";
    
     function signXml(xml, xpath, key) {
@@ -40,7 +41,7 @@ const invoiceFiscalized = async (params) =>{
     '<SOAP-ENV:Body>'+
     '<RegisterInvoiceRequest xmlns="https://eFiskalizimi.tatime.gov.al/FiscalizationService/schema" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" Id="Request" Version="3">'+
     `<Header SendDateTime="${params.body.date}" UUID="56b37523-3677-416a-8bc0-e0dd77296fd8"/>`+
-    `<Invoice BusinUnitCode="rg724gt177" IssueDateTime="${params.body.date}" IIC="4AD5A215BEAF85B0416235736A6DACAB" IICSignature="83D728C8E10BA04C430BE64CE98612B0256C0FE618C167F28BF62A0C0CB38C51824F152AB00510AE076508E53ACE4F877D25D51C7830F043E09BB1500D3A0AEA233ECC6175A45FE58CBF53E517FD9EA1D06CBABC055EEE6B430A16560C96D3A27720A6E5C9BA5C8D18A7AE5C2A7F1D8E46B293F56D32847FCEE199D2AFDC6E5BC1164BA974A6E29D6F40FBD8C51D40A99BC97DD6DB2AE9EC0582F2E74E9C7841AC5A854DE92B1D778A809CACCBBEF4DC325C852487BCF035AA2D54594DC6BDD859E250782CCCDD7CC89EE80A2FE1030AAAD615DA5D728322F8590D9F56E6DDE5975A738F304F56BB832996763624B72C77E97881D9C647B50709F20AFBFA0602" InvNum="${params.newInvoice.dataValues.invoiceCode}" InvOrdNum="${params.newInvoice.dataValues.invoiceCode.substring(0,1)}" IsIssuerInVAT="true" IsReverseCharge="false" IsSimplifiedInv="false" OperatorCode="${params.body.operatorCode}" SoftCode="${softCode}" TCRCode="iy100lf082" TotPrice=${params.body.totalAmount + ".00"} TotPriceWoVAT="${params.body.totalAmountNoVAT + "0"}" TotVATAmt="${params.body.totalVat + "0"}" TypeOfInv="CASH">`+
+    `<Invoice BusinUnitCode="rg724gt177" IssueDateTime="${params.body.date}" IIC="4AD5A215BEAF85B0416235736A6DACAB" IICSignature="83D728C8E10BA04C430BE64CE98612B0256C0FE618C167F28BF62A0C0CB38C51824F152AB00510AE076508E53ACE4F877D25D51C7830F043E09BB1500D3A0AEA233ECC6175A45FE58CBF53E517FD9EA1D06CBABC055EEE6B430A16560C96D3A27720A6E5C9BA5C8D18A7AE5C2A7F1D8E46B293F56D32847FCEE199D2AFDC6E5BC1164BA974A6E29D6F40FBD8C51D40A99BC97DD6DB2AE9EC0582F2E74E9C7841AC5A854DE92B1D778A809CACCBBEF4DC325C852487BCF035AA2D54594DC6BDD859E250782CCCDD7CC89EE80A2FE1030AAAD615DA5D728322F8590D9F56E6DDE5975A738F304F56BB832996763624B72C77E97881D9C647B50709F20AFBFA0602" InvNum="${params.newInvoice.dataValues.invoiceCode}" InvOrdNum="${params.newInvoice.dataValues.invoiceCode.substring(0,5)}" IsIssuerInVAT="true" IsReverseCharge="false" IsSimplifiedInv="false" OperatorCode="${params.body.operatorCode}" SoftCode="${softCode}" TCRCode="iy100lf082" TotPrice=${params.body.totalAmount + ".00"} TotPriceWoVAT="${params.body.totalAmountNoVAT + "0"}" TotVATAmt="${params.body.totalVat + "0"}" TypeOfInv="CASH">`+
     '<PayMethods>'+
     `<PayMethod Amt="${params.body.totalAmount + ".00"}" Type="BANKNOTE"/>`+
     '</PayMethods>'+
@@ -68,14 +69,11 @@ const invoiceFiscalized = async (params) =>{
         headers: {'Content-Type': 'text/xml'},
         data: signedXml
       });
-  
-     if(result.status === 200){
         return result;
-     } else {
-        return false;
-     }
     }catch(err){
-      console.log("error----",err);
+      //console.log("error----",err.code);
+      //throw new GeneralError("Kjo fature nuk u fiskalizua", 409);
+      return err;
     }
 
 }

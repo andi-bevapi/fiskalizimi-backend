@@ -3,7 +3,6 @@ const clientService = require("../services/ClientService");
 const getClients = async(req,res,next)=>{
     try{
         const clients = await clientService.getClients();
-        // console.log("clients-----",clients);
         res.ok(clients,"Lista me kliente");
     }catch(error){
         next(error);
