@@ -40,7 +40,6 @@ const invoiceFiscalized = async (params) =>{
       throw new Error("Kjo fature nuk u fiskalizua", 409);
       //return err;
     }
-
 }
 
 module.exports = {invoiceFiscalized};
