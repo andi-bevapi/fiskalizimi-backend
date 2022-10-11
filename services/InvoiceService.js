@@ -5,6 +5,8 @@ const Branch = require("../db/models/branch");
 const ShiftHistory = require("../db/models/shifthistory");
 const Op = require("sequelize").Op;
 const xmlParser = require("xml-parser");
+const GeneralError = require("../utils/GeneralError");
+
 
 
 const { identifierGenerator } = require("../helpers");
@@ -44,6 +46,7 @@ const getInvoiceById = async (id) => {
 };
 
 const createInvoice = async (body) => {
+  try {
 
   const invoiceItems = body.invoiceItems;
 
@@ -112,18 +115,18 @@ const createInvoice = async (body) => {
     invoiceCode: identifierGenerator(clientInvoices.length, clientBranch.code),
     ...body,
   });
-
-  const result = await fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
   
-  if(result){
+    const result = await fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
     const parsedXml = xmlParser(result.data);
     const fic = parsedXml.root.children[1].children[0].children[1].content;
-    await Invoice.update({FIC:fic},{where:{id:newInvoice.id}})
+    await Invoice.update({FIC:fic},{where:{id:newInvoice.id}});
+    
+    insertInvoiceItems(newInvoice.id, invoiceItems);
+    return getProcessingInvoice(newInvoice.id);
+
+  }catch (error) {
+    throw new GeneralError(error.message, 409);
   }
-
-  insertInvoiceItems(newInvoice.id, invoiceItems);
-
-  return getProcessingInvoice(newInvoice.id);
 };
 
 const getProcessingInvoice = async (id) => {

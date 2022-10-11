@@ -177,13 +177,13 @@ router.put("/update/:id",Joivalidation,clientController.updateClients);
  *  get:
  *    summary:  get one client
  *    tags: [Client]
- *    description: get a new client
+ *    description: get one client
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: number
- *        description: client id
+ *        description: client one id
  *        required: true
  *    responses:
  *      200:
