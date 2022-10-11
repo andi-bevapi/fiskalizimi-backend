@@ -7,8 +7,6 @@ const Op = require("sequelize").Op;
 const xmlParser = require("xml-parser");
 const GeneralError = require("../utils/GeneralError");
 
-
-
 const { identifierGenerator } = require("../helpers");
 const fiscalizedInvoice = require("../xmlStructure/FiskalizimiFatures");
 
@@ -115,7 +113,7 @@ const createInvoice = async (body) => {
     invoiceCode: identifierGenerator(clientInvoices.length, clientBranch.code),
     ...body,
   });
-  
+
     const result = await fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
     const parsedXml = xmlParser(result.data);
     const fic = parsedXml.root.children[1].children[0].children[1].content;
