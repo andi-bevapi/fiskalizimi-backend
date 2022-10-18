@@ -9,6 +9,7 @@ const GeneralError = require("../utils/GeneralError");
 
 const { identifierGenerator } = require("../helpers");
 const fiscalizedInvoice = require("../xmlStructure/FiskalizimiFatures");
+const correctedInvoice = require("../xmlStructure/KorigjimiFatures");
 
 const getAllInvoices = async (branchId, status = "active") => {
   return await Invoice.findAll({
@@ -45,84 +46,98 @@ const getInvoiceById = async (id) => {
 
 const createInvoice = async (body) => {
   try {
+    const invoiceItems = body.invoiceItems;
+    delete body.invoiceItems;
 
-  const invoiceItems = body.invoiceItems;
-
-  delete body.invoiceItems;
-  
-  const todaysShift = await ShiftHistory.findOne({
-    where: {
-      userId: body.userId,
-      shiftStart: {
-        [Op.gt]: new Date().setHours(0, 0, 0, 0),
-        [Op.lt]: new Date(),
-      },
-    },
-  });
-  if (todaysShift?.shiftEnd) {
-    await ShiftHistory.update(
-      { shiftEnd: null },
-      { where: { id: todaysShift.id } }
-    );
-  }
-
-  let doesExists = false;
-
-  if (body.id) {
-    doesExists = await Invoice.findOne({
+    const todaysShift = await ShiftHistory.findOne({
       where: {
-        id: body.id,
-        isActive: true,
-        isDeleted: false,
+        userId: body.userId,
+        shiftStart: {
+          [Op.gt]: new Date().setHours(0, 0, 0, 0),
+          [Op.lt]: new Date(),
+        },
       },
     });
-  }
+    if (todaysShift?.shiftEnd) {
+      await ShiftHistory.update(
+        { shiftEnd: null },
+        { where: { id: todaysShift.id } }
+      );
+    }
 
-  if (doesExists) {
-    await Invoice.update(
-      {
-        ...body,
-        status: "active",
-      },
-      {
+    let doesExists = false;
+
+    if (body.id) {
+      doesExists = await Invoice.findOne({
         where: {
           id: body.id,
+          isActive: true,
+          isDeleted: false,
         },
-      }
-    );
+      });
+    }
 
-    await InvoiceItem.destroy({ where: { invoiceId: body.id } });
-    insertInvoiceItems(body.id, invoiceItems);
+    if (doesExists) {
+      await Invoice.update(
+        {
+          ...body,
+          status: "active",
+        },
+        {
+          where: {
+            id: body.id,
+          },
+        }
+      );
 
-    return getProcessingInvoice(body.id);
+      await InvoiceItem.destroy({ where: { invoiceId: body.id } });
+      insertInvoiceItems(body.id, invoiceItems);
+
+      return getProcessingInvoice(body.id);
+    }
+
+    const clientInvoices = await Invoice.findAll({
+      where: {
+        clientId: body.clientId,
+      },
+    });
+
+    const clientBranch = await Branch.findOne({
+      where: {
+        clientId: body.clientId,
+      },
+    });
+
+    const newInvoice = await Invoice.create({
+      invoiceCode: identifierGenerator(
+        clientInvoices.length,
+        clientBranch.code
+      ),
+      ...body,
+    });
+
+     if(body.description === "Fature e korrigjuar"){
+      const result = await correctedInvoice.correctedInvoice({newInvoice,body,clientBranch,invoiceItems});
+      const parsedXml = xmlParser(result.data);
+      const fic = parsedXml.root.children[1].children[0].children[1].content
+      await Invoice.update({ FIC: fic }, { where: { id: newInvoice.id } });
+      
+    } else{
+      const result = await fiscalizedInvoice.invoiceFiscalized({
+        newInvoice,
+        body,
+        clientBranch,
+        invoiceItems,
+      });
+      const parsedXml = xmlParser(result.data);
+      const fic = parsedXml.root.children[1].children[0].children[1].content;
+      await Invoice.update({ FIC: fic }, { where: { id: newInvoice.id } });
   }
 
-  const clientInvoices = await Invoice.findAll({
-    where: {
-      clientId: body.clientId,
-    },
-  });
-
-  const clientBranch = await Branch.findOne({
-    where: {
-      clientId: body.clientId,
-    },
-  });
-
-  const newInvoice = await Invoice.create({
-    invoiceCode: identifierGenerator(clientInvoices.length, clientBranch.code),
-    ...body,
-  });
-
-    const result = await fiscalizedInvoice.invoiceFiscalized({newInvoice,body,clientBranch,invoiceItems});
-    const parsedXml = xmlParser(result.data);
-    const fic = parsedXml.root.children[1].children[0].children[1].content;
-    await Invoice.update({FIC:fic},{where:{id:newInvoice.id}});
-    
     insertInvoiceItems(newInvoice.id, invoiceItems);
     return getProcessingInvoice(newInvoice.id);
-
-  }catch (error) {
+  } catch (error) {
+    console.log("error-----",error);
     throw new GeneralError(error.message, 409);
   }
 };
