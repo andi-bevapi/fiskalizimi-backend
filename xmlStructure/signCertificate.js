@@ -1,7 +1,8 @@
 const SignedXml = require("xml-crypto").SignedXml;
 const fs = require("fs");
 
-function signXml(xml, xpath, key) {
+function signXml(xml,tagName, xpath, key) {
+
     const sig = new SignedXml();
     sig.signingKey = fs.readFileSync(__dirname +"/"+ key);
 
@@ -19,7 +20,7 @@ function signXml(xml, xpath, key) {
       },
     };
     sig.computeSignature(xml, {
-      location: { reference: "//*[local-name(.)='Invoice']", action: "after" },
+      location: { reference: `//*[local-name(.)='${tagName}']`, action: "after" },
     });
     return sig.getSignedXml();
 }

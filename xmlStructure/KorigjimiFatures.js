@@ -35,7 +35,7 @@ const correctedInvoice = async (params) =>{
     '</RegisterInvoiceRequest>'+
     '</SOAP-ENV:Body>'+
     '</SOAP-ENV:Envelope>';
-    const signedXml = signXml(xmlDocument, "//*[@Id='Request']","cert.pem");
+    const signedXml = signXml(xmlDocument,"Invoice", "//*[@Id='Request']","cert.pem");
 
     try{
       const result = await axios ({

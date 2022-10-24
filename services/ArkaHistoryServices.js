@@ -2,6 +2,7 @@ const arkaHistory = require("../db/models/arkahistory");
 const GeneralError = require("../utils/GeneralError");
 const user = require('../db/models/user');
 const Op = require("sequelize").Op;
+const registerInvoice = require("../xmlStructure/RegjistrimiGjendjes");
 
 const getLastAmount = async (arkaId) => {
   const getLastRecord = await arkaHistory.findOne({
@@ -12,33 +13,22 @@ const getLastAmount = async (arkaId) => {
 };
 
 const updateAmount = async (body) => {
-  const { arkaId, userId} = body;
-  const TODAY_START = new Date().setHours(0, 0, 0, 0);
-  const NOW = new Date();
-  // const checkArkAction = await arkaHistory.findOne({
-  //   where: {
-  //           arkaId,
-  //           userId,
-  //           action: 'Gjendje Fillestare',
-  //           createdAt: {
-  //               [Op.gt]: TODAY_START,
-  //               [Op.lt]: NOW
-  //           }
-  //         }
-  //     });
-  //   if(checkArkAction){
-  //     throw new GeneralError("Ky aksion eshte selektuar me pare", 409);
-  //   } else{
-      return await arkaHistory.create(body);
-    // }
+
+  try{
+    const result = await registerInvoice.moneyDeposit(body);
+   
+    return await arkaHistory.create(body);
+  }catch(error){
+    throw new GeneralError(error.message, 409);
+  }
 };
 
 const autoInsertDeclaration = async (body) =>{
   //nese eshte ora 23:59 dhe nuk ka ne tabele per ate dite rekord me action: 'Gjendje Fillestare' bej update ,
   //by default do behet inser me vleren 0
 
-  const arkaId = body.item.id;
-  const userId = body.userId;
+  const arkaId = body.item.id || body.item;
+  const userId = body.userId || body.id ;
 
   const TODAY_START = new Date().setHours(0, 0, 0, 0);
   const MID_NIGHT = new Date().setHours(23,59,59,59);
@@ -63,7 +53,6 @@ const autoInsertDeclaration = async (body) =>{
       userId
     });
   }
- 
   return todayAction;
 }
 
