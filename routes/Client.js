@@ -168,4 +168,35 @@ router.put("/update/:id",Joivalidation,clientController.updateClients);
 
  router.put("/delete/:id",clientController.deleteClients);
 
+// @route   Get api/client/{id}
+// @desc    get one client
+// @access  Private
+/**
+ * @swagger
+ * /api/client/{id}:
+ *  get:
+ *    summary:  get one client
+ *    tags: [Client]
+ *    description: get one client
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: number
+ *        description: client one id
+ *        required: true
+ *    responses:
+ *      200:
+ *         description: Success
+ *         content:
+ *            application/json:
+ *               schema:
+ *                   items:
+ *                     $ref: '#/components/schemas/Client'
+ *      500:
+ *        description: internal server error
+ */
+
+ router.get("/get/:id",clientController.getClient);
+
 module.exports = router;

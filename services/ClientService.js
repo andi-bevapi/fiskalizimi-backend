@@ -46,4 +46,12 @@ const deleteClients = async (id) => {
     return updateClient;
 }
 
-module.exports = { getClients, createClients, updateClients, deleteClients };
+const getClient = async(id) =>{
+    const client = await Client.findOne({ where: { id } });
+    if (!client) {
+        throw new GeneralError("Ky klient nuk gjendet", 404);
+    }
+    return client;
+}
+
+module.exports = { getClients, createClients, updateClients, deleteClients , getClient };

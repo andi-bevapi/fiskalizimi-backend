@@ -36,9 +36,19 @@ const deleteClients = async(req,res,next)=>{
     }
 }
 
+const getClient = async(req,res,next)=>{
+    try{
+        const client = await clientService.getClient(req.params.id);
+        res.ok(client,"Klienti rezulton")
+    }catch(error){
+        next(error);
+    }
+}
+
 module.exports = {
     getClients,
     createClients,
     updateClients,
-    deleteClients
+    deleteClients,
+    getClient
 };
