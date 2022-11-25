@@ -265,4 +265,36 @@ router.put("/delete/:id", userController.deleteUser);
  */
 router.post("/login", validateUserLogin, userController.loginUser);
 
+
+
+
+// @route   PUT api/user/checkFirstTimeLogin/{id}
+// @desc    Check first time login user
+// @access  Private
+/**
+ *@swagger
+ * /api/user/checkFirstTimeLogin/{id}:
+ *   put:
+ *       summary: Check login user
+ *       tags: [User]
+ *       description: Check first time login user
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *             type: number
+ *           description: user id
+ *           required: true
+ *       responses:
+ *           "200":
+ *             description: Success
+ *           "404":
+ *              description: User not found
+ *           "500":
+ *              description: Internal server error
+ */
+
+ router.put("/checkFirstTimeLogin/:id", userController.checkFirstTimeLogin);
+
+
 module.exports = router;

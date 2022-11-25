@@ -226,7 +226,7 @@ const login = async (username, password) => {
           shiftStart: new Date(),
           userId: user.id,
         });
-        await Arka_Shifts.create({arkaId: 1, shiftId: newShift.id});
+        await Arka_Shifts.create({ arkaId: 1, shiftId: newShift.id });
       }
     }
 
@@ -250,6 +250,16 @@ const findArkaConnected = async () => {
   return null;
 };
 
+const checkFirstTimeLogin = async (id) => {
+  const result = await User.update(
+    { isFirstTimeLogin: true },
+    {
+      where: {id},
+    }
+  );
+  return result;
+};
+
 module.exports = {
   getAllUsers,
   getAllUsersByClientId,
@@ -258,4 +268,5 @@ module.exports = {
   updateUser,
   deleteUser,
   login,
+  checkFirstTimeLogin,
 };

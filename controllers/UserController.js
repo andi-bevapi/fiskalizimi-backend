@@ -63,4 +63,13 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers, getCurrentUser, createUser, updateUser, deleteUser, loginUser, getAllUsersByClientId };
+const checkFirstTimeLogin = async (req, res, next) => {
+  try {
+    const result = await UserServices.checkFirstTimeLogin(req.params.id);
+    res.ok(result, "Perdoruesi u kontrollua me sukses!");
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAllUsers, getCurrentUser, createUser, updateUser, deleteUser, loginUser, getAllUsersByClientId , checkFirstTimeLogin };
