@@ -15,8 +15,7 @@ const getLastAmount = async (arkaId) => {
 const updateAmount = async (body) => {
 
   try{
-    const result = await registerInvoice.moneyDeposit(body);
-   
+    await registerInvoice.moneyDeposit(body);
     return await arkaHistory.create(body);
   }catch(error){
     throw new GeneralError(error.message, 409);
@@ -37,7 +36,7 @@ const autoInsertDeclaration = async (body) =>{
   const todayAction = await arkaHistory.findAll({
     where:{
         arkaId : arkaId,
-        action: 'Gjendje Fillestare',
+        action: 'INITIAL',
         createdAt:{
           [Op.gt]: TODAY_START
       }
